@@ -21,8 +21,7 @@ public class ArenaController {
 		//TODO
 		return 0;
 	}
-	
-	
+
 	public void addPlayer(Player p){
         /**
          *  Adds a player to the game.
@@ -44,7 +43,6 @@ public class ArenaController {
 		return false;
 	}
 	
-	
 	private void initArena(){
         /**
          * Initializes territories and places players on the map.
@@ -52,8 +50,7 @@ public class ArenaController {
 
 		//TODO
 	}
-	
-	
+
 	private boolean reinforce(int nrOfUnits, Point dest,Player player){
         /**
          * Puts player's units on specified territory.
