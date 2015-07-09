@@ -1,28 +1,22 @@
 package tora.train.risk;
 
-public enum ContinentType {
-    A_NE(2, 3),
-    A_NW(2, 3),
-    A_SE(2, 3),
-    A_SW(2, 3),
-    H_E(2, 4),
-    H_W(2, 4),
-    M_N(2, 6),
-    M_S(2, 6),
-    P_S(4, 8),
-    P_N(4, 8),
-    G_N(6, 10),
-    G_S(6, 10),
-    R(8, 12);
+public class ContinentType {
+    //Default map continent types From "Risk for dummies" map
+    public static final ContinentType A = new ContinentType(2, 3);
+    public static final ContinentType H = new ContinentType(2, 4);
+    public static final ContinentType M = new ContinentType(2, 6);
+    public static final ContinentType P = new ContinentType(4, 8);
+    public static final ContinentType G = new ContinentType(6, 10);
+    public static final ContinentType R = new ContinentType(8, 10);
 
-    private int bonus;
-    private int defaultDefence;
+    private final int bonus;
+    private final int defaultDefence;
 
     /**
-     * @param defence The amount of units that initially defend the territories on this continent
-     * @param bonus   The bonus a player gets for owning this continent
+     * @param defence The amount of units that initially defend the territories on this continent(final)
+     * @param bonus   The bonus a player gets for owning this continent(final)
      */
-    private ContinentType(int defence, int bonus) {
+    public ContinentType(int defence, int bonus) {
         this.defaultDefence = defence;
         this.bonus = bonus;
     }

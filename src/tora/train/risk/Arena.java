@@ -28,7 +28,7 @@ public class Arena {
         return map[coordinate.x][coordinate.y];
     }
 
-    public Continent getContinetAtIndex(int index) {
+    public Continent getContinentAtIndex(int index) {
         return continents.get(index);
     }
 }
