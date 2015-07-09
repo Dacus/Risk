@@ -1,5 +1,6 @@
 package tora.train.risk;
 
+import java.awt.*;
 import java.util.List;
 
 public class Arena {
@@ -23,7 +24,7 @@ public class Arena {
         return map[x][y];
     }
 
-    public Teritory getAtCoordinate(java.awt.Point coordinate) {
+    public Teritory getAtCoordinate(Point coordinate) {
         return map[coordinate.x][coordinate.y];
     }
 
