@@ -48,9 +48,18 @@ public class ArenaController {
         }
 
         if (arena.getAtCoordinate(dest).owner != player) {
-            resolveAttack();
+            resolveAttack(nrOfUnits, init, dest, player);
+        } else {
+            transferUnits(nrOfUnits, init, dest, player);
         }
         return true;
+    }
+
+    private void transferUnits(int nrOfUnits, Point init, Point dest, Player player) {
+    }
+
+    private void resolveAttack(int nrOfUnits, Point init, Point dest, Player player) {
+
     }
 
     /**
@@ -73,8 +82,6 @@ public class ArenaController {
         return false;
     }
 
-    private void resolveAttack() {
 
-    }
 
 }
