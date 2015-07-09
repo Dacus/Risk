@@ -47,7 +47,7 @@ public class ArenaController {
             return false;
         }
 
-        if (arena.getAtCoordinate(dest).owner != player) {
+        if (arena.getTerritoryFrom(dest).owner != player) {
             resolveAttack();
         }
         return true;
