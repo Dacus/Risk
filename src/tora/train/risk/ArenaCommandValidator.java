@@ -19,11 +19,11 @@ public class ArenaCommandValidator {
     }
 
     private static Boolean checkOwnerIsValid(Arena arena, Point init, Player player) {
-        return arena.getAtCoordinate(init).owner == player;
+        return arena.getTerritoryFrom(init).owner == player;
     }
 
     private static Boolean checkUnitsIsValid(Arena arena, Point init, int nrOfUnits, Player player) {
-        return arena.getAtCoordinate(init).unitNr >= nrOfUnits;
+        return arena.getTerritoryFrom(init).unitNr >= nrOfUnits;
     }
 
     private static Boolean checkMovePosible(Arena arena, Point init, Point dest, Player player) {
