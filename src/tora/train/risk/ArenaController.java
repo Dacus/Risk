@@ -8,7 +8,7 @@ public class ArenaController {
 	private List<Player> players;
 	
 	public ArenaController(){
-		//TODO init arena
+		//TODO
 		players=new ArrayList<Player>();
 		initArena();
 	}
