@@ -1,7 +1,7 @@
 package tora.train.risk;
 
 public class Teritory {
-
+	
 	/**
 	 * army units in the teritory
 	 */
