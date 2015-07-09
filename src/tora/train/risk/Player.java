@@ -1,15 +1,22 @@
 package tora.train.risk;
 
 public class Player {
-	public String name;
-	//public Color color;
+    public static final Player CPU_MAP_PLAYER = new Player("CPU_MAP");
+    private static final int INITIAL_REIFORCEMENTS = 5;
+    private String name;
+    //public Color color;
 	private int score;
-
     /**
-       Number of units that the player is allowed to place on its own territories
-       at the beginning of each round
+     Number of units that the player is allowed to place on its own territories
+     at the beginning of each round
      */
-	private int reinforcements;
+    private int reinforcements;
+
+    public Player(String name) {
+        this.name = name;
+        this.score = 0;
+        this.reinforcements = INITIAL_REIFORCEMENTS;
+    }
 
     public String getName() {
         return name;
@@ -23,12 +30,12 @@ public class Player {
         return score;
     }
 
-    public int getReinforcements() {
-        return reinforcements;
-    }
-
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getReinforcements() {
+        return reinforcements;
     }
 
     public void setReinforcements(int reinforcements) {

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArenaController {
-	private Arena arena;
+	private static Arena arena;
 	private List<Player> players;
 	
 	public ArenaController() {
@@ -66,6 +66,38 @@ public class ArenaController {
 
 	private void resolveAttack() {
 
+	}
+
+	static class ArenaCommandValidator {
+		public static Boolean validateMove(int nrOfUnits, Point init, Point dest, Player player) {
+			if(!checkOwnerIsValid(init, player)) {
+				return false;
+			} else if (!checkUnitsIsValid(init, nrOfUnits, player)) {
+				return false;
+			} else if(!checkMovePosible(init, dest, player)) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+		public static Boolean checkOwnerIsValid(Point init, Player player) {
+			return arena.getAtCoordinate(init).owner == player;
+		}
+
+		public static Boolean checkUnitsIsValid(Point init, int nrOfUnits, Player player) {
+			return arena.getAtCoordinate(init).unitNr >= nrOfUnits;
+		}
+
+		public static Boolean checkMovePosible(Point init, Point dest, Player player) {
+			Boolean valid = true;
+			if((init.x - dest.x + init.y - init.y) > 1) {
+				valid = false;
+			} else if(init.x < 1 && init.y < 1 && dest.x < 1 && dest.y < 1) {
+				valid = false;
+			}
+			return valid;
+		}
 	}
 	
 }
