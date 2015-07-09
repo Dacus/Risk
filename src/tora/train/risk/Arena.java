@@ -18,10 +18,6 @@ public class Arena {
 
     private void defaultInitializer() {
         //TODO Create the default map from the "Risk for dummies" document
-        for (int i=0;i<=4;i++){
-          //  map[i,0]
-        }
-
     }
 
     public Teritory getAtCoordinate(int x, int y) {
