@@ -4,14 +4,14 @@ import java.awt.*;
 import java.util.List;
 
 public class Arena {
-	private Teritory[][] map ;
+	private Territory[][] map ;
     private List<Continent> continents;
 
     public Arena() {
         defaultInitializer();
     }
 
-    public Arena(Teritory[][] map, List<Continent> continents) {
+    public Arena(Territory[][] map, List<Continent> continents) {
         this.map = map;
         this.continents = continents;
     }
@@ -20,11 +20,11 @@ public class Arena {
         //TODO Create the default map from the "Risk for dummies" document
     }
 
-    public Teritory getAtCoordinate(int x, int y) {
+    public Territory getAtCoordinate(int x, int y) {
         return map[x][y];
     }
 
-    public Teritory getAtCoordinate(Point coordinate) {
+    public Territory getTerritoryFrom(Point coordinate) {
         return map[coordinate.x][coordinate.y];
     }
 
