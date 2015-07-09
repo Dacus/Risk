@@ -20,11 +20,11 @@ public class Arena {
         //TODO Create the default map from the "Risk for dummies" document
     }
 
-    public Teritory getAtCoordinate(int x, int y) {
+    public Teritory getTerritoryAtCoordinate(int x, int y) {
         return map[x][y];
     }
 
-    public Teritory getAtCoordinate(Point coordinate) {
+    public Teritory getTerritoryAtCoordinate(Point coordinate) {
         return map[coordinate.x][coordinate.y];
     }
 
