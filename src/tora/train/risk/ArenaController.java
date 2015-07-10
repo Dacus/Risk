@@ -72,9 +72,27 @@ public class ArenaController {
         return true;
     }
 
+    /**
+     * Moves units from a territory to another. (Both territories must belong to the same player)
+     *
+     * @param nrOfAttackingUnits how many units to move (value > 0)
+     * @param init      the territory's coordinates from which the player moves (belongs to player)
+     * @param dest      the territory's coordinates to which the player moves (belongs to player)
+     * @param player    the player that want to move
+     */
     private void transferUnits(int nrOfAttackingUnits, Point init, Point dest, Player player) {
+        //TODO
     }
 
+    /**
+     * Initiates an attack.
+     *
+     * @param nrOfAttackingUnits how many units does player use to attack an enemy territory.
+     *                           (0 < value <= nr of units available)
+     * @param init      the territory's coordinates from which the player initiates the attack. (belongs to player)
+     * @param dest      the territory's coordinates that player wants to attack. (does not belong to player)
+     * @param player    the player that initiates the attack
+     */
     private void resolveAttack(int nrOfAttackingUnits, Point init, Point dest, Player player) {
         int defendingUnits = arena.getTerritoryAtCoordinate(dest).unitNr;
         int attackingKills = calculateKills("attack");
@@ -85,9 +103,16 @@ public class ArenaController {
         } else {
             arena.getTerritoryAtCoordinate(dest).unitNr = defendingUnits - attackingKills;
         }
-
     }
 
+    /**
+     * Changes owner of a territory, after an attack.
+     *
+     * @param nrOfAttackingUnits how many units attacked the territory
+     * @param dest               the territory that was attacked
+     * @param player             the player that won the territory
+     * @param defendingKills     how many units were on the territory before the attack
+     */
     private void changeOwnershipOfTerritory(int nrOfAttackingUnits, Point dest, Player player, int defendingKills) {
         arena.getTerritoryAtCoordinate(dest).owner = player;
         arena.getTerritoryAtCoordinate(dest).unitNr = nrOfAttackingUnits - defendingKills;
