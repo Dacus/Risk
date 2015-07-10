@@ -7,13 +7,13 @@ public class ContinentType {
     public static final ContinentType M = new ContinentType(2, 6);
     public static final ContinentType P = new ContinentType(4, 8);
     public static final ContinentType G = new ContinentType(6, 10);
-    public static final ContinentType R = new ContinentType(8, 10);
+    public static final ContinentType R = new ContinentType(8, 12);
 
     private final int bonus;
     private final int defaultDefence;
 
     /**
-     * @param defence The amount of units that initially defend the territories on this continent(final)
+     * @param defence The number of units that initially defend the territories on this continent(final)
      * @param bonus   The bonus a player gets for owning this continent(final)
      */
     public ContinentType(int defence, int bonus) {
