@@ -207,7 +207,7 @@ public class Arena {
             for (int j=0;j<=10;j++){
                 if (map[i][j].toString().length()==1)
                     System.out.print(" ");
-                System.out.printf(map[i][j].toString()+" ");
+                System.out.printf(" "+map[i][j].toString()+" ");
             }
             System.out.println();
         }
