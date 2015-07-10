@@ -22,7 +22,7 @@ public class Arena {
     private Continent HE;
 
     public Arena() {
-         map=new Teritory[10][10];
+         map=new Territory[11][11];
          continents=new ArrayList<Continent>();
          ANW=new Continent(ContinentType.A);
          ASW=new Continent(ContinentType.A);
@@ -63,187 +63,123 @@ public class Arena {
     }
 
     private void defaultInitializer() {
+        int i=0;
+
         //ANW
-        for (int i=0;i<5;i++) {
-            map[i][0].owner = Player.CPU_MAP_PLAYER;
-            map[i][0].continent = ANW;
-            map[i][0].unitNr = ContinentType.A.getDefaultDefence();
+        for ( i=0;i<5;i++) {
+            map[i][0]=new Territory(ANW);
         }
-        for (int i=0;i<=2;i++) {
-            map[i][1].owner = Player.CPU_MAP_PLAYER;
-            map[i][1].continent = ANW;
-            map[i][1].unitNr = ContinentType.A.getDefaultDefence();
+        for ( i=0;i<=2;i++) {
+            map[i][1]=new Territory(ANW);
         }
-        map[0][2].owner = Player.CPU_MAP_PLAYER;
-        map[0][2].continent = ANW;
-        map[0][2].unitNr = ContinentType.A.getDefaultDefence();
+        map[0][2]=new Territory(ANW);
 
         //ASW
-        for (int i=6;i<=10;i++) {
-            map[i][0].owner = Player.CPU_MAP_PLAYER;
-            map[i][0].continent = ASW;
-            map[i][0].unitNr = ContinentType.A.getDefaultDefence();
+        for ( i=6;i<=10;i++) {
+            map[i][0] =new Territory(ASW);
         }
-        for (int i=8;i<=10;i++) {
-            map[i][1].owner = Player.CPU_MAP_PLAYER;
-            map[i][1].continent = ASW;
-            map[i][1].unitNr = ContinentType.A.getDefaultDefence();
+        for ( i=8;i<=10;i++) {
+            map[i][1]=new Territory(ASW);
         }
-        map[10][2].owner = Player.CPU_MAP_PLAYER;
-        map[10][2].continent = ASW;
-        map[10][2].unitNr = ContinentType.A.getDefaultDefence();
+        map[10][2]=new Territory(ASW);
 
         //ANE
-        for (int i=0;i<=4;i++) {
-            map[i][10].owner = Player.CPU_MAP_PLAYER;
-            map[i][10].continent = ANE;
-            map[i][10].unitNr = ContinentType.A.getDefaultDefence();
+        for ( i=0;i<=4;i++) {
+            map[i][10]=new Territory(ANE);
         }
-        for (int i=0;i<=2;i++) {
-            map[i][9].owner = Player.CPU_MAP_PLAYER;
-            map[i][9].continent = ANE;
-            map[i][9].unitNr = ContinentType.A.getDefaultDefence();
+        for ( i=0;i<=2;i++) {
+            map[i][9]=new Territory(ANE);
         }
-        map[0][8].owner = Player.CPU_MAP_PLAYER;
-        map[0][8].continent = ANE;
-        map[0][8].unitNr = ContinentType.A.getDefaultDefence();
+        map[0][8]=new Territory(ANE);
 
         //ASE
-        for (int i=6;i<=10;i++) {
-            map[i][10].owner = Player.CPU_MAP_PLAYER;
-            map[i][10].continent = ASE;
-            map[i][10].unitNr = ContinentType.A.getDefaultDefence();
+        for ( i=6;i<=10;i++) {
+            map[i][10]=new Territory(ASE);
         }
-        for (int i=8;i<=10;i++) {
-            map[i][9].owner = Player.CPU_MAP_PLAYER;
-            map[i][9].continent =  ASE;
-            map[i][9].unitNr = ContinentType.A.getDefaultDefence();
+        for ( i=8;i<=10;i++) {
+            map[i][9]=new Territory(ASE);
         }
-        map[10][8].owner = Player.CPU_MAP_PLAYER;
-        map[10][8].continent = ASE;
-        map[10][8].unitNr = ContinentType.A.getDefaultDefence();
+        map[10][8]=new Territory(ASE);
 
         //MN
-        for (int i=3;i<=7;i++){
-            map[0][i].unitNr=ContinentType.M.getDefaultDefence();
-            map[0][i].owner=Player.CPU_MAP_PLAYER;
-            map[0][i].continent=MN;
+        for ( i=3;i<=7;i++){
+            map[0][i]=new Territory(MN);;
         }
-        for (int i=2;i<=8;i++){
-            map[1][i].unitNr=ContinentType.M.getDefaultDefence();
-            map[1][i].owner=Player.CPU_MAP_PLAYER;
-            map[1][i].continent=MN;
+        for ( i=2;i<=8;i++){
+            map[1][i]=new Territory(MN);
         }
 
         //MS
-        for (int i=3;i<=7;i++){
-            map[10][i].unitNr=ContinentType.M.getDefaultDefence();
-            map[10][i].owner=Player.CPU_MAP_PLAYER;
-            map[0][i].continent=MS;
+        for ( i=3;i<=7;i++){
+            map[10][i]=new Territory(MS);;
         }
-        for (int i=2;i<=8;i++){
-            map[9][i].unitNr=ContinentType.M.getDefaultDefence();
-            map[9][i].owner=Player.CPU_MAP_PLAYER;
-            map[9][i].continent=MS;
+        for ( i=2;i<=8;i++){
+            map[9][i]=new Territory(MS);;
         }
 
         //PN
-        for (int i=2;i<=8;i++){
-            map[2][i].unitNr=ContinentType.P.getDefaultDefence();
-            map[2][i].owner=Player.CPU_MAP_PLAYER;
-            map[2][i].continent=PN;
+        for ( i=2;i<=8;i++){
+            map[2][i]=new Territory(PN);;
         }
-        for (int i=2;i<=8;i++){
+        for ( i=2;i<=8;i++){
             if(i==2 || i==3 || i==7 || i==8) {
-                map[3][i].unitNr = ContinentType.P.getDefaultDefence();
-                map[3][i].owner = Player.CPU_MAP_PLAYER;
-                map[3][i].continent = PN;
+                map[3][i]=new Territory(PN);
             }
         }
         //PS
-        for (int i=2;i<=8;i++){
-            map[8][i].unitNr=ContinentType.P.getDefaultDefence();
-            map[8][i].owner=Player.CPU_MAP_PLAYER;
-            map[8][i].continent=PS;
+        for ( i=2;i<=8;i++){
+            map[8][i]=new Territory(PS);
         }
-        for (int i=2;i<=8;i++){
+        for ( i=2;i<=8;i++){
             if(i==2 || i==3 || i==7 || i==8) {
-                map[7][i].unitNr = ContinentType.P.getDefaultDefence();
-                map[7][i].owner = Player.CPU_MAP_PLAYER;
-                map[7][i].continent = PS;
+                map[7][i]=new Territory(PS);
             }
         }
 
         //GN
-        for(int i=4;i<=6;i++){
-            map[3][i].unitNr = ContinentType.G.getDefaultDefence();
-            map[3][i].owner = Player.CPU_MAP_PLAYER;
-            map[3][i].continent = GN;
+        for( i=4;i<=6;i++){
+            map[3][i]=new Territory(GN);;
         }
-        for(int i=3;i<=7;i++){
+        for( i=3;i<=7;i++){
             if (i!=5) {
-                map[4][i].unitNr = ContinentType.G.getDefaultDefence();
-                map[4][i].owner = Player.CPU_MAP_PLAYER;
-                map[4][i].continent = GN;
+                map[4][i]=new Territory(GN);
             }
         }
 
         //GS
-        for(int i=4;i<=6;i++){
-            map[7][i].unitNr = ContinentType.G.getDefaultDefence();
-            map[7][i].owner = Player.CPU_MAP_PLAYER;
-            map[7][i].continent = GS;
+        for( i=4;i<=6;i++){
+            map[7][i]=new Territory(GS);
         }
-        for(int i=3;i<=7;i++){
+        for( i=3;i<=7;i++){
             if (i!=5) {
-                map[6][i].unitNr = ContinentType.G.getDefaultDefence();
-                map[6][i].owner = Player.CPU_MAP_PLAYER;
-                map[6][i].continent = GS;
+                map[6][i]=new Territory(GS);
             }
         }
 
         //R
-        for(int i=3;i<=7;i++){
-            map[5][i].unitNr = ContinentType.R.getDefaultDefence();
-            map[5][i].owner = Player.CPU_MAP_PLAYER;
-            map[5][i].continent = R;
+        for( i=3;i<=7;i++){
+            map[5][i]=new Territory(R);
         }
-        map[6][5].unitNr = ContinentType.R.getDefaultDefence();
-        map[6][5].owner = Player.CPU_MAP_PLAYER;
-        map[6][5].continent = R;
-        map[4][5].unitNr = ContinentType.R.getDefaultDefence();
-        map[4][5].owner = Player.CPU_MAP_PLAYER;
-        map[4][5].continent = R;
+        map[6][5] =new Territory(R);;
+        map[4][5]=new Territory(R);
 
         //HW
-        for(int i=3;i<=7;i++){
-            map[i][1].unitNr = ContinentType.H.getDefaultDefence();
-            map[i][1].owner = Player.CPU_MAP_PLAYER;
-            map[i][1].continent = HW;
+        for( i=3;i<=7;i++){
+            map[i][1]=new Territory(HW);
         }
-        for(int i=4;i<=6;i++){
-            map[i][2].unitNr = ContinentType.H.getDefaultDefence();
-            map[i][2].owner = Player.CPU_MAP_PLAYER;
-            map[i][2].continent = HW;
+        for( i=4;i<=6;i++){
+            map[i][2]=new Territory(HW);
         }
-        map[5][0].unitNr = ContinentType.H.getDefaultDefence();
-        map[5][0].owner = Player.CPU_MAP_PLAYER;
-        map[5][0].continent = HW;
+        map[5][0]=new Territory(HW);
 
         //HE
-        for(int i=3;i<=7;i++){
-            map[i][9].unitNr = ContinentType.H.getDefaultDefence();
-            map[i][9].owner = Player.CPU_MAP_PLAYER;
-            map[i][9].continent = HE;
+        for( i=3;i<=7;i++){
+            map[i][9]=new Territory(HE);
         }
-        for(int i=4;i<=6;i++){
-            map[i][8].unitNr = ContinentType.H.getDefaultDefence();
-            map[i][8].owner = Player.CPU_MAP_PLAYER;
-            map[i][8].continent = HE;
+        for( i=4;i<=6;i++){
+            map[i][8]=new Territory(HE);
         }
-        map[5][10].unitNr = ContinentType.H.getDefaultDefence();
-        map[5][10].owner = Player.CPU_MAP_PLAYER;
-        map[5][10].continent = HE;
+        map[5][10]=new Territory(HE);
     }
 
     public Territory getTerritoryAtCoordinate(int x, int y) {
