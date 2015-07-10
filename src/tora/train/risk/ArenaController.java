@@ -5,13 +5,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArenaController {
-    private static Arena arena;
+    private static final int BONUS_FOR_GROUP = 1;
+    private static final int GROUP_SIZE = 3;
+    private final Arena arena;
     private List<Player> players;
 
+    /**
+     * Default constructor
+     */
     public ArenaController() {
         //TODO
         players = new ArrayList<Player>();
-        initArena();
+        players.add(Player.CPU_MAP_PLAYER);
+        this.arena = defaultArena();
+    }
+
+    /**
+     * Constructor with given arena
+     *
+     * @param arena the arena the game is played on
+     */
+    public ArenaController(Arena arena) {
+        players = new ArrayList<Player>();
+        players.add(Player.CPU_MAP_PLAYER);
+        this.arena = arena;
     }
 
     /**
@@ -85,8 +102,9 @@ public class ArenaController {
     /**
      * Initializes territories and places players on the map.
      */
-    private void initArena() {
+    private Arena defaultArena() {
         //TODO
+        return null;
     }
 
     /**
@@ -102,6 +120,24 @@ public class ArenaController {
         return false;
     }
 
+    private int computePlayerBonus(Player player) {
+        int bonus = 0, territories = 0;
+        List<Continent> continents = arena.getContinents();
+        int N = arena.getXSize(), M = arena.getYSize();
+        for (Continent continent : continents) {
+            if (continent.getOwnerIfExists().equals(player))
+                bonus += continent.getType().getBonus();
+        }
 
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                Territory territory = arena.getTerritoryAtCoordinate(i, j);
+                if (territory.getOwner().equals(player))
+                    territories++;
+            }
+        }
 
+        bonus += (territories / GROUP_SIZE) * BONUS_FOR_GROUP;
+        return bonus;
+    }
 }

@@ -1,5 +1,7 @@
 package tora.train.risk;
 
+import java.util.List;
+
 public class Player {
     public static final Player CPU_MAP_PLAYER = new Player("CPU_MAP");
     private static final int INITIAL_REIFORCEMENTS = 5;
@@ -13,6 +15,12 @@ public class Player {
     private int reinforcements;
 
     public Player(String name) {
+        this.name = name;
+        this.score = 0;
+        this.reinforcements = INITIAL_REIFORCEMENTS;
+    }
+
+    public Player(String name, List<Territory> territories) {
         this.name = name;
         this.score = 0;
         this.reinforcements = INITIAL_REIFORCEMENTS;
@@ -40,5 +48,22 @@ public class Player {
 
     public void setReinforcements(int reinforcements) {
         this.reinforcements = reinforcements;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        if (!name.equals(player.name)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }
