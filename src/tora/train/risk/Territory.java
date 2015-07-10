@@ -15,6 +15,16 @@ public class Territory {
      */
 	protected Continent continent;
 
+    /***
+     * default constructor, creates a territory on the given Continent
+     * @param c Continent
+     */
+    public Territory(Continent c){
+        owner=Player.CPU_MAP_PLAYER;
+        continent=c;
+        unitNr=c.getType().getDefaultDefence();
+    }
+
     public int getUnitNr() {
         return unitNr;
     }
