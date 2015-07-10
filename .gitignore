@@ -1,2 +1,4 @@
 .idea
 *.iml
+*.eml
+.classpath
