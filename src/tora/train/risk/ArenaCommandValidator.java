@@ -28,7 +28,9 @@ public class ArenaCommandValidator {
 
     private static Boolean checkMovePosible(Arena arena, Point init, Point dest, Player player) {
         Boolean valid = true;
-        if((init.x - dest.x + init.y - init.y) > 1) {
+        int x = init.x - dest.x;
+        int y = init.y - dest.y;
+        if((x + y) > 1 && (x == 0 || y == 0)) {
             valid = false;
         } else if(init.x < 1 && init.y < 1 && dest.x < 1 && dest.y < 1) {
             valid = false;
