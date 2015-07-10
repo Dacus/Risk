@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Arena {
-	private Teritory[][] map ;
+    private Territory[][] map;
     private List<Continent> continents;
     private Continent ANW;
     private Continent ASW;
@@ -53,7 +53,11 @@ public class Arena {
         defaultInitializer();
     }
 
-    public Arena(Teritory[][] map, List<Continent> continents) {
+    /**
+     * @param map        the map of the territories, map.length > 0,map[0].length >0;
+     * @param continents the partition of the map into continents
+     */
+    public Arena(Territory[][] map, List<Continent> continents) {
         this.map = map;
         this.continents = continents;
     }
@@ -242,16 +246,24 @@ public class Arena {
         map[5][10].continent = HE;
     }
 
-    public Teritory getTerritoryAtCoordinate(int x, int y) {
+    public Territory getTerritoryAtCoordinate(int x, int y) {
         return map[x][y];
     }
 
-    public Teritory getTerritoryAtCoordinate(Point coordinate) {
+    public Territory getTerritoryAtCoordinate(Point coordinate) {
         return map[coordinate.x][coordinate.y];
     }
 
-    public Continent getContinentAtIndex(int index) {
-        return continents.get(index);
+    public int getXSize() {
+        return map.length;
+    }
+
+    public int getYSize() {
+        return map[0].length;
+    }
+
+    public List<Continent> getContinents() {
+        return continents;
     }
 
     public static void main(String[] args) {
