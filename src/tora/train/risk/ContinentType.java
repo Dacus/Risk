@@ -28,4 +28,9 @@ public class ContinentType {
     public int getDefaultDefence() {
         return defaultDefence;
     }
+
+    @Override
+    public String toString(){
+        return ""+bonus;
+    }
 }

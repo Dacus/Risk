@@ -202,7 +202,19 @@ public class Arena {
         return continents;
     }
 
+    private void printArena(){
+        for (int i=0;i<=10;i++){
+            for (int j=0;j<=10;j++){
+                if (map[i][j].toString().length()==1)
+                    System.out.print(" ");
+                System.out.printf(map[i][j].toString()+" ");
+            }
+            System.out.println();
+        }
+    }
+
     public static void main(String[] args) {
         Arena a=new Arena();
+        a.printArena();
     }
 }
