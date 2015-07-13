@@ -62,8 +62,6 @@ public class Arena {
         this.continents = continents;
     }
 
-
-
     public Territory getTerritoryAtCoordinate(int x, int y) {
         return map[x][y];
     }
@@ -213,14 +211,5 @@ public class Arena {
             map[i][8]=new Territory(HE);
         }
         map[5][10]=new Territory(HE);
-    }
-
-    /**
-     * testing -> map correctness
-     * @param args
-     */
-    public static void main(String[] args) {
-        Arena a=new Arena();
-        a.printArena();
     }
 }
