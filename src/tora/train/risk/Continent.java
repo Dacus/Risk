@@ -1,21 +1,23 @@
 package tora.train.risk;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 
 public class Continent {
     private ContinentType type;
-    private List<Player> currentPlayers;
+    private Set<Player> currentPlayers;
 
     public Continent(ContinentType type) {
         this.type = type;
-        currentPlayers = new ArrayList<>();
+        currentPlayers = new HashSet<Player>();
     }
 
     public Player getOwnerIfExists() {
-        if (currentPlayers.size() == 1)
-            return currentPlayers.get(0);
+        Iterator i=currentPlayers.iterator();
+        if (currentPlayers. size() == 1)
+            return (Player) i.next();
         else return null;
     }
 
