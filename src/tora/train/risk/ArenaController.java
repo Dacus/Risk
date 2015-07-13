@@ -245,4 +245,13 @@ public class ArenaController {
     public int getNumberOfPlayers(){
         return players.size();
     }
+
+    /**
+     *
+     * @param index
+     * @return the player at position "index"
+     */
+    public Player getPlayerByIndex(int index){
+        return players.get(index);
+    }
 }
