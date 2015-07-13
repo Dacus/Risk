@@ -33,15 +33,6 @@ public class ArenaController {
     }
 
     /**
-     * @param p player that wants to get the reinforcements
-     * @return the number of units that p is allowed to use for reinforcement
-     */
-    public int getReinforcements(Player p) {
-        //TODO
-        return 0;
-    }
-
-    /**
      * Adds a player to the game.
      *
      * @param p player to add
