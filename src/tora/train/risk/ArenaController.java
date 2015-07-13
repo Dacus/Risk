@@ -3,6 +3,7 @@ package tora.train.risk;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ArenaController {
     private static final int BONUS_FOR_GROUP = 1;
@@ -95,8 +96,8 @@ public class ArenaController {
      */
     private void resolveAttack(int nrOfAttackingUnits, Point init, Point dest, Player player) {
         int defendingUnits = arena.getTerritoryAtCoordinate(dest).unitNr;
-        int attackingKills = calculateKills("attack");
-        int defendingKills = calculateKills("defend");
+        int attackingKills = calculateKills(CombatType.ATTACK, nrOfAttackingUnits);
+        int defendingKills = calculateKills(CombatType.DEFEND, defendingUnits);
 
         if (attackingKills >= defendingUnits) {
             changeOwnershipOfTerritory(nrOfAttackingUnits, dest, player, defendingKills);
@@ -119,9 +120,24 @@ public class ArenaController {
         //TODO complete method
     }
 
-    private int calculateKills(String typeOfCombat) {
-        //TODO create method for both cases attacking and defending
-        return 0;
+    /**
+     * Method that randomizes the number of units that will be killed
+     * in a fight, depending of they either defend or attack
+     *
+     * @param type          the combat type the units are engaged in
+     * @param numberOfUnits the number of units that are involved
+     * @return the number of kills it delivered
+     */
+    private int calculateKills(CombatType type, int numberOfUnits) {
+        Random randomizer = new Random();
+        int kills = 0;
+        for (int i = 0; i < numberOfUnits; i++) {
+            int chance = randomizer.nextInt(100);
+            if (chance < type.winChance)
+                kills++;
+        }
+
+        return kills;
     }
 
     /**
@@ -178,5 +194,23 @@ public class ArenaController {
         }
         bonus += (territories / GROUP_SIZE) * BONUS_FOR_GROUP;
         return bonus;
+    }
+
+    /**
+     * Enum with the type of combats we encounter on the map
+     */
+    private static enum CombatType {
+        DEFEND(70),
+        ATTACK(60);
+
+        private final int winChance;
+
+        /**
+         * @param winChance  < 100% percentage that represents what is the chance of one unit killing
+         * another in a fight of this type
+         */
+        private CombatType(int winChance) {
+            this.winChance = winChance;
+        }
     }
 }
