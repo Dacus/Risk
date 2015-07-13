@@ -82,15 +82,22 @@ public class Arena {
         return continents;
     }
 
-    private void printArena(){
+    private String printArena(){
+        String s="";
         for (int i=0;i<=10;i++){
             for (int j=0;j<=10;j++){
                 if (map[i][j].toString().length()==1)
-                    System.out.print(" ");
-                System.out.printf(" "+map[i][j].toString()+" ");
+                    s+=" ";
+                s+=" "+map[i][j].toString()+" ";
             }
-            System.out.println();
+            s+="\n";
         }
+        return s;
+    }
+
+    @Override
+    public String toString(){
+        return printArena();
     }
 
     private void defaultInitializer() {
