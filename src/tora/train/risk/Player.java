@@ -4,10 +4,11 @@ import java.util.List;
 
 public class Player {
     public static final Player CPU_MAP_PLAYER = new Player("CPU_MAP");
-    private static final int INITIAL_REIFORCEMENTS = 5;
+    private static final int INITIAL_REINFORCEMENTS = 5;
     private String name;
     //public Color color;
 	private int score;
+
     /**
      Number of units that the player is allowed to place on its own territories
      at the beginning of each round
@@ -17,13 +18,13 @@ public class Player {
     public Player(String name) {
         this.name = name;
         this.score = 0;
-        this.reinforcements = INITIAL_REIFORCEMENTS;
+        this.reinforcements = INITIAL_REINFORCEMENTS;
     }
 
     public Player(String name, List<Territory> territories) {
         this.name = name;
         this.score = 0;
-        this.reinforcements = INITIAL_REIFORCEMENTS;
+        this.reinforcements = INITIAL_REINFORCEMENTS;
     }
 
     public String getName() {
