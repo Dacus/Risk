@@ -177,12 +177,16 @@ public class ArenaController {
         }
 
         //territories cannot be distributed if they are not enough
-        if (territoriesPerPlayer * players.size() > distributableTerritories.size())
+        if (territoriesPerPlayer * (players.size() - 1) > distributableTerritories.size())
             return false;
 
         for (int i = 0; i < territoriesPerPlayer; i++) {
             //for each player, distribute a random territory
             for (int playerID = 0; playerID < players.size(); playerID++) {
+                //if current player is computer, skip
+                if (players.get(playerID) == Player.CPU_MAP_PLAYER)
+                    continue;
+
                 Random generator = new Random();
                 int territoryID = generator.nextInt(distributableTerritories.size());
                 distributableTerritories.get(territoryID).owner = players.get(playerID);
