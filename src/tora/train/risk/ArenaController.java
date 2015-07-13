@@ -254,4 +254,8 @@ public class ArenaController {
     public Player getPlayerByIndex(int index){
         return players.get(index);
     }
+
+    public Arena getArena() {
+        return arena;
+    }
 }
