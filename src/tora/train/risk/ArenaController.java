@@ -149,6 +149,19 @@ public class ArenaController {
     }
 
     /**
+     * Distributes players on arena's map.
+     *
+     * (players list must be complete before running this method)
+     * @param territoriesPerPlayer how many territories to distribute for each player (value >= 0)
+     * @param unitsPerTerritory how many units should each territory have (value >= 0)
+     * @return true if distribution succeeded /
+     *   false if distribution cannot be done because there are not enough territories on the map to fulfill the request
+     */
+    private boolean distributePlayers(int territoriesPerPlayer, int unitsPerTerritory) {
+        
+    }
+
+    /**
      * Puts player's units on specified territory.
      *
      * @param nrOfUnits how many units to place on the territory (value > 0)
