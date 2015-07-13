@@ -2,6 +2,7 @@ package tora.train.risk;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -158,7 +159,10 @@ public class ArenaController {
      *   false if distribution cannot be done because there are not enough territories on the map to fulfill the request
      */
     private boolean distributePlayers(int territoriesPerPlayer, int unitsPerTerritory) {
-        
+        /*int nrOfDistributableTerritories = 0;
+        HashSet<Territory> distributableTerritories = new HashSet<>();*/
+
+        return false;
     }
 
     /**
