@@ -141,8 +141,11 @@ public class ArenaController {
      * @return true if player can put his reinforcements on the specified territory
      */
     private boolean reinforce(int nrOfUnits, Point dest, Player player) {
-        //TODO
-        return false;
+        if (getReinforcements(player)<nrOfUnits || arena.getTerritoryAtCoordinate(dest).getOwner()!=player)
+            return false;
+        arena.getTerritoryAtCoordinate(dest).unitNr+=nrOfUnits;
+        player.setReinforcements(player.getReinforcements()-nrOfUnits);
+        return true;
     }
 
     private int computePlayerBonus(Player player) {
@@ -153,7 +156,6 @@ public class ArenaController {
             if (continent.getOwnerIfExists().equals(player))
                 bonus += continent.getType().getBonus();
         }
-
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 Territory territory = arena.getTerritoryAtCoordinate(i, j);
@@ -161,7 +163,6 @@ public class ArenaController {
                     territories++;
             }
         }
-
         bonus += (territories / GROUP_SIZE) * BONUS_FOR_GROUP;
         return bonus;
     }
