@@ -41,4 +41,5 @@ public class Continent {
     public ContinentType getType() {
         return type;
     }
+
 }

@@ -36,4 +36,9 @@ public class Territory {
     public Continent getContinent() {
         return continent;
     }
+
+    @Override
+    public String toString(){
+        return continent.getType().toString();
+    }
 }
