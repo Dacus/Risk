@@ -117,7 +117,7 @@ public class ArenaController {
     private void changeOwnershipOfTerritory(int nrOfAttackingUnits, Point dest, Player player, int defendingKills) {
         arena.getTerritoryAtCoordinate(dest).owner = player;
         arena.getTerritoryAtCoordinate(dest).unitNr = nrOfAttackingUnits - defendingKills;
-        //TODO complete method
+        arena.getTerritoryAtCoordinate(dest).continent.addPlayer(player);
     }
 
     /**

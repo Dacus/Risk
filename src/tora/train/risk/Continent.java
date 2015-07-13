@@ -18,7 +18,6 @@ public class Continent {
         Iterator i=currentPlayers.iterator();
         if (currentPlayers. size() == 1)
             return (Player) i.next();
-        
         else return null;
     }
 
@@ -27,7 +26,11 @@ public class Continent {
      * @return true if the addition was successful, false otherwise
      */
     public boolean addPlayer(Player player) {
-        return currentPlayers.add(player);
+        if (currentPlayers.contains(player)) {
+            currentPlayers.add(player);
+            return true;
+        }
+        return false;
     }
 
     /**
