@@ -10,7 +10,7 @@ public class Continent {
 
     public Continent(ContinentType type) {
         this.type = type;
-        currentPlayers = new ArrayList<>();
+        currentPlayers = new ArrayList<Player>();
     }
 
     public Player getOwnerIfExists() {
