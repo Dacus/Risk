@@ -159,10 +159,36 @@ public class ArenaController {
      *   false if distribution cannot be done because there are not enough territories on the map to fulfill the request
      */
     private boolean distributePlayers(int territoriesPerPlayer, int unitsPerTerritory) {
-        /*int nrOfDistributableTerritories = 0;
-        HashSet<Territory> distributableTerritories = new HashSet<>();*/
+        if ((territoriesPerPlayer < 0) || (unitsPerTerritory < 0))
+            return false;
 
-        return false;
+        ArrayList<Territory> distributableTerritories = new ArrayList<>();
+
+        //search distributable territories in arena and put them in the list
+        for (int i = 0; i < arena.getXSize(); i++) {
+            for (int j = 0; j < arena.getYSize(); j++) {
+                Territory currentTerritory = arena.getTerritoryAtCoordinate(i, j);
+                if (currentTerritory.getContinent().getType().isDistributable())
+                    distributableTerritories.add(currentTerritory);
+            }
+        }
+
+        //territories cannot be distributed if they are not enough
+        if (territoriesPerPlayer * players.size() > distributableTerritories.size())
+            return false;
+
+        for (int i = 0; i < territoriesPerPlayer; i++) {
+            //for each player, distribute a random territory
+            for (int playerID = 0; playerID < players.size(); playerID++) {
+                Random generator = new Random();
+                int territoryID = generator.nextInt(distributableTerritories.size());
+                distributableTerritories.get(territoryID).owner = players.get(playerID);
+
+                //mark current territory as distributed
+                distributableTerritories.remove(territoryID);
+            }
+        }
+        return true;
     }
 
     /**
