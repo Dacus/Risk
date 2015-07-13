@@ -20,7 +20,7 @@ public class ArenaCommandValidator {
     public static Boolean validateMove(Arena arena, int nrOfUnits, Point init, Point dest, Player player) {
         if(!checkOwnerIsValid(arena, init, player)) {
             return false;
-        } else if (!checkUnitsIsValid(arena, init, nrOfUnits, player)) {
+        } else if (!checkUnitsIsValid(arena, init, nrOfUnits)) {
             return false;
         } else if(!checkMovePosible(arena, init, dest, player)) {
             return false;
@@ -47,11 +47,9 @@ public class ArenaCommandValidator {
      * @param arena     arena of the game
      * @param init      coordinates of territory to check
      * @param nrOfUnits supposed number of units on the territory
-     * @param player    supposed owner of the territory
      * @return true if territory has the specified number of units
      */
-    //TODO: Chiar e nevoie de player?
-    private static Boolean checkUnitsIsValid(Arena arena, Point init, int nrOfUnits, Player player) {
+    private static Boolean checkUnitsIsValid(Arena arena, Point init, int nrOfUnits) {
         return arena.getTerritoryAtCoordinate(init).unitNr >= nrOfUnits;
     }
 
