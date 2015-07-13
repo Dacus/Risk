@@ -237,4 +237,12 @@ public class ArenaController {
             this.winChance = winChance;
         }
     }
+
+    /**
+     *
+     * @return The number of players involved in the game
+     */
+    public int getNumberOfPlayers(){
+        return players.size();
+    }
 }
