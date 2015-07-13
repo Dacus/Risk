@@ -36,8 +36,7 @@ public class ArenaController {
      * @return the number of units that p is allowed to use for reinforcement
      */
     public int getReinforcements(Player p) {
-        //TODO
-        return 0;
+        return p.getReinforcements();
     }
 
     /**
@@ -97,7 +96,6 @@ public class ArenaController {
         int defendingUnits = arena.getTerritoryAtCoordinate(dest).unitNr;
         int attackingKills = calculateKills("attack");
         int defendingKills = calculateKills("defend");
-
         if (attackingKills >= defendingUnits) {
             changeOwnershipOfTerritory(nrOfAttackingUnits, dest, player, defendingKills);
         } else {
