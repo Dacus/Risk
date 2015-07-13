@@ -23,7 +23,7 @@ public class Arena {
 
     public Arena() {
          map=new Territory[11][11];
-         continents=new ArrayList<>();
+         continents=new ArrayList<Continent>();
          ANW=new Continent(ContinentType.A);
          ASW=new Continent(ContinentType.A);
          ANE=new Continent(ContinentType.A);
