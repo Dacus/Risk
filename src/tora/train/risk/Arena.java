@@ -23,7 +23,7 @@ public class Arena {
 
     public Arena() {
          map=new Territory[11][11];
-         continents=new ArrayList<Continent>();
+         continents=new ArrayList<>();
          ANW=new Continent(ContinentType.A);
          ASW=new Continent(ContinentType.A);
          ANE=new Continent(ContinentType.A);
@@ -96,7 +96,7 @@ public class Arena {
     }
 
     private void defaultInitializer() {
-        int i=0;
+        int i;
 
         //ANW
         for ( i=0;i<5;i++) {
@@ -136,7 +136,7 @@ public class Arena {
 
         //MN
         for ( i=3;i<=7;i++){
-            map[0][i]=new Territory(MN);;
+            map[0][i]=new Territory(MN);
         }
         for ( i=2;i<=8;i++){
             map[1][i]=new Territory(MN);
@@ -144,15 +144,15 @@ public class Arena {
 
         //MS
         for ( i=3;i<=7;i++){
-            map[10][i]=new Territory(MS);;
+            map[10][i]=new Territory(MS);
         }
         for ( i=2;i<=8;i++){
-            map[9][i]=new Territory(MS);;
+            map[9][i]=new Territory(MS);
         }
 
         //PN
         for ( i=2;i<=8;i++){
-            map[2][i]=new Territory(PN);;
+            map[2][i]=new Territory(PN);
         }
         for ( i=2;i<=8;i++){
             if(i==2 || i==3 || i==7 || i==8) {
@@ -171,7 +171,7 @@ public class Arena {
 
         //GN
         for( i=4;i<=6;i++){
-            map[3][i]=new Territory(GN);;
+            map[3][i]=new Territory(GN);
         }
         for( i=3;i<=7;i++){
             if (i!=5) {
@@ -193,7 +193,7 @@ public class Arena {
         for( i=3;i<=7;i++){
             map[5][i]=new Territory(R);
         }
-        map[6][5] =new Territory(R);;
+        map[6][5] =new Territory(R);
         map[4][5]=new Territory(R);
 
         //HW
