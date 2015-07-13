@@ -20,9 +20,9 @@ public class ArenaCommandValidator {
     public static Boolean validateMove(Arena arena, int nrOfUnits, Point init, Point dest, Player player) {
         if(!checkOwnerIsValid(arena, init, player)) {
             return false;
-        } else if (!checkUnitsIsValid(arena, init, nrOfUnits, player)) {
+        } else if (!checkUnitsIsValid(arena, init, nrOfUnits)) {
             return false;
-        } else if(!checkMovePosible(arena, init, dest, player)) {
+        } else if(!checkMovePossible(arena, init, dest)) {
             return false;
         } else {
             return true;
@@ -47,11 +47,9 @@ public class ArenaCommandValidator {
      * @param arena     arena of the game
      * @param init      coordinates of territory to check
      * @param nrOfUnits supposed number of units on the territory
-     * @param player    supposed owner of the territory
      * @return true if territory has the specified number of units
      */
-    //TODO: Chiar e nevoie de player?
-    private static Boolean checkUnitsIsValid(Arena arena, Point init, int nrOfUnits, Player player) {
+    private static Boolean checkUnitsIsValid(Arena arena, Point init, int nrOfUnits) {
         return arena.getTerritoryAtCoordinate(init).unitNr >= nrOfUnits;
     }
 
@@ -61,11 +59,9 @@ public class ArenaCommandValidator {
      * @param arena  arena of the game
      * @param init   coordinates of territory from which the move is initiated
      * @param dest   coordinates of territory on which the player wants to move
-     * @param player the player that wants to move
      * @return
      */
-    //TODO: player useless
-    private static Boolean checkMovePosible(Arena arena, Point init, Point dest, Player player) {
+    private static Boolean checkMovePossible(Arena arena, Point init, Point dest) {
         Boolean valid = true;
         int x = init.x - dest.x;
         int y = init.y - dest.y;

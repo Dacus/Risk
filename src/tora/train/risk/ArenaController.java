@@ -2,7 +2,6 @@ package tora.train.risk;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -19,7 +18,7 @@ public class ArenaController {
         //TODO
         players = new ArrayList<Player>();
         players.add(Player.CPU_MAP_PLAYER);
-        this.arena = defaultArena();
+        this.arena = new Arena();
     }
 
     /**
@@ -77,13 +76,17 @@ public class ArenaController {
     /**
      * Moves units from a territory to another. (Both territories must belong to the same player)
      *
-     * @param nrOfAttackingUnits how many units to move (value > 0)
-     * @param init      the territory's coordinates from which the player moves (belongs to player)
-     * @param dest      the territory's coordinates to which the player moves (belongs to player)
+     * @param nrOfUnits how many units to move (value > 0)
+     * @param from      the territory's coordinates from which the player moves (belongs to player)
+     * @param to      the territory's coordinates to which the player moves (belongs to player)
      * @param player    the player that want to move
      */
-    private void transferUnits(int nrOfAttackingUnits, Point init, Point dest, Player player) {
-        //TODO
+    private void transferUnits(int nrOfUnits, Point from, Point to, Player player) {
+        Territory fromTerritory=arena.getTerritoryAtCoordinate(from.x, from.y);
+        Territory toTerritory=arena.getTerritoryAtCoordinate(to.x, to.y);
+
+        fromTerritory.unitNr-=nrOfUnits;
+        toTerritory.unitNr+=nrOfUnits;
     }
 
     /**
@@ -118,7 +121,7 @@ public class ArenaController {
     private void changeOwnershipOfTerritory(int nrOfAttackingUnits, Point dest, Player player, int defendingKills) {
         arena.getTerritoryAtCoordinate(dest).owner = player;
         arena.getTerritoryAtCoordinate(dest).unitNr = nrOfAttackingUnits - defendingKills;
-        //TODO complete method
+        arena.getTerritoryAtCoordinate(dest).continent.addPlayer(player);
     }
 
     /**
