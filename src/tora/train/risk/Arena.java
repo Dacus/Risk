@@ -62,6 +62,39 @@ public class Arena {
         this.continents = continents;
     }
 
+
+
+    public Territory getTerritoryAtCoordinate(int x, int y) {
+        return map[x][y];
+    }
+
+    public Territory getTerritoryAtCoordinate(Point coordinate) {
+        return map[coordinate.x][coordinate.y];
+    }
+
+    public int getXSize() {
+        return map.length;
+    }
+
+    public int getYSize() {
+        return map[0].length;
+    }
+
+    public List<Continent> getContinents() {
+        return continents;
+    }
+
+    private void printArena(){
+        for (int i=0;i<=10;i++){
+            for (int j=0;j<=10;j++){
+                if (map[i][j].toString().length()==1)
+                    System.out.print(" ");
+                System.out.printf(" "+map[i][j].toString()+" ");
+            }
+            System.out.println();
+        }
+    }
+
     private void defaultInitializer() {
         int i=0;
 
@@ -182,37 +215,10 @@ public class Arena {
         map[5][10]=new Territory(HE);
     }
 
-    public Territory getTerritoryAtCoordinate(int x, int y) {
-        return map[x][y];
-    }
-
-    public Territory getTerritoryAtCoordinate(Point coordinate) {
-        return map[coordinate.x][coordinate.y];
-    }
-
-    public int getXSize() {
-        return map.length;
-    }
-
-    public int getYSize() {
-        return map[0].length;
-    }
-
-    public List<Continent> getContinents() {
-        return continents;
-    }
-
-    private void printArena(){
-        for (int i=0;i<=10;i++){
-            for (int j=0;j<=10;j++){
-                if (map[i][j].toString().length()==1)
-                    System.out.print(" ");
-                System.out.printf(" "+map[i][j].toString()+" ");
-            }
-            System.out.println();
-        }
-    }
-
+    /**
+     * testing -> map correctness
+     * @param args
+     */
     public static void main(String[] args) {
         Arena a=new Arena();
         a.printArena();
