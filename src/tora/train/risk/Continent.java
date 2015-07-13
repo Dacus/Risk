@@ -18,6 +18,7 @@ public class Continent {
         Iterator i=currentPlayers.iterator();
         if (currentPlayers. size() == 1)
             return (Player) i.next();
+        
         else return null;
     }
 
