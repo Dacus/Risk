@@ -152,7 +152,7 @@ public class ArenaController {
      * @return true if distribution succeeded /
      *   false if distribution cannot be done because there are not enough territories on the map to fulfill the request
      */
-    private boolean distributePlayers(int territoriesPerPlayer, int unitsPerTerritory) {
+    public boolean distributePlayers(int territoriesPerPlayer, int unitsPerTerritory) {
         if ((territoriesPerPlayer < 0) || (unitsPerTerritory < 0))
             return false;
 
