@@ -59,9 +59,8 @@ public class Arena {
                     list.add(t);
                 }
             }
-            s+="\n";
         }
-        return s;
+        return list;
     }
 
     @Override
@@ -229,24 +228,5 @@ public class Arena {
             map[i][8]=new Territory(HE);
         }
         map[5][10]=new Territory(HE);
-    }
-
-    /**
-     * Find all territories owned by a player
-     *
-     * @param p Player
-     * @return a list of Territories owned by p
-     */
-    public List<Territory> getOwnedTerritories(Player p){
-        List<Territory> list=new ArrayList<>();
-        for (int i=0; i<11; i++){
-            for (int j=0; j<11; j++) {
-                Territory t=map[i][j];
-                if (t.getOwner().equals(p)){
-                    list.add(t);
-                }
-            }
-        }
-        return list;
     }
 }
