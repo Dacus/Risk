@@ -39,6 +39,6 @@ public class Territory {
 
     @Override
     public String toString(){
-        return continent.getType().toString();
+        return unitNr+"";
     }
 }

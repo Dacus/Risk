@@ -29,6 +29,7 @@ public class TestGame {
             Player p=arenaController.getPlayerByIndex(i);
             if (!p.equals(Player.CPU_MAP_PLAYER)) {
                 List<Territory> list = arenaController.getArena().getOwnedTerritories(p);
+                System.out.println(arenaController.getArena().printArena());
                 assertThat(list.size(), equalTo(5));
             }
         }
@@ -50,4 +51,8 @@ public class TestGame {
         }
         System.out.println();
     }
+
+
+
+
 }
