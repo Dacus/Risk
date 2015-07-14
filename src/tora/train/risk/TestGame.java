@@ -32,7 +32,6 @@ public class TestGame {
     @Test
     public void testDistributingReinforcements(){
         arenaController.distributePlayers(5, 1);
-        System.out.println(arenaController.getArena().toString());
         for (int i=0; i<arenaController.getNumberOfPlayers(); i++){
             Player p=arenaController.getPlayerByIndex(i);
             if (!p.equals(Player.CPU_MAP_PLAYER)) {
@@ -41,6 +40,67 @@ public class TestGame {
             }
         }
     }
+
+    /**
+     * Test the transfer of units between territories belonging to the same player.
+     * Check if the transfer is done correctly by verifying the number of units on each territory involved
+     */
+    @Test
+    public void testTransferUnitsNormal(){
+        int unitsToTransfer=2;
+        Point fromP=new Point(1,1);
+        Point toP=new Point(1,2);
+
+        Player player=players.get(0);
+
+        Territory fromT=arenaController.getArena().getTerritoryAtCoordinate(fromP);
+        Territory toT=arenaController.getArena().getTerritoryAtCoordinate(toP);
+        fromT.setOwner(player);
+        fromT.setUnitNr(4);
+        toT.setOwner(player);
+        toT.setUnitNr(2);
+
+        int unitsOnSource=fromT.getUnitNr();
+        int unitsOnDest=toT.getUnitNr();
+
+        //(int nrOfAttackingUnits, Point init, Point dest, Player player) {
+        arenaController.moveUnits(unitsToTransfer, fromP, toP, player);
+
+        assertThat(fromT.getUnitNr(), equalTo(unitsOnSource-unitsToTransfer));
+        assertThat(toT.getUnitNr(), equalTo(unitsOnDest + unitsToTransfer));
+
+    }
+
+    /**
+     * Test the transfer of units between territories belonging to the same player when the number of units on
+     * the source territory is the minimum allowed (1), so the transfer is not possible
+     */
+    @Test
+    public void testTransferUnitsImpossible1(){
+        int unitsToTransfer=2;
+        Point fromP=new Point(1,1);
+        Point toP=new Point(1,2);
+
+        Player player=players.get(0);
+
+        Territory fromT=arenaController.getArena().getTerritoryAtCoordinate(fromP);
+        Territory toT=arenaController.getArena().getTerritoryAtCoordinate(toP);
+        fromT.setOwner(player);
+        fromT.setUnitNr(1);
+        toT.setOwner(player);
+        toT.setUnitNr(2);
+
+        int unitsOnSource=fromT.getUnitNr();
+        int unitsOnDest=toT.getUnitNr();
+
+        //(int nrOfAttackingUnits, Point init, Point dest, Player player) {
+        arenaController.moveUnits(unitsToTransfer, fromP, toP, player);
+
+        //transfer not possible. The number of units remains unchanged
+        assertThat(fromT.getUnitNr(), equalTo(unitsOnSource));
+        assertThat(toT.getUnitNr(), equalTo(unitsOnDest));
+    }
+
 
     /**
      * Helper methods (if something does not work)
@@ -57,31 +117,5 @@ public class TestGame {
                 System.out.println(list.get(i).getOwner());
         }
         System.out.println();
-    }
-
-    @Test
-    public void testTransferUnits(){
-        Point fromP=new Point(1,1);
-        Point toP=new Point(1,2);
-
-        Player player=players.get(0);
-
-        Territory fromT=arenaController.getArena().getTerritoryAtCoordinate(fromP);
-        Territory toT=arenaController.getArena().getTerritoryAtCoordinate(toP);
-
-        fromT.setOwner(player);
-        toT.setOwner(player);
-
-        int unitsOnSource=fromT.
-        int unitsOnDest=player.getReinforcements();
-
-
-        //(int nrOfAttackingUnits, Point init, Point dest, Player player) {
-        arenaController.moveUnits(2, fromP, toP, player);
-
-        int unitsAfter=player.getReinforcements();
-
-
-
     }
 }
