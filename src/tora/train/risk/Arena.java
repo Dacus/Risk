@@ -7,49 +7,11 @@ import java.util.List;
 public class Arena {
     private Territory[][] map;
     private List<Continent> continents;
-    private Continent ANW;
-    private Continent ASW;
-    private Continent ANE;
-    private Continent ASE;
-    private Continent MN;
-    private Continent MS;
-    private Continent PN;
-    private Continent PS;
-    private Continent GN;
-    private Continent GS;
-    private Continent R;
-    private Continent HW;
-    private Continent HE;
 
     public Arena() {
-         map=new Territory[11][11];
-         continents=new ArrayList<Continent>();
-         ANW=new Continent(ContinentType.A);
-         ASW=new Continent(ContinentType.A);
-         ANE=new Continent(ContinentType.A);
-         ASE=new Continent(ContinentType.A);
-         MN=new Continent(ContinentType.M);
-         MS=new Continent(ContinentType.M);
-         PN=new Continent(ContinentType.P);
-         PS=new Continent(ContinentType.P);
-         GN=new Continent(ContinentType.G);
-         GS=new Continent(ContinentType.G);
-         R=new Continent(ContinentType.R);
-         HW=new Continent(ContinentType.H);
-         HE=new Continent(ContinentType.H);
-        continents.add(ANE);
-        continents.add(ANW);
-        continents.add(ASE);
-        continents.add(ASW);
-        continents.add(MN);
-        continents.add(MS);
-        continents.add(PN);
-        continents.add(PS);
-        continents.add(GN);
-        continents.add(GS);
-        continents.add(HE);
-        continents.add(HW);
-        continents.add(R);
+        map = new Territory[11][11];
+        continents = new ArrayList<Continent>();
+
         defaultInitializer();
     }
 
@@ -82,17 +44,23 @@ public class Arena {
         return continents;
     }
 
-    public String printArena(){
-        String s="";
-        for (int i=0;i<=10;i++){
-            for (int j=0;j<=10;j++){
-                if (map[i][j].toString().length()==1)
-                    s+=" ";
-                s+=" "+map[i][j].toString()+" ";
+    /**
+     * Find all territories owned by a player
+     *
+     * @param p Player
+     * @return a list of Territories owned by p
+     */
+    public List<Territory> getOwnedTerritories(Player p) {
+        List<Territory> list = new ArrayList<>();
+        for (int i = 0; i < 11; i++) {
+            for (int j = 0; j < 11; j++) {
+                Territory t = map[i][j];
+                if (t.getOwner().equals(p)) {
+                    list.add(t);
+                }
             }
-            s+="\n";
         }
-        return s;
+        return list;
     }
 
     @Override
@@ -100,8 +68,50 @@ public class Arena {
         return printArena();
     }
 
+    private String printArena() {
+        String s = "";
+        for (int i = 0; i <= 10; i++) {
+            for (int j = 0; j <= 10; j++) {
+                if (map[i][j].toString().length() == 1)
+                    s += " ";
+                s += " " + map[i][j].toString() + " ";
+            }
+            s += "\n";
+        }
+        return s;
+    }
+
+    /**
+     * Initializing the map as it is in the documentation
+     */
     private void defaultInitializer() {
         int i;
+        Continent ANW = new Continent(ContinentType.A);
+        Continent ASW = new Continent(ContinentType.A);
+        Continent ANE = new Continent(ContinentType.A);
+        Continent ASE = new Continent(ContinentType.A);
+        Continent MN = new Continent(ContinentType.M);
+        Continent MS = new Continent(ContinentType.M);
+        Continent PN = new Continent(ContinentType.P);
+        Continent PS = new Continent(ContinentType.P);
+        Continent GN = new Continent(ContinentType.G);
+        Continent GS = new Continent(ContinentType.G);
+        Continent R = new Continent(ContinentType.R);
+        Continent HW = new Continent(ContinentType.H);
+        Continent HE = new Continent(ContinentType.H);
+        continents.add(ANE);
+        continents.add(ANW);
+        continents.add(ASE);
+        continents.add(ASW);
+        continents.add(MN);
+        continents.add(MS);
+        continents.add(PN);
+        continents.add(PS);
+        continents.add(GN);
+        continents.add(GS);
+        continents.add(HE);
+        continents.add(HW);
+        continents.add(R);
 
         //ANW
         for ( i=0;i<5;i++) {
@@ -218,24 +228,5 @@ public class Arena {
             map[i][8]=new Territory(HE);
         }
         map[5][10]=new Territory(HE);
-    }
-
-    /**
-     * Find all territories owned by a player
-     *
-     * @param p Player
-     * @return a list of Territories owned by p
-     */
-    public List<Territory> getOwnedTerritories(Player p){
-        List<Territory> list=new ArrayList<>();
-        for (int i=0; i<11; i++){
-            for (int j=0; j<11; j++) {
-                Territory t=map[i][j];
-                if (t.getOwner().equals(p)){
-                    list.add(t);
-                }
-            }
-        }
-        return list;
     }
 }
