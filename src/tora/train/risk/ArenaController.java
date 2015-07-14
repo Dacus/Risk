@@ -56,7 +56,7 @@ public class ArenaController {
             return false;
         }
 
-        if (arena.getTerritoryAtCoordinate(dest).owner != player) {
+        if (arena.getTerritoryAtCoordinate(dest).getOwner() != player) {
             resolveAttack(nrOfAttackingUnits, init, dest, player);
         } else {
             transferUnits(nrOfAttackingUnits, init, dest, player);
@@ -76,8 +76,8 @@ public class ArenaController {
         Territory fromTerritory=arena.getTerritoryAtCoordinate(from.x, from.y);
         Territory toTerritory=arena.getTerritoryAtCoordinate(to.x, to.y);
 
-        fromTerritory.unitNr-=nrOfUnits;
-        toTerritory.unitNr+=nrOfUnits;
+        fromTerritory.setUnitNr(fromTerritory.getUnitNr() - nrOfUnits);
+        toTerritory.setUnitNr(toTerritory.getUnitNr() + nrOfUnits);
     }
 
     /**
@@ -90,14 +90,14 @@ public class ArenaController {
      * @param player    the player that initiates the attack
      */
     private void resolveAttack(int nrOfAttackingUnits, Point init, Point dest, Player player) {
-        int defendingUnits = arena.getTerritoryAtCoordinate(dest).unitNr;
+        int defendingUnits = arena.getTerritoryAtCoordinate(dest).getUnitNr();
         int attackingKills = calculateKills(CombatType.ATTACK, nrOfAttackingUnits);
         int defendingKills = calculateKills(CombatType.DEFEND, defendingUnits);
 
         if (attackingKills >= defendingUnits) {
             changeOwnershipOfTerritory(nrOfAttackingUnits, dest, player, defendingKills);
         } else {
-            arena.getTerritoryAtCoordinate(dest).unitNr = defendingUnits - attackingKills;
+            arena.getTerritoryAtCoordinate(dest).setUnitNr(defendingUnits - attackingKills);
         }
     }
 
@@ -110,9 +110,9 @@ public class ArenaController {
      * @param defendingKills     how many units were on the territory before the attack
      */
     private void changeOwnershipOfTerritory(int nrOfAttackingUnits, Point dest, Player player, int defendingKills) {
-        arena.getTerritoryAtCoordinate(dest).owner = player;
-        arena.getTerritoryAtCoordinate(dest).unitNr = nrOfAttackingUnits - defendingKills;
-        arena.getTerritoryAtCoordinate(dest).continent.addPlayer(player);
+        arena.getTerritoryAtCoordinate(dest).setOwner(player);
+        arena.getTerritoryAtCoordinate(dest).setUnitNr(nrOfAttackingUnits - defendingKills);
+        arena.getTerritoryAtCoordinate(dest).getContinent().addPlayer(player);
     }
 
     /**
@@ -182,8 +182,8 @@ public class ArenaController {
 
                 Random generator = new Random();
                 int territoryID = generator.nextInt(distributableTerritories.size());
-                distributableTerritories.get(territoryID).owner = currentPlayer;
-                distributableTerritories.get(territoryID).unitNr = 1;
+                distributableTerritories.get(territoryID).setOwner(currentPlayer);
+                distributableTerritories.get(territoryID).setUnitNr(1);
                 currentPlayer.setReinforcements(currentPlayer.getReinforcements() - 1);
 
                 //mark current territory as distributed
@@ -204,7 +204,8 @@ public class ArenaController {
     public boolean reinforce(int nrOfUnits, Point dest, Player player) {
         if (player.getReinforcements()<nrOfUnits || arena.getTerritoryAtCoordinate(dest).getOwner()!=player)
             return false;
-        arena.getTerritoryAtCoordinate(dest).unitNr+=nrOfUnits;
+        Territory territory = arena.getTerritoryAtCoordinate(dest);
+        territory.setUnitNr(territory.getUnitNr() + nrOfUnits);
         player.setReinforcements(player.getReinforcements()-nrOfUnits);
         return true;
     }
@@ -229,6 +230,27 @@ public class ArenaController {
     }
 
     /**
+     *
+     * @return The number of players involved in the game
+     */
+    public int getNumberOfPlayers() {
+        return players.size();
+    }
+
+    /**
+     *
+     * @param index
+     * @return the player at position "index"
+     */
+    public Player getPlayerByIndex(int index) {
+        return players.get(index);
+    }
+
+    public Arena getArena() {
+        return arena;
+    }
+
+    /**
      * Enum with the type of combats we encounter on the map
      */
     private static enum CombatType {
@@ -238,32 +260,11 @@ public class ArenaController {
         private final int winChance;
 
         /**
-         * @param winChance  < 100% percentage that represents what is the chance of one unit killing
-         * another in a fight of this type
+         * @param winChance < 100% percentage that represents what is the chance of one unit killing
+         *                  another in a fight of this type
          */
         private CombatType(int winChance) {
             this.winChance = winChance;
         }
-    }
-
-    /**
-     *
-     * @return The number of players involved in the game
-     */
-    public int getNumberOfPlayers(){
-        return players.size();
-    }
-
-    /**
-     *
-     * @param index
-     * @return the player at position "index"
-     */
-    public Player getPlayerByIndex(int index){
-        return players.get(index);
-    }
-
-    public Arena getArena() {
-        return arena;
     }
 }
