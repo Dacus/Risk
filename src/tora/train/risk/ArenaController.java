@@ -197,7 +197,7 @@ public class ArenaController {
      * @param player    the player that puts his reinforcements
      * @return true if player can put his reinforcements on the specified territory
      */
-    private boolean reinforce(int nrOfUnits, Point dest, Player player) {
+    public boolean reinforce(int nrOfUnits, Point dest, Player player) {
         if (player.getReinforcements()<nrOfUnits || arena.getTerritoryAtCoordinate(dest).getOwner()!=player)
             return false;
         arena.getTerritoryAtCoordinate(dest).unitNr+=nrOfUnits;
