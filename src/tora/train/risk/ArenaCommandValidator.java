@@ -50,7 +50,7 @@ public class ArenaCommandValidator {
      * @return true if territory has the specified number of units
      */
     private static Boolean checkUnitsIsValid(Arena arena, Point init, int nrOfUnits) {
-        return arena.getTerritoryAtCoordinate(init).getUnitNr() >= nrOfUnits;
+        return arena.getTerritoryAtCoordinate(init).getUnitNr() > nrOfUnits;
     }
 
     /**

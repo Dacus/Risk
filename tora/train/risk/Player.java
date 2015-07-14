@@ -4,27 +4,26 @@ import java.util.List;
 
 public class Player {
     public static final Player CPU_MAP_PLAYER = new Player("CPU_MAP");
-    private static final int INITIAL_REINFORCEMENTS = 20;
+    private static final int INITIAL_REIFORCEMENTS = 5;
     private String name;
     //public Color color;
-    private int score;
-
+	private int score;
     /**
-     * Number of units that the player is allowed to place on its own territories
-     * at the beginning of each round
+     Number of units that the player is allowed to place on its own territories
+     at the beginning of each round
      */
     private int reinforcements;
 
     public Player(String name) {
         this.name = name;
         this.score = 0;
-        this.reinforcements = INITIAL_REINFORCEMENTS;
+        this.reinforcements = INITIAL_REIFORCEMENTS;
     }
 
     public Player(String name, List<Territory> territories) {
         this.name = name;
         this.score = 0;
-        this.reinforcements = INITIAL_REINFORCEMENTS;
+        this.reinforcements = INITIAL_REIFORCEMENTS;
     }
 
     public String getName() {
@@ -66,12 +65,5 @@ public class Player {
     @Override
     public int hashCode() {
         return name.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        String s = "";
-        s += "Player name " + name;
-        return s;
     }
 }
