@@ -13,9 +13,9 @@ import static org.hamcrest.Matchers.equalTo;
  * Created by intern on 7/13/15.
  */
 public class TestGame {
-    private static final int NR_OF_PLAYERS = 2;
     private ArenaController arenaController;
     private List<Player> players;
+    private static final int NR_OF_PLAYERS=2;
 
     @Before
     public void init(){
@@ -31,10 +31,9 @@ public class TestGame {
     @Test
     public void testDistributingReinforcements(){
         arenaController.distributePlayers(5, 1);
-
+        System.out.println(arenaController.getArena().toString());
         for (int i=0; i<arenaController.getNumberOfPlayers(); i++){
             Player p=arenaController.getPlayerByIndex(i);
-            System.out.println(arenaController.getArena());
             if (!p.equals(Player.CPU_MAP_PLAYER)) {
                 List<Territory> list = arenaController.getArena().getOwnedTerritories(p);
                 assertThat(list.size(), equalTo(5));
