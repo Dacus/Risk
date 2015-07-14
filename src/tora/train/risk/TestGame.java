@@ -1,7 +1,6 @@
 package tora.train.risk;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -15,20 +14,18 @@ import static org.hamcrest.Matchers.equalTo;
  */
 public class TestGame {
     private ArenaController arenaController;
-    private static final List<Player> players=new ArrayList<Player>();
+    private List<Player> players;
     private static final int NR_OF_PLAYERS=2;
 
     @Before
     public void init(){
         arenaController=new ArenaController();
-        for (int i=0; i<NR_OF_PLAYERS; i++)
-            arenaController.addPlayer(players.get(i));
-    }
-
-    @BeforeClass
-    public static void setup(){
-        for (int i=0; i<NR_OF_PLAYERS; i++)
-            players.add(new Player("Player" + i));
+        players=new ArrayList<Player>();
+        for (int i=0; i<NR_OF_PLAYERS; i++) {
+            Player p=new Player("Player"+i);
+            players.add(p);
+            arenaController.addPlayer(p);
+        }
     }
 
     @Test
