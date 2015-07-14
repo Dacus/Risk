@@ -18,11 +18,11 @@ public class ArenaCommandValidator {
      * @return true if move can be done
      */
     public static Boolean validateMove(Arena arena, int nrOfUnits, Point init, Point dest, Player player) {
-        if(!checkOwnerIsValid(arena, init, player)) {
+        if (!checkOwnerIsValid(arena, init, player)) {
             return false;
         } else if (!checkUnitsIsValid(arena, init, nrOfUnits)) {
             return false;
-        } else if(!checkMovePossible(arena, init, dest)) {
+        } else if (!checkMovePossible(arena, init, dest)) {
             return false;
         } else {
             return true;
@@ -56,18 +56,18 @@ public class ArenaCommandValidator {
     /**
      * Checks whether the territory placed at dest coordinates is adjacent to the territory at init coordinates.
      *
-     * @param arena  arena of the game
-     * @param init   coordinates of territory from which the move is initiated
-     * @param dest   coordinates of territory on which the player wants to move
+     * @param arena arena of the game
+     * @param init  coordinates of territory from which the move is initiated
+     * @param dest  coordinates of territory on which the player wants to move
      * @return
      */
     private static Boolean checkMovePossible(Arena arena, Point init, Point dest) {
         Boolean valid = true;
         int x = init.x - dest.x;
         int y = init.y - dest.y;
-        if((x + y) > 1 && (x == 0 || y == 0)) {
+        if ((x + y) > 1 && (x == 0 || y == 0)) {
             valid = false;
-        } else if(init.x < 1 && init.y < 1 && dest.x < 1 && dest.y < 1) {
+        } else if (init.x < 1 && init.y < 1 && dest.x < 1 && dest.y < 1) {
             valid = false;
         }
         return valid;

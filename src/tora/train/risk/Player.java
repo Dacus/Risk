@@ -7,11 +7,11 @@ public class Player {
     private static final int INITIAL_REINFORCEMENTS = 5;
     private String name;
     //public Color color;
-	private int score;
+    private int score;
 
     /**
-     Number of units that the player is allowed to place on its own territories
-     at the beginning of each round
+     * Number of units that the player is allowed to place on its own territories
+     * at the beginning of each round
      */
     private int reinforcements;
 
@@ -69,9 +69,9 @@ public class Player {
     }
 
     @Override
-    public String toString(){
-        String s="";
-        s+="Player name " + name;
+    public String toString() {
+        String s = "";
+        s += "Player name " + name;
         return s;
     }
 }
