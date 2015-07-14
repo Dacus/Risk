@@ -3,6 +3,7 @@ package tora.train.risk;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,5 +58,31 @@ public class TestGame {
                 System.out.println(list.get(i).getOwner());
         }
         System.out.println();
+    }
+
+    @Test
+    public void testTransferUnits(){
+        Point fromP=new Point(1,1);
+        Point toP=new Point(1,2);
+
+        Player player=players.get(0);
+
+        Territory fromT=arenaController.getArena().getTerritoryAtCoordinate(fromP);
+        Territory toT=arenaController.getArena().getTerritoryAtCoordinate(toP);
+
+        fromT.setOwner(player);
+        toT.setOwner(player);
+
+        int unitsOnSource=fromT.
+        int unitsOnDest=player.getReinforcements();
+
+
+        //(int nrOfAttackingUnits, Point init, Point dest, Player player) {
+        arenaController.moveUnits(2, fromP, toP, player);
+
+        int unitsAfter=player.getReinforcements();
+
+
+
     }
 }
