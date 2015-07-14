@@ -31,6 +31,9 @@ public class TestGame {
             players.add(new Player("Player" + i));
     }
 
+    /**
+     * testing random territory distribution
+     */
     @Test
     public void testDistributingReinforcements(){
         arenaController.distributePlayers(5, 1);
@@ -42,6 +45,16 @@ public class TestGame {
                 assertThat(list.size(), equalTo(5));
             }
         }
+    }
+
+    /**
+     * testing reinforcing right after random territory distribution
+     */
+    @Test
+    public void testReinforcementsAtBeginningOfGame() {
+        arenaController.distributePlayers(5, 1);
+
+
     }
 
     /**

@@ -174,13 +174,17 @@ public class ArenaController {
         for (int i = 0; i < territoriesPerPlayer; i++) {
             //for each player, distribute a random territory
             for (int playerID = 0; playerID < players.size(); playerID++) {
+                Player currentPlayer = players.get(playerID);
+
                 //if current player is computer, skip
-                if (players.get(playerID) == Player.CPU_MAP_PLAYER)
+                if (currentPlayer == Player.CPU_MAP_PLAYER)
                     continue;
 
                 Random generator = new Random();
                 int territoryID = generator.nextInt(distributableTerritories.size());
-                distributableTerritories.get(territoryID).owner = players.get(playerID);
+                distributableTerritories.get(territoryID).owner = currentPlayer;
+                distributableTerritories.get(territoryID).unitNr = 1;
+                currentPlayer.setReinforcements(currentPlayer.getReinforcements() - 1);
 
                 //mark current territory as distributed
                 distributableTerritories.remove(territoryID);
