@@ -38,7 +38,7 @@ public class ArenaCommandValidator {
      * @return true if territory belongs to player
      */
     private static Boolean checkOwnerIsValid(Arena arena, Point init, Player player) {
-        return arena.getTerritoryAtCoordinate(init).owner == player;
+        return arena.getTerritoryAtCoordinate(init).getOwner().equals(player);
     }
 
     /**
@@ -50,7 +50,7 @@ public class ArenaCommandValidator {
      * @return true if territory has the specified number of units
      */
     private static Boolean checkUnitsIsValid(Arena arena, Point init, int nrOfUnits) {
-        return arena.getTerritoryAtCoordinate(init).unitNr >= nrOfUnits;
+        return arena.getTerritoryAtCoordinate(init).getUnitNr() >= nrOfUnits;
     }
 
     /**

@@ -5,15 +5,15 @@ public class Territory {
     /**
      * army units in the territory
      */
-	protected int unitNr;
-	/**
+    private int unitNr;
+    /**
      * the "lord" of the territory
      */
-	protected Player owner;
-	/**
+    private Player owner;
+    /**
      * the continent to which territory belongs
      */
-	protected Continent continent;
+    private Continent continent;
 
     /***
      * default constructor, creates a territory on the given Continent
@@ -29,6 +29,10 @@ public class Territory {
         return unitNr;
     }
 
+    public void setUnitNr(int unitNr) {
+        this.unitNr = unitNr;
+    }
+
     public Player getOwner() {
         return owner;
     }
@@ -41,8 +45,12 @@ public class Territory {
         return continent;
     }
 
+    public void setContinent(Continent continent) {
+        this.continent = continent;
+    }
+
     @Override
     public String toString(){
-        return unitNr+"";
+        return owner.getName()+"("+unitNr+")";
     }
 }
