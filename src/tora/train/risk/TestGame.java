@@ -1,7 +1,6 @@
 package tora.train.risk;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,21 +13,19 @@ import static org.hamcrest.Matchers.equalTo;
  * Created by intern on 7/13/15.
  */
 public class TestGame {
-    private static final List<Player> players = new ArrayList<Player>();
-    private static final int NR_OF_PLAYERS = 2;
     private ArenaController arenaController;
-
-    @BeforeClass
-    public static void setup() {
-        for (int i = 0; i < NR_OF_PLAYERS; i++)
-            players.add(new Player("Player" + i));
-    }
+    private List<Player> players;
+    private static final int NR_OF_PLAYERS=2;
 
     @Before
     public void init(){
         arenaController=new ArenaController();
-        for (int i=0; i<NR_OF_PLAYERS; i++)
-            arenaController.addPlayer(players.get(i));
+        players=new ArrayList<Player>();
+        for (int i=0; i<NR_OF_PLAYERS; i++) {
+            Player p=new Player("Player"+i);
+            players.add(p);
+            arenaController.addPlayer(p);
+        }
     }
 
     @Test
@@ -37,9 +34,9 @@ public class TestGame {
 
         for (int i=0; i<arenaController.getNumberOfPlayers(); i++){
             Player p=arenaController.getPlayerByIndex(i);
+            System.out.println(arenaController.getArena().printArena());
             if (!p.equals(Player.CPU_MAP_PLAYER)) {
                 List<Territory> list = arenaController.getArena().getOwnedTerritories(p);
-                System.out.println(arenaController.getArena());
                 assertThat(list.size(), equalTo(5));
             }
         }
@@ -61,8 +58,4 @@ public class TestGame {
         }
         System.out.println();
     }
-
-
-
-
 }
