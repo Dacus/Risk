@@ -67,4 +67,11 @@ public class Player {
     public int hashCode() {
         return name.hashCode();
     }
+
+    @Override
+    public String toString(){
+        String s="";
+        s+="Player name " + name;
+        return s;
+    }
 }

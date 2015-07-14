@@ -3,20 +3,22 @@ package tora.train.risk;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * Created by intern on 7/13/15.
  */
 public class TestGame {
-    private ArenaController arenaController;
+    private static final ArenaController arenaController=new ArenaController();
+    private static final int NR_OF_PLAYERS=2;
 
     @BeforeClass
-    public void init(){
-        arenaController=new ArenaController();
-
-        //add players
+    public static void init(){
+        for (int i=0; i<NR_OF_PLAYERS; i++)
+            arenaController.addPlayer(new Player("Player"+i));
     }
 
     @Test
@@ -25,11 +27,27 @@ public class TestGame {
 
         for (int i=0; i<arenaController.getNumberOfPlayers(); i++){
             Player p=arenaController.getPlayerByIndex(i);
-            assertThat(arenaController.getArena().getOwnedTerritories(p).size(), equalTo(1));
+            if (!p.equals(Player.CPU_MAP_PLAYER)) {
+                List<Territory> list = arenaController.getArena().getOwnedTerritories(p);
+                assertThat(list.size(), equalTo(5));
+            }
         }
     }
 
+    /**
+     * Helper methods (if something does not work)
+     */
+    private void printOwners(){
+        for (int i=0; i<11; i++)
+            for(int j=0; j<11; j++)
+                System.out.println(arenaController.getArena().getTerritoryAtCoordinate(i,j).getOwner().getName());
+    }
 
-
-
+    private void printTerritoryListOwners(List<Territory> list){
+        for (int i=0; i<list.size(); i++){
+            if (!list.get(i).getOwner().equals(Player.CPU_MAP_PLAYER))
+                System.out.println(list.get(i).getOwner());
+        }
+        System.out.println();
+    }
 }
