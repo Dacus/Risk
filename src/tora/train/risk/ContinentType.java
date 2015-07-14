@@ -35,9 +35,4 @@ public class ContinentType {
     public boolean isDistributable() {
         return distributable;
     }
-
-    @Override
-    public String toString(){
-        return ""+bonus;
-    }
 }

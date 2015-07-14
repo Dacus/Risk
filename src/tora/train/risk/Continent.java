@@ -14,9 +14,14 @@ public class Continent {
         currentPlayers = new HashSet<Player>();
     }
 
+    /**
+     * Verify if the continent has only players of one owner
+     *
+     * @return owner if there exists one, null otherwise
+     */
     public Player getOwnerIfExists() {
-        Iterator i=currentPlayers.iterator();
-        if (currentPlayers. size() == 1)
+        Iterator i = currentPlayers.iterator();
+        if (currentPlayers.size() == 1)
             return (Player) i.next();
         else return null;
     }
