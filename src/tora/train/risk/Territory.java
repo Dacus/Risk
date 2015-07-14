@@ -43,6 +43,6 @@ public class Territory {
 
     @Override
     public String toString(){
-        return unitNr+"";
+        return owner.getName()+"("+unitNr+")";
     }
 }
