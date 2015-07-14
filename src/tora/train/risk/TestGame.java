@@ -41,6 +41,23 @@ public class TestGame {
         }
     }
 
+    @Test
+    public void testReinforcementAfterInitialTerritoryDistribution() {
+        arenaController.distributePlayers(5, 1);
+        Arena arena = arenaController.getArena();
+
+        /*for (Player currentPlayer : players) {
+            //it's currentPlayer's turn, ignore CPU
+            if (!players.equals(Player.CPU_MAP_PLAYER)) {
+                int allowedReinforcements = currentPlayer.getReinforcements();
+                List<Territory> territoriesOwnedByPlayer = arena.getOwnedTerritories(currentPlayer);
+                for (Territory currentTeritory : territoriesOwnedByPlayer) {
+
+                }
+            }
+        }*/
+    }
+
     /**
      * Helper methods (if something does not work)
      */
