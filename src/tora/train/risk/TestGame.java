@@ -31,10 +31,10 @@ public class TestGame {
     @Test
     public void testDistributingReinforcements(){
         arenaController.distributePlayers(5, 1);
+        System.out.println(arenaController.getArena().printArena());
 
         for (int i=0; i<arenaController.getNumberOfPlayers(); i++){
             Player p=arenaController.getPlayerByIndex(i);
-            System.out.println(arenaController.getArena().printArena());
             if (!p.equals(Player.CPU_MAP_PLAYER)) {
                 List<Territory> list = arenaController.getArena().getOwnedTerritories(p);
                 assertThat(list.size(), equalTo(5));
