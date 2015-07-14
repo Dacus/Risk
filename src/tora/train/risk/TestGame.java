@@ -1,8 +1,10 @@
 package tora.train.risk;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -12,13 +14,21 @@ import static org.hamcrest.Matchers.equalTo;
  * Created by intern on 7/13/15.
  */
 public class TestGame {
-    private static final ArenaController arenaController=new ArenaController();
+    private ArenaController arenaController;
+    private static final List<Player> players=new ArrayList<Player>();
     private static final int NR_OF_PLAYERS=2;
 
-    @BeforeClass
-    public static void init(){
+    @Before
+    public void init(){
+        arenaController=new ArenaController();
         for (int i=0; i<NR_OF_PLAYERS; i++)
-            arenaController.addPlayer(new Player("Player"+i));
+            arenaController.addPlayer(players.get(i));
+    }
+
+    @BeforeClass
+    public static void setup(){
+        for (int i=0; i<NR_OF_PLAYERS; i++)
+            players.add(new Player("Player" + i));
     }
 
     @Test

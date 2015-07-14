@@ -33,6 +33,10 @@ public class Territory {
         return owner;
     }
 
+    public void setOwner(Player p) {
+        this.owner=p;
+    }
+
     public Continent getContinent() {
         return continent;
     }
