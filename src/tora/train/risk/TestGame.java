@@ -31,9 +31,6 @@ public class TestGame {
             players.add(new Player("Player" + i));
     }
 
-    /**
-     * testing random territory distribution
-     */
     @Test
     public void testDistributingReinforcements(){
         arenaController.distributePlayers(5, 1);
@@ -42,20 +39,9 @@ public class TestGame {
             Player p=arenaController.getPlayerByIndex(i);
             if (!p.equals(Player.CPU_MAP_PLAYER)) {
                 List<Territory> list = arenaController.getArena().getOwnedTerritories(p);
-                System.out.println(arenaController.getArena().printArena());
                 assertThat(list.size(), equalTo(5));
             }
         }
-    }
-
-    /**
-     * testing reinforcing right after random territory distribution
-     */
-    @Test
-    public void testReinforcementsAtBeginningOfGame() {
-        arenaController.distributePlayers(5, 1);
-
-
     }
 
     /**
@@ -74,8 +60,4 @@ public class TestGame {
         }
         System.out.println();
     }
-
-
-
-
 }
