@@ -41,6 +41,12 @@ public class TestGame {
         }
     }
 
+    /**
+     * Test the reinforcement after initial territory distribution.
+     * While it can, it puts units on every territory owned by player. (It tries an even distribution)
+     * First territories should have more reinforcements than last territories owned
+     * (if units cannot be distributed evenly across the territories)
+     */
     @Test
     public void testReinforcementAfterInitialTerritoryDistribution() {
         arenaController.distributePlayers(5, 1);
@@ -50,9 +56,10 @@ public class TestGame {
             //it's currentPlayer's turn, ignore CPU
             if (!players.equals(Player.CPU_MAP_PLAYER)) {
                 int allowedReinforcements = currentPlayer.getReinforcements();
-                List<Territory> territoriesOwnedByPlayer = arena.getOwnedTerritories(currentPlayer);
-                for (Territory currentTeritory : territoriesOwnedByPlayer) {
 
+                List<Territory> territoriesOwnedByPlayer = arena.getOwnedTerritories(currentPlayer);
+                for (int i = 0; i < territoriesOwnedByPlayer.size(); i++) {
+                    Territory currentTerritory = territoriesOwnedByPlayer.get(i);
                 }
             }
         }*/
