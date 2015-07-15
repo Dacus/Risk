@@ -1,5 +1,7 @@
 package tora.train.risk;
 
+import java.awt.*;
+
 public class Territory {
 
     /**
@@ -15,6 +17,8 @@ public class Territory {
      */
     private Continent continent;
 
+    private Point coordinates;
+
     /***
      * default constructor, creates a territory on the given Continent
      * @param c Continent
@@ -23,6 +27,11 @@ public class Territory {
         owner=Player.CPU_MAP_PLAYER;
         continent=c;
         unitNr=c.getType().getDefaultDefence();
+    }
+
+    public Territory(Continent c, Point coordinates) {
+        this(c);
+        this.coordinates = coordinates;
     }
 
     public int getUnitNr() {
@@ -35,6 +44,10 @@ public class Territory {
 
     public Player getOwner() {
         return owner;
+    }
+
+    public Point getCoordinates() {
+        return coordinates;
     }
 
     public void setOwner(Player p) {
