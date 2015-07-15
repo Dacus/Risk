@@ -15,7 +15,6 @@ public class ArenaController {
      * Default constructor
      */
     public ArenaController() {
-        //TODO
         players = new ArrayList<Player>();
         players.add(Player.CPU_MAP_PLAYER);
         this.arena = new Arena();
@@ -97,6 +96,7 @@ public class ArenaController {
 
         if (attackingKills >= defendingUnits) {
             if (defendingKills < nrOfAttackingUnits) {
+
                 changeOwnershipOfTerritory(nrOfAttackingUnits, dest, player, defendingKills);
                 arena.getTerritoryAtCoordinate(init).setUnitNr(unitsOnAttackingTerritory - nrOfAttackingUnits);
             } else {
@@ -171,10 +171,11 @@ public class ArenaController {
         int kills = 0;
         for (int i = 0; i < numberOfUnits; i++) {
             int chance = randomizer.nextInt(100);
-            if (chance < type.winChance)
+            if (chance < type.winChance) {
                 kills++;
+            }
         }
-
+        System.out.println(kills+" killed");
         return kills;
     }
 
@@ -267,7 +268,7 @@ public class ArenaController {
         return true;
     }
 
-    private int computePlayerBonus(Player player) {
+    public int computePlayerBonus(Player player) {
         int bonus = 0, territories = 0;
         List<Continent> continents = arena.getContinents();
         int N = arena.getXSize(), M = arena.getYSize();

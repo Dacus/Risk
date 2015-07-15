@@ -51,7 +51,7 @@ public class RiskSimulation {
 
 
 
-        System.out.println("Players reinforced each territory with 4 units");
+        System.out.println("Players reinforced each territory with 3 units");
         for (int i=1;i<=NR_PLAYERS;i++){
             List<Territory> teritories= arenaController.getArena().getOwnedTerritories(arenaController.getPlayerByIndex(i));
             for (Territory t:teritories){
@@ -99,6 +99,14 @@ public class RiskSimulation {
         t3=arenaController.getArena().getOwnedTerritories(arenaController.getPlayerByIndex(2)).get(3);
         System.out.println("Player2 move right 4 units from "+t3.getCoordinates().toString());
         moveRight(2,t3,arenaController.getPlayerByIndex(2));
+        System.out.println(arenaController.getArena().toString());
+
+        //compute bonus
+        for (int i=1;i<=arenaController.getNumberOfPlayers();i++){
+            arenaController.getPlayerByIndex(i).setReinforcements(arenaController.computePlayerBonus(arenaController.getPlayerByIndex(i)));
+            System.out.println(arenaController.getPlayerByIndex(i).toString());
+        }
+        System.out.println("offer bonus");
         System.out.println(arenaController.getArena().toString());
     }
 
