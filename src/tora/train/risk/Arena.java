@@ -7,9 +7,11 @@ import java.util.List;
 public class Arena {
     private Territory[][] map;
     private List<Continent> continents;
+    private static final int SIZE_X=11;
+    private static final int SIZE_Y=11;
 
     public Arena() {
-        map = new Territory[11][11];
+        map = new Territory[SIZE_X][SIZE_Y];
         continents = new ArrayList<Continent>();
 
         defaultInitializer();
@@ -52,8 +54,8 @@ public class Arena {
      */
     public List<Territory> getOwnedTerritories(Player p) {
         List<Territory> list = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
-            for (int j = 0; j < 11; j++) {
+        for (int i = 0; i < SIZE_X; i++) {
+            for (int j = 0; j < SIZE_Y; j++) {
                 Territory t = map[i][j];
                 if (t.getOwner().equals(p)) {
                     list.add(t);
@@ -70,8 +72,8 @@ public class Arena {
 
     private String printArena() {
         String s = "";
-        for (int i = 0; i <= 10; i++) {
-            for (int j = 0; j <= 10; j++) {
+        for (int i = 0; i < SIZE_X; i++) {
+            for (int j = 0; j < SIZE_Y; j++) {
                 if (map[i][j].toString().length() == 1)
                     s += " ";
                 s += " " + map[i][j].toString() + " ";
@@ -123,10 +125,10 @@ public class Arena {
         map[0][2]=new Territory(ANW,new Point(0,2));
 
         //ASW
-        for ( i=6;i<=10;i++) {
+        for ( i=6;i< SIZE_X;i++) {
             map[i][0] =new Territory(ASW,new Point(i,0));
         }
-        for ( i=8;i<=10;i++) {
+        for ( i=8;i<= SIZE_X;i++) {
             map[i][1]=new Territory(ASW,new Point(i,1));
         }
         map[10][2]=new Territory(ASW,new Point(10,2));
@@ -141,10 +143,10 @@ public class Arena {
         map[0][8]=new Territory(ANE,new Point(0,8));
 
         //ASE
-        for ( i=6;i<=10;i++) {
+        for ( i=6;i<SIZE_X;i++) {
             map[i][10]=new Territory(ASE,new Point(i,10));
         }
-        for ( i=8;i<=10;i++) {
+        for ( i=8;i<=SIZE_X;i++) {
             map[i][9]=new Territory(ASE,new Point(i,9));
         }
         map[10][8]=new Territory(ASE,new Point(10,8));
