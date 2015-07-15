@@ -188,6 +188,7 @@ public class ArenaController {
 
                 //mark current territory as distributed
                 distributableTerritories.remove(territoryID);
+                distributableTerritories.get(territoryID).getContinent().addPlayer(currentPlayer);
             }
         }
         return true;
