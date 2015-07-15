@@ -31,11 +31,7 @@ public class Continent {
      * @return true if the addition was successful, false otherwise
      */
     public boolean addPlayer(Player player) {
-        if (currentPlayers.contains(player)) {
-            currentPlayers.add(player);
-            return true;
-        }
-        return false;
+        return currentPlayers.add(player);
     }
 
     /**
