@@ -203,9 +203,22 @@ public class ArenaController {
      * @return true if player can put his reinforcements on the specified territory
      */
     public boolean reinforce(int nrOfUnits, Point dest, Player player) {
-        if (player.getReinforcements()<nrOfUnits || arena.getTerritoryAtCoordinate(dest).getOwner()!=player)
-            return false;
         Territory territory = arena.getTerritoryAtCoordinate(dest);
+        return reinforce(nrOfUnits, territory, player);
+    }
+
+    /**
+     * Puts player's units on specified territory. Overload
+     *
+     * @param nrOfUnits how many units to place on the territory (value > 0)
+     * @param territory the territory where the units will be placed (territory must belong to player)
+     * @param player    the player that puts his reinforcements
+     * @return true if player can put his reinforcements on the specified territory
+     */
+    public boolean reinforce(int nrOfUnits, Territory territory, Player player) {
+        if (player.getReinforcements()<nrOfUnits || territory.getOwner()!=player)
+            return false;
+        System.out.println("%^&%&$%^&$^");
         territory.setUnitNr(territory.getUnitNr() + nrOfUnits);
         player.setReinforcements(player.getReinforcements()-nrOfUnits);
         return true;
