@@ -10,24 +10,28 @@ public class RiskSimulation {
 
     ArenaController arenaController=new ArenaController();
 
-    private void moveUp(int unitsNr,Point src, Player player){
-        Point dest=new Point(src.x+1,src.y);
-        arenaController.moveUnits(unitsNr,src,);
+    private void moveUp(int unitsNr,Territory src, Player player){
+        Point init=src.getCoordinates();
+        Point dest=new Point(init.x-1,init.y);
+        arenaController.moveUnits(unitsNr,init,dest,player);
     }
 
-    private void moveDown(int unitsNr,Point src, Player player){
-        Point dest=new Point(src.x-1,src.y);
-        arenaController.moveUnits(unitsNr,src,);
+    private void moveDown(int unitsNr,Territory src, Player player){
+        Point init=src.getCoordinates();
+        Point dest=new Point(init.x+1,init.y);
+        arenaController.moveUnits(unitsNr,init,dest,player);
     }
 
-    private void moveLeft(int unitsNr,Point src, Player player){
-        Point dest=new Point(src.x,src.y-1);
-        arenaController.moveUnits(unitsNr,src,);
+    private void moveLeft(int unitsNr,Territory src, Player player){
+        Point init=src.getCoordinates();
+        Point dest=new Point(init.x,init.y-1);
+        arenaController.moveUnits(unitsNr,init,dest,player);
     }
 
-    private void moveRight(int unitsNr,Point src, Player player){
-        Point dest=new Point(src.x,src.y+1);
-        arenaController.moveUnits(unitsNr,src,);
+    private void moveRight(int unitsNr,Territory src, Player player){
+        Point init=src.getCoordinates();
+        Point dest=new Point(init.x,init.y+1);
+        arenaController.moveUnits(unitsNr,init,dest,player);
     }
 
     private void doSmth(){
@@ -56,7 +60,9 @@ public class RiskSimulation {
         }
         System.out.println(arenaController.getArena().toString());
 
-        //TODO
+        System.out.println("Player1 move up 2 units");
+        moveUp(2,arenaController.getArena().getOwnedTerritories(arenaController.getPlayerByIndex(1)).get(1),arenaController.getPlayerByIndex(1));
+        System.out.println(arenaController.getArena().toString());
     }
 
     private static int NR_PLAYERS=2;
