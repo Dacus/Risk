@@ -7,8 +7,10 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -50,30 +52,45 @@ public class TestGame {
      */
     @Test
     public void testReinforcementAfterInitialTerritoryDistribution() {
-        //TODO: Lorand
-        /*arenaController.distributePlayers(5, 1);
+        arenaController.distributePlayers(5, 1);
         Arena arena = arenaController.getArena();
 
         for (Player currentPlayer : players) {
             //it's currentPlayer's turn, ignore CPU
             if (!players.equals(Player.CPU_MAP_PLAYER)) {
                 int allowedReinforcements = currentPlayer.getReinforcements();
-
                 List<Territory> territoriesOwnedByPlayer = arena.getOwnedTerritories(currentPlayer);
+                assertFalse(territoriesOwnedByPlayer.isEmpty());
+
                 int reinforcementsPerTerritory = allowedReinforcements / territoriesOwnedByPlayer.size();
                 for (int i = 0; i < territoriesOwnedByPlayer.size(); i++) {
                     Territory currentTerritory = territoriesOwnedByPlayer.get(i);
                     assertTrue(arenaController.reinforce(reinforcementsPerTerritory, currentTerritory, currentPlayer));
+                    assertEquals(allowedReinforcements - (i+1) * reinforcementsPerTerritory, currentPlayer.getReinforcements());
                 }
 
                 //if player has remaining reinforcements, put one on every territory, starting with first owned territory
                 int remainingReinforcements = allowedReinforcements % territoriesOwnedByPlayer.size();
+                assertEquals(remainingReinforcements, currentPlayer.getReinforcements());
                 for (int i = 0; i < remainingReinforcements; i++) {
-
+                    Territory currentTerritory = territoriesOwnedByPlayer.get(i);
+                    assertTrue(arenaController.reinforce(1, currentTerritory, currentPlayer));
+                    assertEquals(remainingReinforcements - (i+1), currentPlayer.getReinforcements());
                 }
 
+                //try to reinforce without reinforcements
+                assertEquals(0, currentPlayer.getReinforcements());
+                assertFalse(arenaController.reinforce(1, territoriesOwnedByPlayer.get(0), currentPlayer));
+
+                //check number of units on each territory owned by player
+                for (int i = 0; i < territoriesOwnedByPlayer.size(); i++) {
+                    if (i < remainingReinforcements)
+                        assertEquals(reinforcementsPerTerritory + 2, territoriesOwnedByPlayer.get(i).getUnitNr());
+                    else
+                        assertEquals(reinforcementsPerTerritory + 1, territoriesOwnedByPlayer.get(i).getUnitNr());
+                }
             }
-        }*/
+        }
     }
 
     /**
