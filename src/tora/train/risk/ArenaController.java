@@ -56,7 +56,7 @@ public class ArenaController {
             return false;
         }
 
-        if (arena.getTerritoryAtCoordinate(dest).getOwner() != player) {
+        if (!arena.getTerritoryAtCoordinate(dest).getOwner().equals(player)) {
             resolveAttack(nrOfAttackingUnits, init, dest, player);
         } else {
             transferUnits(nrOfAttackingUnits, init, dest, player);

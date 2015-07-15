@@ -69,8 +69,7 @@ public class ArenaCommandValidator {
         int y = abs(init.y - dest.y);
         if ((x + y) > 1 || (x == 0 && y == 0)) {
             valid = false;
-        }
-        else if (init.x < 0 || init.y < 0 || dest.x < 0 && dest.y < 0) {
+        } else if (init.x < 0 || init.y < 0 || dest.x < 0 || dest.y < 0) {
             valid = false;
         }
         else if(init.x >= arena.getXSize() || init.y >= arena.getYSize() || dest.x >= arena.getXSize() || dest.y >= arena.getYSize())
