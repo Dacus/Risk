@@ -217,7 +217,7 @@ public class ArenaController {
     public boolean reinforce(int nrOfUnits, Territory territory, Player player) {
         if (player.getReinforcements()<nrOfUnits || territory.getOwner()!=player)
             return false;
-        System.out.println("%^&%&$%^&$^");
+
         territory.setUnitNr(territory.getUnitNr() + nrOfUnits);
         player.setReinforcements(player.getReinforcements()-nrOfUnits);
         return true;
