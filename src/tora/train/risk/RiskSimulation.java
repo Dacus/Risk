@@ -61,9 +61,44 @@ public class RiskSimulation {
         System.out.println(arenaController.getArena().toString());
 
 
-        Territory t=arenaController.getArena().getOwnedTerritories(arenaController.getPlayerByIndex(1)).get(1);
-        System.out.println("Player1 move up 2 units from "+t.getCoordinates().toString());
-        moveUp(2,t,arenaController.getPlayerByIndex(1));
+        Territory t0=arenaController.getArena().getOwnedTerritories(arenaController.getPlayerByIndex(1)).get(0);
+        System.out.println("Player1 move up 2 units from "+t0.getCoordinates().toString());
+        moveUp(2,t0,arenaController.getPlayerByIndex(1));
+        System.out.println(arenaController.getArena().toString());
+
+        Territory t1=arenaController.getArena().getOwnedTerritories(arenaController.getPlayerByIndex(1)).get(1);
+        System.out.println("Player1 move down 2 units from "+t1.getCoordinates().toString());
+        moveDown(2, t1, arenaController.getPlayerByIndex(1));
+        System.out.println(arenaController.getArena().toString());
+
+        Territory t2=arenaController.getArena().getOwnedTerritories(arenaController.getPlayerByIndex(1)).get(2);
+        System.out.println("Player1 move left 2 units from "+t2.getCoordinates().toString());
+        moveLeft(2, t2, arenaController.getPlayerByIndex(1));
+        System.out.println(arenaController.getArena().toString());
+
+        Territory t3=arenaController.getArena().getOwnedTerritories(arenaController.getPlayerByIndex(1)).get(3);
+        System.out.println("Player1 move right 3 units from "+t3.getCoordinates().toString());
+        moveRight(2,t3,arenaController.getPlayerByIndex(1));
+        System.out.println(arenaController.getArena().toString());
+
+        t0=arenaController.getArena().getOwnedTerritories(arenaController.getPlayerByIndex(2)).get(0);
+        System.out.println("Player2 move up 3 units from "+t0.getCoordinates().toString());
+        moveUp(2,t0,arenaController.getPlayerByIndex(2));
+        System.out.println(arenaController.getArena().toString());
+
+        t1=arenaController.getArena().getOwnedTerritories(arenaController.getPlayerByIndex(2)).get(1);
+        System.out.println("Player2 move down 3 units from "+t1.getCoordinates().toString());
+        moveDown(2, t1, arenaController.getPlayerByIndex(2));
+        System.out.println(arenaController.getArena().toString());
+
+        t2=arenaController.getArena().getOwnedTerritories(arenaController.getPlayerByIndex(2)).get(2);
+        System.out.println("Player2 move left 3 units from "+t2.getCoordinates().toString());
+        moveLeft(2, t2, arenaController.getPlayerByIndex(2));
+        System.out.println(arenaController.getArena().toString());
+
+        t3=arenaController.getArena().getOwnedTerritories(arenaController.getPlayerByIndex(2)).get(3);
+        System.out.println("Player2 move right 4 units from "+t3.getCoordinates().toString());
+        moveRight(2,t3,arenaController.getPlayerByIndex(2));
         System.out.println(arenaController.getArena().toString());
     }
 
