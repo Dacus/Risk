@@ -54,7 +54,7 @@ public class Player {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this==null ||o == null || getClass() != o.getClass()) return false;
 
         Player player = (Player) o;
 
@@ -71,7 +71,7 @@ public class Player {
     @Override
     public String toString() {
         String s = "";
-        s += "Player name " + name;
+        s += "Player name " + name + " " + reinforcements+" reinforcements";
         return s;
     }
 }

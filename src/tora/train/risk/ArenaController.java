@@ -268,13 +268,20 @@ public class ArenaController {
         return true;
     }
 
-    public int computePlayerBonus(Player player) {
+    public void givePlayerBonus(Player player){
+        player.setReinforcements(computePlayerBonus(player));
+    }
+
+    private int computePlayerBonus(Player player) {
         int bonus = 0, territories = 0;
         List<Continent> continents = arena.getContinents();
         int N = arena.getXSize(), M = arena.getYSize();
         for (Continent continent : continents) {
-            if (continent.getOwnerIfExists().equals(player))
-                bonus += continent.getType().getBonus();
+            try {
+                if (continent.getOwnerIfExists().equals(player))
+                    bonus += continent.getType().getBonus();
+            } catch (NullPointerException e) {
+            }
         }
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {

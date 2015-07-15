@@ -102,8 +102,9 @@ public class RiskSimulation {
         System.out.println(arenaController.getArena().toString());
 
         //compute bonus
-        for (int i=1;i<=arenaController.getNumberOfPlayers();i++){
-            arenaController.getPlayerByIndex(i).setReinforcements(arenaController.computePlayerBonus(arenaController.getPlayerByIndex(i)));
+        int n=arenaController.getNumberOfPlayers();
+        for (int i=1;i<n;i++){
+            arenaController.givePlayerBonus(arenaController.getPlayerByIndex(i));
             System.out.println(arenaController.getPlayerByIndex(i).toString());
         }
         System.out.println("offer bonus");
