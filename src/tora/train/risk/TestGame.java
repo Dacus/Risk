@@ -9,6 +9,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by intern on 7/13/15.
@@ -49,18 +50,28 @@ public class TestGame {
      */
     @Test
     public void testReinforcementAfterInitialTerritoryDistribution() {
-        arenaController.distributePlayers(5, 1);
+        //TODO: Lorand
+        /*arenaController.distributePlayers(5, 1);
         Arena arena = arenaController.getArena();
 
-        /*for (Player currentPlayer : players) {
+        for (Player currentPlayer : players) {
             //it's currentPlayer's turn, ignore CPU
             if (!players.equals(Player.CPU_MAP_PLAYER)) {
                 int allowedReinforcements = currentPlayer.getReinforcements();
 
                 List<Territory> territoriesOwnedByPlayer = arena.getOwnedTerritories(currentPlayer);
+                int reinforcementsPerTerritory = allowedReinforcements / territoriesOwnedByPlayer.size();
                 for (int i = 0; i < territoriesOwnedByPlayer.size(); i++) {
                     Territory currentTerritory = territoriesOwnedByPlayer.get(i);
+                    assertTrue(arenaController.reinforce(reinforcementsPerTerritory, currentTerritory, currentPlayer));
                 }
+
+                //if player has remaining reinforcements, put one on every territory, starting with first owned territory
+                int remainingReinforcements = allowedReinforcements % territoriesOwnedByPlayer.size();
+                for (int i = 0; i < remainingReinforcements; i++) {
+
+                }
+
             }
         }*/
     }
