@@ -93,16 +93,38 @@ public class ArenaController {
         int defendingUnits = arena.getTerritoryAtCoordinate(dest).getUnitNr();
         int attackingKills = calculateKills(CombatType.ATTACK, nrOfAttackingUnits);
         int defendingKills = calculateKills(CombatType.DEFEND, defendingUnits);
+        int unitsOnAttackingTerritory = arena.getTerritoryAtCoordinate(init).getUnitNr();
 
         if (attackingKills >= defendingUnits) {
-            changeOwnershipOfTerritory(nrOfAttackingUnits, dest, player, defendingKills);
+            if (defendingKills < nrOfAttackingUnits) {
+                changeOwnershipOfTerritory(nrOfAttackingUnits, dest, player, defendingKills);
+                arena.getTerritoryAtCoordinate(init).setUnitNr(unitsOnAttackingTerritory - nrOfAttackingUnits);
+            } else {
+                makeTerritoryNeutral(dest);
+                arena.getTerritoryAtCoordinate(init).setUnitNr(unitsOnAttackingTerritory - nrOfAttackingUnits);
+            }
         } else {
             arena.getTerritoryAtCoordinate(dest).setUnitNr(defendingUnits - attackingKills);
+            arena.getTerritoryAtCoordinate(init).setUnitNr(unitsOnAttackingTerritory - defendingKills);
         }
     }
 
     /**
-     * Changes owner of a territory, after an attack.
+     * Marginal case when the territory becomes neutral as the attacked could not
+     * conquer it but it killed all the units inside it
+     *
+     * @param dest the territory coordinate on which this happened
+     */
+    private void makeTerritoryNeutral(Point dest) {
+        verifyContinentAfterTerritoryLoss(dest);
+
+        arena.getTerritoryAtCoordinate(dest).setUnitNr(0);
+        arena.getTerritoryAtCoordinate(dest).setOwner(Player.CPU_MAP_PLAYER);
+        arena.getTerritoryAtCoordinate(dest).getContinent().addPlayer(Player.CPU_MAP_PLAYER);
+    }
+
+    /**
+     * Changes owner of a territory, after an attack with all his consequences.
      *
      * @param nrOfAttackingUnits how many units attacked the territory
      * @param dest               the territory that was attacked
@@ -110,9 +132,30 @@ public class ArenaController {
      * @param defendingKills     how many units were on the territory before the attack
      */
     private void changeOwnershipOfTerritory(int nrOfAttackingUnits, Point dest, Player player, int defendingKills) {
+        verifyContinentAfterTerritoryLoss(dest);
+
         arena.getTerritoryAtCoordinate(dest).setOwner(player);
         arena.getTerritoryAtCoordinate(dest).setUnitNr(nrOfAttackingUnits - defendingKills);
         arena.getTerritoryAtCoordinate(dest).getContinent().addPlayer(player);
+    }
+
+    /**
+     * Verify if a player is still on a continent after he will loose the territory at given coordinate
+     * If it still has other territory(ies) on it ,it does nothing, otherwise it removes it from it
+     *
+     * @param coordinate the coordinate of the territory in cause
+     */
+    private void verifyContinentAfterTerritoryLoss(Point coordinate) {
+        Player owner = arena.getTerritoryAtCoordinate(coordinate).getOwner();
+        List<Territory> ownedTerritories = arena.getOwnedTerritories(owner);
+        Continent continent = arena.getTerritoryAtCoordinate(coordinate).getContinent();
+
+        for (Territory territory : ownedTerritories) {
+            if (territory.getContinent().equals(continent) && !territory.equals(arena.getTerritoryAtCoordinate(coordinate)))
+                return;
+        }
+
+        continent.removePlayer(owner);
     }
 
     /**
