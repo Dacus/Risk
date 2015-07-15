@@ -128,7 +128,7 @@ public class Arena {
         for ( i=6;i< SIZE_X;i++) {
             map[i][0] =new Territory(ASW,new Point(i,0));
         }
-        for ( i=8;i<= SIZE_X;i++) {
+        for ( i=8;i< SIZE_X;i++) {
             map[i][1]=new Territory(ASW,new Point(i,1));
         }
         map[10][2]=new Territory(ASW,new Point(10,2));
@@ -146,7 +146,7 @@ public class Arena {
         for ( i=6;i<SIZE_X;i++) {
             map[i][10]=new Territory(ASE,new Point(i,10));
         }
-        for ( i=8;i<=SIZE_X;i++) {
+        for ( i=8;i<SIZE_X;i++) {
             map[i][9]=new Territory(ASE,new Point(i,9));
         }
         map[10][8]=new Territory(ASE,new Point(10,8));

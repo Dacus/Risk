@@ -13,11 +13,7 @@ public class RiskSimulation {
     private void moveUp(int unitsNr,Territory src, Player player){
         Point init=src.getCoordinates();
         Point dest=new Point(init.x-1,init.y);
-        try {
-            arenaController.moveUnits(unitsNr,init,dest,player);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        arenaController.moveUnits(unitsNr,init,dest,player);
     }
 
     private void moveDown(int unitsNr,Territory src, Player player){
@@ -64,8 +60,10 @@ public class RiskSimulation {
         }
         System.out.println(arenaController.getArena().toString());
 
-        System.out.println("Player1 move up 2 units");
-        moveUp(2,arenaController.getArena().getOwnedTerritories(arenaController.getPlayerByIndex(1)).get(1),arenaController.getPlayerByIndex(1));
+
+        Territory t=arenaController.getArena().getOwnedTerritories(arenaController.getPlayerByIndex(1)).get(1);
+        System.out.println("Player1 move up 2 units from "+t.getCoordinates().toString());
+        moveUp(2,t,arenaController.getPlayerByIndex(1));
         System.out.println(arenaController.getArena().toString());
     }
 
