@@ -2,6 +2,8 @@ package tora.train.risk;
 
 import java.awt.*;
 
+import static java.lang.Math.abs;
+
 /**
  * Created by intern on 7/9/15.
  */
@@ -63,13 +65,16 @@ public class ArenaCommandValidator {
      */
     private static Boolean checkMovePossible(Arena arena, Point init, Point dest) {
         Boolean valid = true;
-        int x = init.x - dest.x;
-        int y = init.y - dest.y;
-        if ((x + y) > 1 && (x == 0 || y == 0)) {
-            valid = false;
-        } else if (init.x < 1 && init.y < 1 && dest.x < 1 && dest.y < 1) {
+        int x = abs(init.x - dest.x);
+        int y = abs(init.y - dest.y);
+        if ((x + y) > 1 || (x == 0 && y == 0)) {
             valid = false;
         }
+        else if (init.x < 0 || init.y < 0 || dest.x < 0 && dest.y < 0) {
+            valid = false;
+        }
+        else if(init.x >= arena.getXSize() || init.y >= arena.getYSize() || dest.x >= arena.getXSize() || dest.y >= arena.getYSize())
+            valid = false;
         return valid;
     }
 }

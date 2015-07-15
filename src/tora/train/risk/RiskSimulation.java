@@ -13,7 +13,11 @@ public class RiskSimulation {
     private void moveUp(int unitsNr,Territory src, Player player){
         Point init=src.getCoordinates();
         Point dest=new Point(init.x-1,init.y);
-        arenaController.moveUnits(unitsNr,init,dest,player);
+        try {
+            arenaController.moveUnits(unitsNr,init,dest,player);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void moveDown(int unitsNr,Territory src, Player player){
