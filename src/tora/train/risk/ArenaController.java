@@ -105,6 +105,8 @@ public class ArenaController {
             }
         } else {
             arena.getTerritoryAtCoordinate(dest).setUnitNr(defendingUnits - attackingKills);
+            if (defendingKills > nrOfAttackingUnits)
+                defendingKills = nrOfAttackingUnits;
             arena.getTerritoryAtCoordinate(init).setUnitNr(unitsOnAttackingTerritory - defendingKills);
         }
     }
