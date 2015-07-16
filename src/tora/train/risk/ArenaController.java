@@ -286,6 +286,7 @@ public class ArenaController {
             } catch (NullPointerException e) {
             }
         }
+        System.out.println("Continent bonus + 5 = " + bonus);
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 Territory territory = arena.getTerritoryAtCoordinate(i, j);
@@ -294,6 +295,8 @@ public class ArenaController {
             }
         }
         bonus += (territories / GROUP_SIZE) * BONUS_FOR_GROUP;
+        System.out.println("Territories : " + territories);
+        System.out.println("Bonus : " + bonus);
         return bonus;
     }
 

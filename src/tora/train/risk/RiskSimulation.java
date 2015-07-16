@@ -104,6 +104,9 @@ public class RiskSimulation {
         //compute bonus
         int n=arenaController.getNumberOfPlayers();
         for (int i=1;i<n;i++){
+            System.out.println(arenaController.getPlayerByIndex(i).toString());
+        }
+        for (int i=1;i<n;i++){
             arenaController.givePlayerBonus(arenaController.getPlayerByIndex(i));
             System.out.println(arenaController.getPlayerByIndex(i).toString());
         }
@@ -117,4 +120,6 @@ public class RiskSimulation {
         RiskSimulation risk=new RiskSimulation();
         risk.doSmth();
     }
+
+
 }

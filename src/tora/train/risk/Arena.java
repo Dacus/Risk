@@ -115,6 +115,9 @@ public class Arena {
         continents.add(HW);
         continents.add(R);
 
+        for (Continent continent : continents){
+            continent.addPlayer(Player.CPU_MAP_PLAYER);
+        }
         //ANW
         for ( i=0;i<5;i++) {
             map[i][0]=new Territory(ANW,new Point(i,0));
