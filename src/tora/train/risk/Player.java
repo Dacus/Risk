@@ -1,9 +1,12 @@
 package tora.train.risk;
 
-import java.util.List;
-
 public class Player {
-    public static final Player CPU_MAP_PLAYER = new Player("CPU_MAP");
+    public static final Player CPU_MAP_PLAYER;
+
+    static {
+        CPU_MAP_PLAYER = new Player("CPU_MAP");
+        CPU_MAP_PLAYER.setReinforcements(0);
+    }
     private static final int INITIAL_REINFORCEMENTS = 20;
     private String name;
     //public Color color;
@@ -16,12 +19,6 @@ public class Player {
     private int reinforcements;
 
     public Player(String name) {
-        this.name = name;
-        this.score = 0;
-        this.reinforcements = INITIAL_REINFORCEMENTS;
-    }
-
-    public Player(String name, List<Territory> territories) {
         this.name = name;
         this.score = 0;
         this.reinforcements = INITIAL_REINFORCEMENTS;

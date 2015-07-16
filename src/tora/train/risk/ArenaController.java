@@ -8,6 +8,7 @@ import java.util.Random;
 public class ArenaController {
     private static final int BONUS_FOR_GROUP = 1;
     private static final int GROUP_SIZE = 3;
+    private static final int DEFAULT_BONUS = 5;
     private final Arena arena;
     private List<Player> players;
 
@@ -270,7 +271,7 @@ public class ArenaController {
     }
 
     private int computePlayerBonus(Player player) {
-        int bonus = 0, territories = 0;
+        int bonus = DEFAULT_BONUS, territories = 0;
         List<Continent> continents = arena.getContinents();
         int N = arena.getXSize(), M = arena.getYSize();
         for (Continent continent : continents) {
