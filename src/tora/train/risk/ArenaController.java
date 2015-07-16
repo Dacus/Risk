@@ -231,8 +231,8 @@ public class ArenaController {
                 currentPlayer.setReinforcements(currentPlayer.getReinforcements() - 1);
 
                 //mark current territory as distributed
-                distributableTerritories.remove(territoryID);
                 distributableTerritories.get(territoryID).getContinent().addPlayer(currentPlayer);
+                distributableTerritories.remove(territoryID);
             }
         }
         return true;
