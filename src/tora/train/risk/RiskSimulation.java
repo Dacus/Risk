@@ -8,6 +8,8 @@ import java.util.List;
  */
 public class RiskSimulation {
 
+    private static int NR_PLAYERS=2;
+
     ArenaController arenaController=new ArenaController();
 
     private void moveUp(int unitsNr,Territory src, Player player){
@@ -101,20 +103,57 @@ public class RiskSimulation {
         moveRight(2,t3,arenaController.getPlayerByIndex(2));
         System.out.println(arenaController.getArena().toString());
 
-        //compute bonus
-        int n=arenaController.getNumberOfPlayers();
-        for (int i=1;i<n;i++){
+        System.out.println("compute bonus");
+        int nrPlayers=arenaController.getNumberOfPlayers();
+        for (int i=1;i<nrPlayers;i++){
             System.out.println(arenaController.getPlayerByIndex(i).toString());
         }
-        for (int i=1;i<n;i++){
+        for (int i=1;i<nrPlayers;i++){
             arenaController.givePlayerBonus(arenaController.getPlayerByIndex(i));
             System.out.println(arenaController.getPlayerByIndex(i).toString());
         }
-        System.out.println("offer bonus");
+
+
+        //distribute bonus
+        System.out.println("\nreinforce:");
+        Player p;
+        for (int i=1;i<nrPlayers;i++){
+            p=arenaController.getPlayerByIndex(i);
+            while (p.getReinforcements()>0){
+                for(Territory t:arenaController.getArena().getOwnedTerritories(p)){
+                    if (p.getReinforcements()>0) {
+                        arenaController.reinforce(1, t, p);
+                        System.out.println(t.toString() + " | reinforcements left="+p.getReinforcements()+" | "+t.getCoordinates().toString());
+                    }
+                }
+            }
+        }
         System.out.println(arenaController.getArena().toString());
+
+
+        System.out.println("New round of attacks");
+        for (int i=1;i<nrPlayers;i++){
+            p=arenaController.getPlayerByIndex(i);
+            System.out.println(p.toString() + "attack up from: ");
+            for (Territory t:arenaController.getArena().getOwnedTerritories(p)){
+                System.out.println(t.getCoordinates().toString() + " with " + (t.getUnitNr()-1) + ", owner is " + t.getOwner().getName());
+                moveUp(t.getUnitNr()-1, t, p);
+            }
+        }
+        System.out.println(arenaController.getArena().toString());
+
+        System.out.println("compute bonus part II");
+        for (int i=1;i<nrPlayers;i++){
+            System.out.println(arenaController.getPlayerByIndex(i).toString());
+        }
+        for (int i=1;i<nrPlayers;i++){
+            arenaController.givePlayerBonus(arenaController.getPlayerByIndex(i));
+            System.out.println(arenaController.getPlayerByIndex(i).toString());
+        }
+
     }
 
-    private static int NR_PLAYERS=2;
+
 
     public static void main(String[] args) {
         RiskSimulation risk=new RiskSimulation();

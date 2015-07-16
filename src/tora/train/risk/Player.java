@@ -68,7 +68,7 @@ public class Player {
     @Override
     public String toString() {
         String s = "";
-        s += "Player name " + name + " " + reinforcements+" reinforcements";
+        s += "Player name " + name + " " + reinforcements+" reinforcements ";
         return s;
     }
 }
