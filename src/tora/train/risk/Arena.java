@@ -65,6 +65,21 @@ public class Arena {
         return list;
     }
 
+    /**
+     * @return a list of territories on which players can be distributed at the beginning of game
+     */
+    public List<Territory> getDistributableTerritories() {
+        List<Territory> distributableTerritories = new ArrayList<>();
+        for (int i = 0; i < getXSize(); i++) {
+            for (int j = 0; j < getYSize(); j++) {
+                Territory currentTerritory = getTerritoryAtCoordinate(i, j);
+                if (currentTerritory.getContinent().getType().isDistributable())
+                    distributableTerritories.add(currentTerritory);
+            }
+        }
+        return distributableTerritories;
+    }
+
     @Override
     public String toString(){
         return printArena();
