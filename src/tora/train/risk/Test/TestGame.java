@@ -1,5 +1,6 @@
 package tora.train.risk.Test;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import tora.train.risk.Arena;
@@ -46,6 +47,11 @@ public class TestGame {
                 assertThat(list.size(), equalTo(5));
             }
         }
+    }
+
+    @Test
+    public void testDistributingReinforcements_WhenTooManyTerritoriesPerPlayer_ExpectedDistributionFail(){
+        //TODO: Lorand
     }
 
     /**

@@ -170,16 +170,7 @@ public class ArenaController {
         if ((territoriesPerPlayer < 0) || (unitsPerTerritory < 0))
             return false;
 
-        ArrayList<Territory> distributableTerritories = new ArrayList<>();
-
-        //search distributable territories in arena and put them in the list
-        for (int i = 0; i < arena.getXSize(); i++) {
-            for (int j = 0; j < arena.getYSize(); j++) {
-                Territory currentTerritory = arena.getTerritoryAtCoordinate(i, j);
-                if (currentTerritory.getContinent().getType().isDistributable())
-                    distributableTerritories.add(currentTerritory);
-            }
-        }
+        List<Territory> distributableTerritories = arena.getDistributableTerritories();
 
         //territories cannot be distributed if they are not enough
         if (territoriesPerPlayer * (players.size() - 1) > distributableTerritories.size())
