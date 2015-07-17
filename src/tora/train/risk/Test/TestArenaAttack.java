@@ -2,6 +2,7 @@ package tora.train.risk.Test;
 
 import org.junit.Before;
 import tora.train.risk.ArenaController;
+import tora.train.risk.CombatStrategy;
 import tora.train.risk.Player;
 
 import java.util.ArrayList;
@@ -17,7 +18,8 @@ public class TestArenaAttack {
 
     @Before
     public void init() {
-        arenaController = new ArenaController();
+        CombatStrategy combatMock = new CombatStrategyMock();
+        arenaController = new ArenaController(combatMock);
         players = new ArrayList<>();
         for (int i = 0; i < NR_OF_PLAYERS; i++) {
             Player p = new Player("Player" + i);

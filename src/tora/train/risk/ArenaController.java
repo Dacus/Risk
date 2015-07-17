@@ -23,6 +23,11 @@ public class ArenaController {
         this.strategy = new RiskCombatStrategy();
     }
 
+    /**
+     * Constructor with given strategy, on the default map
+     *
+     * @param strategy the strategy logic of attacking
+     */
     public ArenaController(CombatStrategy strategy) {
         players = new ArrayList<Player>();
         players.add(Player.CPU_MAP_PLAYER);
@@ -31,7 +36,7 @@ public class ArenaController {
     }
 
     /**
-     * Constructor with given arena
+     * Constructor with specific arena and default combat logic
      *
      * @param arena the arena the game is played on
      */
@@ -42,10 +47,10 @@ public class ArenaController {
         this.strategy = new RiskCombatStrategy();
     }
 
-    /**
-     * Constructor with given arena
+    /**Constructor with specified arena and attacking strategy
      *
-     * @param arena the arena the game is played on
+     * @param arena the arena used for playing
+     * @param strategy combat rules
      */
     public ArenaController(Arena arena, CombatStrategy strategy) {
         players = new ArrayList<Player>();
@@ -67,10 +72,10 @@ public class ArenaController {
      * Moves units from a territory to another.
      *
      * @param nrOfAttackingUnits how many units to move (value > 0)
-     * @param init      the territory's coordinates from which the player moves (territory must belong to player)
-     * @param dest      the territory's coordinates to which the player moves
-     *                  (if territory does not belong to player = attack)
-     * @param player    the player that want to move
+     * @param init               the territory's coordinates from which the player moves (territory must belong to player)
+     * @param dest               the territory's coordinates to which the player moves
+     *                           (if territory does not belong to player = attack)
+     * @param player             the player that want to move
      * @return true if player can move the specified units from init to dest
      */
     public boolean moveUnits(int nrOfAttackingUnits, Point init, Point dest, Player player) {
@@ -91,12 +96,12 @@ public class ArenaController {
      *
      * @param nrOfUnits how many units to move (value > 0)
      * @param from      the territory's coordinates from which the player moves (belongs to player)
-     * @param to      the territory's coordinates to which the player moves (belongs to player)
+     * @param to        the territory's coordinates to which the player moves (belongs to player)
      * @param player    the player that want to move
      */
     private void transferUnits(int nrOfUnits, Point from, Point to, Player player) {
-        Territory fromTerritory=arena.getTerritoryAtCoordinate(from.x, from.y);
-        Territory toTerritory=arena.getTerritoryAtCoordinate(to.x, to.y);
+        Territory fromTerritory = arena.getTerritoryAtCoordinate(from.x, from.y);
+        Territory toTerritory = arena.getTerritoryAtCoordinate(to.x, to.y);
 
         fromTerritory.setUnitNr(fromTerritory.getUnitNr() - nrOfUnits);
         toTerritory.setUnitNr(toTerritory.getUnitNr() + nrOfUnits);
@@ -107,9 +112,9 @@ public class ArenaController {
      *
      * @param nrOfAttackingUnits how many units does player use to attack an enemy territory.
      *                           (0 < value <= nr of units available)
-     * @param init      the territory's coordinates from which the player initiates the attack. (belongs to player)
-     * @param dest      the territory's coordinates that player wants to attack. (does not belong to player)
-     * @param player    the player that initiates the attack
+     * @param init               the territory's coordinates from which the player initiates the attack. (belongs to player)
+     * @param dest               the territory's coordinates that player wants to attack. (does not belong to player)
+     * @param player             the player that initiates the attack
      */
     private void resolveAttack(int nrOfAttackingUnits, Point init, Point dest, Player player) {
         Territory destination = arena.getTerritoryAtCoordinate(dest);
@@ -121,7 +126,8 @@ public class ArenaController {
         }
     }
 
-    /**Verifies if a player does not have any territories on the continent after it lost a territory
+    /**
+     * Verifies if a player does not have any territories on the continent after it lost a territory
      *
      * @param territoryLost territory that is lost
      */
@@ -147,12 +153,13 @@ public class ArenaController {
 
     /**
      * Distributes players on arena's map.
-     *
+     * <p/>
      * (players list must be complete before running this method)
+     *
      * @param territoriesPerPlayer how many territories to distribute for each player (value >= 0)
-     * @param unitsPerTerritory how many units should each territory have (value >= 0)
+     * @param unitsPerTerritory    how many units should each territory have (value >= 0)
      * @return true if distribution succeeded /
-     *   false if distribution cannot be done because there are not enough territories on the map to fulfill the request
+     * false if distribution cannot be done because there are not enough territories on the map to fulfill the request
      */
     public boolean distributePlayers(int territoriesPerPlayer, int unitsPerTerritory) {
         if ((territoriesPerPlayer < 0) || (unitsPerTerritory < 0))
@@ -218,18 +225,23 @@ public class ArenaController {
      * @return true if player can put his reinforcements on the specified territory
      */
     public boolean reinforce(int nrOfUnits, Territory territory, Player player) {
-        if (player.getReinforcements()<nrOfUnits || territory.getOwner()!=player)
+        if (player.getReinforcements() < nrOfUnits || territory.getOwner() != player)
             return false;
 
         territory.setUnitNr(territory.getUnitNr() + nrOfUnits);
-        player.setReinforcements(player.getReinforcements()-nrOfUnits);
+        player.setReinforcements(player.getReinforcements() - nrOfUnits);
         return true;
     }
 
-    public void givePlayerBonus(Player player){
+    public void givePlayerBonus(Player player) {
         player.setReinforcements(computePlayerBonus(player));
     }
 
+    /**Method that computes the bonus reinforcements a player should get at the start of the
+     * turn
+     * @param player player for which we are computing the reinforcements
+     * @return the amount of units he can reinforce now
+     */
     private int computePlayerBonus(Player player) {
         int bonus = DEFAULT_BONUS, territories = 0;
         List<Continent> continents = arena.getContinents();
@@ -256,7 +268,6 @@ public class ArenaController {
     }
 
     /**
-     *
      * @return The number of players involved in the game
      */
     public int getNumberOfPlayers() {
@@ -264,7 +275,6 @@ public class ArenaController {
     }
 
     /**
-     *
      * @param index
      * @return the player at position "index"
      */

@@ -4,7 +4,7 @@ import tora.train.risk.CombatStrategy;
 import tora.train.risk.Player;
 import tora.train.risk.Territory;
 
-/**
+/** Mock class for testing purposes
  * Created by intern on 7/17/15.
  */
 public class CombatStrategyMock implements CombatStrategy {
