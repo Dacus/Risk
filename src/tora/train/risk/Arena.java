@@ -84,6 +84,30 @@ public class Arena {
     }
 
     /**
+     *     Identical to arena.printArena(), but is much more easy to read
+     *     note: Increased readability works only for player names up to 10 characters
+     */
+
+    public String fancyPrintArena(){
+        String s = "";
+        String playerName;
+        for (int i = 0; i < SIZE_X; i++) {
+            for (int j = 0; j < SIZE_Y; j++) {
+                if (map[i][j].toString().length() == 1)
+                    s += " ";
+                playerName=map[i][j].toString();
+                while(playerName.length()<14)
+                    playerName+=" ";
+
+
+                s += " " + playerName + "| ";
+            }
+            s += "\n";
+        }
+        return s;
+    }
+
+    /**
      * Initializing the map as it is in the documentation
      */
     private void defaultInitializer() {
