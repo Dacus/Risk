@@ -12,6 +12,7 @@ public class Continent {
     public Continent(ContinentType type) {
         this.type = type;
         currentPlayers = new HashSet<Player>();
+        currentPlayers.add(Player.CPU_MAP_PLAYER);
     }
 
     /**

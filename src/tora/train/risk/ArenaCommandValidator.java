@@ -71,8 +71,7 @@ public class ArenaCommandValidator {
             valid = false;
         } else if (init.x < 0 || init.y < 0 || dest.x < 0 || dest.y < 0) {
             valid = false;
-        }
-        else if(init.x >= arena.getXSize() || init.y >= arena.getYSize() || dest.x >= arena.getXSize() || dest.y >= arena.getYSize())
+        } else if (init.x >= arena.getXSize() || init.y >= arena.getYSize() || dest.x >= arena.getXSize() || dest.y >= arena.getYSize())
             valid = false;
         return valid;
     }
