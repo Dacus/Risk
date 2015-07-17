@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Arena {
-    private Territory[][] map;
-    private List<Continent> continents;
     private static final int SIZE_X=11;
     private static final int SIZE_Y=11;
+    private Territory[][] map;
+    private List<Continent> continents;
 
     public Arena() {
         map = new Territory[SIZE_X][SIZE_Y];
-        continents = new ArrayList<Continent>();
+        continents = new ArrayList<>();
 
         defaultInitializer();
     }
