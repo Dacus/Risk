@@ -1,7 +1,11 @@
-package tora.train.risk;
+package tora.train.risk.Test;
 
 import org.junit.Before;
 import org.junit.Test;
+import tora.train.risk.Arena;
+import tora.train.risk.ArenaController;
+import tora.train.risk.Player;
+import tora.train.risk.Territory;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,14 +21,14 @@ import static org.junit.Assert.assertTrue;
  * Created by intern on 7/13/15.
  */
 public class TestGame {
+    private static final int NR_OF_PLAYERS = 2;
     private ArenaController arenaController;
     private List<Player> players;
-    private static final int NR_OF_PLAYERS=2;
 
     @Before
     public void init(){
         arenaController=new ArenaController();
-        players=new ArrayList<Player>();
+        players = new ArrayList<>();
         for (int i=0; i<NR_OF_PLAYERS; i++) {
             Player p=new Player("Player"+i);
             players.add(p);
@@ -164,9 +168,9 @@ public class TestGame {
     }
 
     private void printTerritoryListOwners(List<Territory> list){
-        for (int i=0; i<list.size(); i++){
-            if (!list.get(i).getOwner().equals(Player.CPU_MAP_PLAYER))
-                System.out.println(list.get(i).getOwner());
+        for (Territory territory : list) {
+            if (!territory.getOwner().equals(Player.CPU_MAP_PLAYER))
+                System.out.println(territory.getOwner());
         }
         System.out.println();
     }
