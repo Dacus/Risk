@@ -133,12 +133,12 @@ public class ArenaController {
      */
     private void verifyContinentAfterTerritoryLoss(Territory territoryLost, Player owner) {
         List<Territory> ownedTerritories = arena.getOwnedTerritories(owner);
+        Continent continent = territoryLost.getContinent();
         if (ownedTerritories.size() == 0) {
             players.remove(owner);
+            continent.removePlayer(owner);
             return;
         }
-
-        Continent continent = territoryLost.getContinent();
 
         for (Territory territory : ownedTerritories) {
             if (territory.getContinent().equals(continent) && !territory.equals(territoryLost))
