@@ -15,6 +15,7 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -51,7 +52,10 @@ public class TestGame {
 
     @Test
     public void testDistributingReinforcements_WhenTooManyTerritoriesPerPlayer_ExpectedDistributionFail(){
-        //TODO: Lorand
+        int nrOfDistributableTerritories = arenaController.getArena().getDistributableTerritories().size();
+        int nrOfPlayers = players.size() - 1;
+        int territoriesPerPlayer = nrOfDistributableTerritories / nrOfPlayers + 1;
+        assertThat(arenaController.distributePlayers(territoriesPerPlayer, 1), is(false));
     }
 
     /**
