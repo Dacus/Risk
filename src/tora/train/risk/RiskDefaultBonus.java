@@ -22,21 +22,20 @@ public class RiskDefaultBonus implements BonusStrategy {
         int N = arena.getXSize(), M = arena.getYSize();
         for (Continent continent : continents) {
             try {
-                if (continent.getOwnerIfExists().equals(player))
+                if (continent.getOwnerIfExists().equals(player)) {
                     bonus += continent.getType().getBonus();
+                }
             } catch (NullPointerException e) {
                 //no owner exists
             }
         }
+        territories = arena.getOwnedTerritories(player).size();
 
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                Territory territory = arena.getTerritoryAtCoordinate(i, j);
-                if (territory.getOwner().equals(player))
-                    territories++;
-            }
+        if (territories == 0) {
+            bonus = 0;
+        } else {
+            bonus += (territories / GROUP_SIZE) * BONUS_FOR_GROUP;
         }
-        bonus += (territories / GROUP_SIZE) * BONUS_FOR_GROUP;
         return bonus;
     }
 }
