@@ -1,4 +1,4 @@
-package test;
+package ClientServerExample.test;
 
 import serverapp.MainServerController;
 import serverapp.MainServerFrame;

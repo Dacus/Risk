@@ -1,4 +1,4 @@
-package serverapp;
+package ClientServerExample.serverapp;
 
 /**
  * Created by Andrea on 7/16/2015.

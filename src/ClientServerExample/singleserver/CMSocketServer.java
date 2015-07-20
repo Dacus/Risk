@@ -1,6 +1,6 @@
-package singleserver;
+package ClientServerExample.singleserver;
 
-import common.Message;
+import ClientServerExample.common.Message;
 
 import java.io.*;
 import java.net.*;

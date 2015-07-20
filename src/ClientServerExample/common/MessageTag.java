@@ -1,4 +1,4 @@
-package common;
+package ClientServerExample.common;
 
 /**
  * Type of message

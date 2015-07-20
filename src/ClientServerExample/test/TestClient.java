@@ -1,4 +1,4 @@
-package test;
+package ClientServerExample.test;
 
 import clientapp.ClientAppController;
 

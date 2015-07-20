@@ -1,7 +1,7 @@
-package singleclient;
+package ClientServerExample.singleclient;
 
-import clientapp.ClientAppViewInterface;
-import utils.Helpers;
+import ClientServerExample.clientapp.ClientAppViewInterface;
+import ClientServerExample.utils.Helpers;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

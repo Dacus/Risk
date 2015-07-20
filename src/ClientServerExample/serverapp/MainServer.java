@@ -1,9 +1,9 @@
-package serverapp;
+package ClientServerExample.serverapp;
 
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
-import common.Message;
-import common.MessageProvider;
-import common.MessageTag;
+import ClientServerExample.common.Message;
+import ClientServerExample.common.MessageProvider;
+import ClientServerExample.common.MessageTag;
 import singleserver.CMSocketServer;
 import singleserver.SingleServerMessageHandler;
 import singleserver.SingleServerController;

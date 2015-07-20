@@ -1,9 +1,9 @@
-package singleserver;
+package ClientServerExample.singleserver;
 
-import common.MessageHandler;
-import common.Controller;
-import common.Message;
-import common.MessageTag;
+import ClientServerExample.common.MessageHandler;
+import ClientServerExample.common.Controller;
+import ClientServerExample.common.Message;
+import ClientServerExample.common.MessageTag;
 
 /**
  * Class that processes the messages received from the client

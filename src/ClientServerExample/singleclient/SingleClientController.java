@@ -1,4 +1,4 @@
-package singleclient;
+package ClientServerExample.singleclient;
 
 import common.*;
 

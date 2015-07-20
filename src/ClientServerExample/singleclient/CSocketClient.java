@@ -1,7 +1,7 @@
-package singleclient;
+package ClientServerExample.singleclient;
 
-import common.Message;
-import common.MessageHandler;
+import ClientServerExample.common.Message;
+import ClientServerExample.common.MessageHandler;
 
 import java.io.*;
 import java.net.*;

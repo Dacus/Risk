@@ -1,4 +1,4 @@
-package utils;
+package ClientServerExample.utils;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

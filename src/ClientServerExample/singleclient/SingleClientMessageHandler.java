@@ -1,8 +1,8 @@
-package singleclient;
+package ClientServerExample.singleclient;
 
-import common.Controller;
-import common.Message;
-import common.MessageHandler;
+import ClientServerExample.common.Controller;
+import ClientServerExample.common.Message;
+import ClientServerExample.common.MessageHandler;
 
 /**
  * Processes messages received from the server

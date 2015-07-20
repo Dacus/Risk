@@ -1,6 +1,6 @@
-package serverapp;
+package ClientServerExample.serverapp;
 
-import utils.Helpers;
+import ClientServerExample.utils.Helpers;
 
 import javax.swing.*;
 import java.awt.*;

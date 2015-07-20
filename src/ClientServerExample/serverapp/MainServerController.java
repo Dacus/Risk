@@ -1,8 +1,8 @@
-package serverapp;
+package ClientServerExample.serverapp;
 
-import common.Message;
-import common.MessageProvider;
-import common.MessageTag;
+import ClientServerExample.common.Message;
+import ClientServerExample.common.MessageProvider;
+import ClientServerExample.common.MessageTag;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

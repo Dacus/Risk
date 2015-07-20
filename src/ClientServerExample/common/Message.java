@@ -1,4 +1,4 @@
-package common;
+package ClientServerExample.common;
 
 import java.io.Serializable;
 import java.util.ArrayList;
