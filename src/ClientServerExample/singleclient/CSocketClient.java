@@ -3,8 +3,10 @@ package ClientServerExample.singleclient;
 import ClientServerExample.common.Message;
 import ClientServerExample.common.MessageHandler;
 
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 /**
  * Client Thread that continuously reads incoming messages received from its corresponding CSocketServer.

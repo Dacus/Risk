@@ -1,7 +1,7 @@
 package ClientServerExample.test;
 
-import serverapp.MainServerController;
-import serverapp.MainServerFrame;
+import ClientServerExample.serverapp.MainServerController;
+import ClientServerExample.serverapp.MainServerFrame;
 
 /**
  * Created by Andrea on 7/16/2015.

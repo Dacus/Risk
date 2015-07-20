@@ -1,8 +1,8 @@
 package ClientServerExample.singleserver;
 
-import ClientServerExample.common.MessageHandler;
 import ClientServerExample.common.Controller;
 import ClientServerExample.common.Message;
+import ClientServerExample.common.MessageHandler;
 import ClientServerExample.common.MessageTag;
 
 /**

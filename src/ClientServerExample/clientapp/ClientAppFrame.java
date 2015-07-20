@@ -6,8 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import static javax.swing.JOptionPane.showOptionDialog;
-
 /**
  * Created by Andrea on 7/17/2015.
  *

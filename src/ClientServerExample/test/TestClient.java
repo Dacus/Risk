@@ -1,6 +1,6 @@
 package ClientServerExample.test;
 
-import clientapp.ClientAppController;
+import ClientServerExample.clientapp.ClientAppController;
 
 import java.io.IOException;
 

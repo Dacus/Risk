@@ -1,6 +1,6 @@
 package ClientServerExample.singleclient;
 
-import common.*;
+import ClientServerExample.common.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

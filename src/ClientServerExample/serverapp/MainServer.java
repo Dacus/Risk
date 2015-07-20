@@ -1,14 +1,10 @@
 package ClientServerExample.serverapp;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import ClientServerExample.common.Message;
-import ClientServerExample.common.MessageProvider;
-import ClientServerExample.common.MessageTag;
-import singleserver.CMSocketServer;
-import singleserver.SingleServerMessageHandler;
-import singleserver.SingleServerController;
+import ClientServerExample.singleserver.CMSocketServer;
+import ClientServerExample.singleserver.SingleServerController;
+import ClientServerExample.singleserver.SingleServerMessageHandler;
 
-import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;

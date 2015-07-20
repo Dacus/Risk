@@ -1,10 +1,10 @@
 package ClientServerExample.singleserver;
 
+import ClientServerExample.common.Controller;
+import ClientServerExample.common.Message;
 import ClientServerExample.common.MessageProvider;
 import ClientServerExample.common.MessageTag;
 import ClientServerExample.serverapp.MainServerController;
-import ClientServerExample.common.Controller;
-import ClientServerExample.common.Message;
 
 import java.io.IOException;
 

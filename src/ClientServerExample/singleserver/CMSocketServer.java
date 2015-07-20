@@ -2,9 +2,10 @@ package ClientServerExample.singleserver;
 
 import ClientServerExample.common.Message;
 
-import java.io.*;
-import java.net.*;
-import java.sql.SQLException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 /**
  * Also called "single server", CMSocketServer communicates with a CSocketClient. It delegates message processing

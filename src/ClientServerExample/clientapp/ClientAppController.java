@@ -1,10 +1,9 @@
 package ClientServerExample.clientapp;
 
-import singleclient.SingleClientController;
-import singleclient.SingleClientFrame;
-import singleclient.SingleClientMessageHandler;
+import ClientServerExample.singleclient.SingleClientController;
+import ClientServerExample.singleclient.SingleClientFrame;
+import ClientServerExample.singleclient.SingleClientMessageHandler;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
