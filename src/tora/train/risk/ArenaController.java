@@ -6,11 +6,9 @@ import java.util.List;
 import java.util.Random;
 
 public class ArenaController {
-    private static final int BONUS_FOR_GROUP = 1;
-    private static final int GROUP_SIZE = 3;
-    private static final int DEFAULT_BONUS = 5;
     private final Arena arena;
     private CombatStrategy strategy;
+    private BonusStrategy bonusComputer;
     private List<Player> players;
 
     /**
@@ -20,6 +18,7 @@ public class ArenaController {
         players = new ArrayList<Player>();
         players.add(Player.CPU_MAP_PLAYER);
         this.arena = new Arena();
+        this.bonusComputer = new RiskDefaultBonus(arena);
         this.strategy = new RiskCombatStrategy();
     }
 
@@ -32,6 +31,7 @@ public class ArenaController {
         players = new ArrayList<Player>();
         players.add(Player.CPU_MAP_PLAYER);
         this.arena = new Arena();
+        this.bonusComputer = new RiskDefaultBonus(arena);
         this.strategy = strategy;
     }
 
@@ -44,6 +44,7 @@ public class ArenaController {
         players = new ArrayList<Player>();
         players.add(Player.CPU_MAP_PLAYER);
         this.arena = arena;
+        this.bonusComputer = new RiskDefaultBonus(arena);
         this.strategy = new RiskCombatStrategy();
     }
 
@@ -56,6 +57,7 @@ public class ArenaController {
         players = new ArrayList<Player>();
         players.add(Player.CPU_MAP_PLAYER);
         this.arena = arena;
+        this.bonusComputer = new RiskDefaultBonus(arena);
         this.strategy = strategy;
     }
 
@@ -229,38 +231,15 @@ public class ArenaController {
         return true;
     }
 
-    public void givePlayerBonus(Player player) {
-        player.setReinforcements(computePlayerBonus(player));
-    }
-
-    /**Method that computes the bonus reinforcements a player should get at the start of the
+    /**
+     * Method that computes  and gives the bonus reinforcements a player should get at the start of the
      * turn
-     * @param player player for which we are computing the reinforcements
-     * @return the amount of units he can reinforce now
+     *
+     * @param player player which receives the reinforcements
      */
-    private int computePlayerBonus(Player player) {
-        int bonus = DEFAULT_BONUS, territories = 0;
-        List<Continent> continents = arena.getContinents();
-        int N = arena.getXSize(), M = arena.getYSize();
-        for (Continent continent : continents) {
-            try {
-                if (continent.getOwnerIfExists().equals(player))
-                    bonus += continent.getType().getBonus();
-            } catch (NullPointerException e) {
-            }
-        }
-        System.out.println("Continent bonus + 5 = " + bonus);
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                Territory territory = arena.getTerritoryAtCoordinate(i, j);
-                if (territory.getOwner().equals(player))
-                    territories++;
-            }
-        }
-        bonus += (territories / GROUP_SIZE) * BONUS_FOR_GROUP;
-        System.out.println("Territories : " + territories);
-        System.out.println("Bonus : " + bonus);
-        return bonus;
+    public void givePlayerBonus(Player player) {
+        int bonus = bonusComputer.computePlayerBonus(player);
+        player.setReinforcements(bonus);
     }
 
     /**
