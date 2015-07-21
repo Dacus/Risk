@@ -165,7 +165,7 @@ public class HotSeatConsole {
         boolean win=false;
 
         while (!win){
-            for (int i=1;i<=arenaController.getNumberOfPlayers();i++){
+            for (int i=1;i<arenaController.getNumberOfPlayers();i++){
                 Player currentPlayer = arenaController.getPlayerByIndex(i);
                 System.out.println("It is now "+ currentPlayer.getName()+"'s turn");
                 arenaController.givePlayerBonus(currentPlayer);
