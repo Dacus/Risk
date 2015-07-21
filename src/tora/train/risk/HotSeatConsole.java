@@ -14,6 +14,11 @@ public class HotSeatConsole {
         arenaController=new ArenaController();
     }
 
+    public static void main(String[] args) {
+        HotSeatConsole hot = new HotSeatConsole();
+        hot.startGame();
+    }
+
     //Move Methods Modified to not use Territory
     private void moveUp(int unitsNr,Point init, Player player,ArenaController arenaController){
         Point dest=new Point(init.x-1,init.y);
@@ -29,12 +34,12 @@ public class HotSeatConsole {
         Point dest=new Point(init.x,init.y-1);
         arenaController.moveUnits(unitsNr,init,dest,player);
     }
+    //
 
-    private void moveRight(int unitsNr,Point init, Player player,ArenaController arenaController){
-        Point dest=new Point(init.x,init.y+1);
+    private void moveRight(int unitsNr, Point init, Player player, ArenaController arenaController) {
+        Point dest = new Point(init.x, init.y + 1);
         arenaController.moveUnits(unitsNr, init, dest, player);
     }
-    //
 
     private Player readPlayer() {
         System.out.println("Input Player name");
@@ -86,8 +91,10 @@ public class HotSeatConsole {
                 reader.nextLine();
             }
         }
-
+        System.out.println("New arena units distributions");
+        System.out.println(arenaController.getArena().fancyPrintArena());
     }
+
     private void playerTurn(Player player,ArenaController arenaController){
         System.out.println("Type end to finish turn, move followed by coordinates, number of units and direction of movement \n to move units");
         String command="";
@@ -120,6 +127,8 @@ public class HotSeatConsole {
 
             }
         }
+        System.out.println("New arena units distributions");
+        System.out.println(arenaController.getArena().fancyPrintArena());
     }
 
     private void printWelcomeMessage(){
@@ -137,12 +146,12 @@ public class HotSeatConsole {
     }
 
     private void initialDistribution(){
-        arenaController.distributePlayers(5,1);
+        arenaController.distributePlayers(5, 1);
 
         System.out.println(arenaController.getArena().fancyPrintArena());
 
         System.out.println("Players will now distribute 15 units on their territories:");
-        for (int i=1;i <= arenaController.getNumberOfPlayers();i++){
+        for (int i = 1; i < arenaController.getNumberOfPlayers(); i++) {
             System.out.println(arenaController.getPlayerByIndex(i).getName()+" it is your turn to distribute your starting units");
             playerReinforces(arenaController.getPlayerByIndex(i),arenaController);
         }
@@ -169,11 +178,6 @@ public class HotSeatConsole {
             win=true;
         }
         System.out.println(arenaController.getArena().fancyPrintArena());
-    }
-
-    public static void main(String[] args) {
-        HotSeatConsole hot =new HotSeatConsole();
-        hot.startGame();
     }
 
 
