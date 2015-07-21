@@ -1,6 +1,5 @@
 package tora.train.risk.Test;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import tora.train.risk.Arena;
@@ -10,13 +9,16 @@ import tora.train.risk.Territory;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -51,11 +53,51 @@ public class TestGame {
     }
 
     @Test
-    public void testDistributingReinforcements_WhenTooManyTerritoriesPerPlayer_ExpectedDistributionFail(){
+    public void testDistributingReinforcements_WhenTooManyTerritoriesPerPlayer_ExpectedDistributionFail() {
         int nrOfDistributableTerritories = arenaController.getArena().getDistributableTerritories().size();
         int nrOfPlayers = players.size() - 1;
         int territoriesPerPlayer = nrOfDistributableTerritories / nrOfPlayers + 1;
         assertThat(arenaController.distributePlayers(territoriesPerPlayer, 1), is(false));
+    }
+
+    /**
+     * Test the order of players turns in the game.
+     */
+    @Test
+    public void testPlayersTurnsOrder() {
+        ArenaController localArenaController = new ArenaController();
+        localArenaController.addPlayer(new Player("Lorand"));
+        localArenaController.addPlayer(new Player("Ervin"));
+        localArenaController.addPlayer(new Player("Andrea"));
+        localArenaController.addPlayer(new Player("Florin"));
+        localArenaController.addPlayer(new Player("Isabela"));
+        localArenaController.addPlayer(new Player("Paul"));
+        localArenaController.addPlayer(new Player("Alex"));
+
+        //game did not begin so you cannot end current player's turn
+        assertThat(localArenaController.endCurrentPlayerTurn(), is(false));
+
+        //the game started, 3 rounds in this game, each player has only one turn per round
+        for (int round = 1; round <= 3; round++) {
+            //contains players that finished their turns
+            Set<Player> finishedTurns = new HashSet<>();
+            for (int turn = 1; turn <= 7; turn++) {
+                //who's next?
+                Player player = localArenaController.getCurrentPlayer();
+                //calling getCurrentPlayer twice should get the same result
+                Player samePlayer = localArenaController.getCurrentPlayer();
+                assertThat(player, equalTo(samePlayer));
+                //no CPU player allowed
+                assertNotEquals(Player.CPU_MAP_PLAYER, player);
+                //no duplicate turns allowed
+                assertThat(finishedTurns.contains(player), is(false));
+                //player finishes turn
+                finishedTurns.add(player);
+                assertThat(localArenaController.endCurrentPlayerTurn(), is(true));
+            }
+            //all players must have finished their turns
+            assertThat(localArenaController.endCurrentPlayerTurn(), is(false));
+        }
     }
 
     /**
