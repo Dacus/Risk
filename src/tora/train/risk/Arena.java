@@ -104,22 +104,50 @@ public class Arena {
      */
 
     public String fancyPrintArena(){
-        String s = "";
-        String playerName;
+        StringBuilder s = new StringBuilder("");
+        StringBuilder playerName;
+        s.append(String.format("%" + 8 + "s", 0));
+        for (int i = 1; i < SIZE_Y; i++) {
+            s.append(String.format("%" + 17 + "s", i));
+        }
+        s.append("\n");
+        int expSizeX = 0, X = SIZE_X;
+        while (X >= 10) {
+            X /= 10;
+            expSizeX++;
+        }
+
         for (int i = 0; i < SIZE_X; i++) {
+            if (SIZE_X >= 10) {
+                int newI = i, spaces = 0;
+                while (newI >= 10) {
+                    newI /= 10;
+                    spaces++;
+                }
+                spaces = expSizeX - spaces;
+                for (int j = 0; j < spaces; j++) {
+                    s.append(" ");
+                }
+                s.append(i);
+            } else {
+                s.append(i + " ");
+            }
             for (int j = 0; j < SIZE_Y; j++) {
                 if (map[i][j].toString().length() == 1)
-                    s += " ";
-                playerName=map[i][j].toString();
+                    s.append(" ");
+                playerName = new StringBuilder(map[i][j].toString());
+                /*
                 while(playerName.length()<14)
-                    playerName+=" ";
+                    playerName.append(" ");
+                */
 
+                playerName.append(String.format("%" + (14 - playerName.length()) + "s", ""));
 
-                s += " " + playerName + "| ";
+                s.append(" " + playerName + "| ");
             }
-            s += "\n";
+            s.append("\n");
         }
-        return s;
+        return s.toString();
     }
 
     /**
