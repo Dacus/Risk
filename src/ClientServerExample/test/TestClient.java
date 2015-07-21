@@ -7,6 +7,7 @@ import java.io.IOException;
 
 public class TestClient {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        ClientAppController clientApp = new ClientAppController();
+        ClientAppController clientApp1 = new ClientAppController();
+        ClientAppController clientApp2 = new ClientAppController();
     }
 }

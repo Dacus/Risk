@@ -51,7 +51,6 @@ public class CMSocketServer implements Runnable {
 	 */
 	public Message readMessage() throws IOException,
 			ClassNotFoundException {
-		
 		Message msg = (Message) serverInputStream.readObject();
 		return msg;
 	}
@@ -66,6 +65,7 @@ public class CMSocketServer implements Runnable {
 		
 		serverOutputStream.writeObject(msg);
 		System.out.println("Server sends:" + msg);
+        serverOutputStream.flush();
 	}
 
 	/**

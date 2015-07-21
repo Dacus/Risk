@@ -1,7 +1,6 @@
 package ClientServerExample.serverapp;
 
 import ClientServerExample.common.Message;
-import ClientServerExample.common.MessageProvider;
 import ClientServerExample.common.MessageTag;
 
 import java.awt.event.ActionEvent;
@@ -41,6 +40,14 @@ public class MainServerController {
         server.run();
     }
 
+    public void incrementNumberOfReadyClients() {
+        server.incrementReadyCounter();
+    }
+
+    public void setClientName(String name, int id) {
+        server.setClientName(name, id);
+    }
+
     /**
      * Action assigned to the "Stop Server" button on the GUI to stop the MainServer.
      * It stops all single servers (thus all clients) then it shuts down.
@@ -61,7 +68,7 @@ public class MainServerController {
         @Override
         public void actionPerformed(ActionEvent e) {
             String str=frame.getOutgoingTextField();
-            Message msg=MessageProvider.getMessage(MessageTag.GLOBAL);
+            Message msg= new Message(MessageTag.GLOBAL);
             msg.addObject(str);
             server.sendGlobalMessage(msg);
         }

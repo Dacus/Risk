@@ -4,6 +4,8 @@ import ClientServerExample.common.Controller;
 import ClientServerExample.common.Message;
 import ClientServerExample.common.MessageHandler;
 
+import java.util.ArrayList;
+
 /**
  * Processes messages received from the server
  *
@@ -26,8 +28,31 @@ public class SingleClientMessageHandler implements MessageHandler {
             }
             case IDENTITY:{
                 int id=(int)msg.getContent().get(0);
-                controller.setClientIdentity(id);
                 System.out.println("Client has assigned ID " + id );
+                controller.setClientIdentity(id);
+                break;
+            }
+            case START:{
+                controller.displayMessage(msg);
+                break;
+            }
+            case NEW_PLAYER_CONNECTED:{
+                String name=String.valueOf(msg.getContent().get(0));
+                controller.addNewPlayerToCombo(name);
+                break;
+            }
+            case PLAYER_DISCONNECTED:{
+                String name=String.valueOf(msg.getContent().get(0));
+                controller.removePlayerFromCombo(name);
+                break;
+            }
+            case ONLINE_PLAYERS:{
+                int n=(int)msg.getContent().get(0);
+                ArrayList<String> names=new ArrayList<String>();
+                for (int i=1; i<n+1; i++){
+                    names.add(String.valueOf(msg.getContent().get(i)));
+                }
+                controller.addPlayersToCombo(names);
                 break;
             }
             default:{

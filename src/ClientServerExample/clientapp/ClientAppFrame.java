@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  *
  * Application GUI for the client machine.
  */
-public class ClientAppFrame implements ClientAppViewInterface{
+public class ClientAppFrame implements ClientAppViewInterface {
     private JFrame frame;
     private JButton newClientButton;
     private JTextField nameField;
@@ -36,7 +36,7 @@ public class ClientAppFrame implements ClientAppViewInterface{
     }
 
     private JPanel buildNewClientPanel(){
-        JPanel panel= Helpers.buildCustomizedPanel("Client name");
+        JPanel panel= Helpers.buildCustomizedPanel("Client name", BoxLayout.X_AXIS);
 
         newClientButton=new JButton("New Client");
         nameField=new JTextField();

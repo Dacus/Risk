@@ -15,10 +15,11 @@ import java.net.Socket;
  */
 public class CSocketClient implements Runnable{
 	private int clientId;
+    private String clientName;
 	private MessageHandler messageHandler;
 	private final String hostname="localhost";
 	private boolean isRunning;
-	private final int PORT_NO=9990;
+    private static final int PORT_NO=9990;
 
 	private Socket socketClient;
 	private ObjectOutputStream outputStream;
@@ -93,7 +94,6 @@ public class CSocketClient implements Runnable{
 		while (isRunning){
 			try {
 				Message message = readMessage();
-				System.out.println("Message to process:");
 				messageHandler.handleMessage(message);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
@@ -128,4 +128,12 @@ public class CSocketClient implements Runnable{
 	public void setClientId(int id){
 		this.clientId=id;
 	}
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
 }

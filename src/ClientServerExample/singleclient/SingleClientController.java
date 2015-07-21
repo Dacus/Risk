@@ -5,6 +5,7 @@ import ClientServerExample.common.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Controls the Client.
@@ -21,6 +22,8 @@ public class SingleClientController implements Controller {
     private SingleClientFrame clientFrame;
     private CSocketClient clientSocket;
 
+    private boolean readyFlag;
+
     public SingleClientController(SingleClientFrame frame, MessageHandler handler){
         this.clientFrame=frame;
         handler.setController(this);
@@ -29,6 +32,7 @@ public class SingleClientController implements Controller {
         this.clientFrame.setConnectionButtonListener(new ConnectAction());
         this.clientFrame.setDisconnectButtonListener(new DisconnectAction());
         this.clientFrame.setSendMessageButtonListener(new SendUserMessageAction());
+        this.clientFrame.setReadyButtonListener(new ReadyAction());
     }
 
     /***************************************************************************************
@@ -44,11 +48,22 @@ public class SingleClientController implements Controller {
         try {
             if (! clientSocket.isRunning()) {
                 clientSocket.connect();
+                clientSocket.setClientName(clientFrame.getName());
+
                 clientFrame.setStatus(true);
+
+                connectByName();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void connectByName(){
+        Message msg=new Message(MessageTag.CONNECT);
+        msg.addObject(clientSocket.getClientName());
+        msg.addObject(clientSocket.getClientId());
+        sendMessage(msg);
     }
 
     /**
@@ -94,6 +109,8 @@ public class SingleClientController implements Controller {
         return received;
     }
 
+
+
     /**
      * Action assigned to the "Connect" button on the GUI that connects the client to server
      */
@@ -113,7 +130,7 @@ public class SingleClientController implements Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (clientSocket.isRunning()) {
-                Message msg=MessageProvider.getMessage(MessageTag.STOP);
+                Message msg=new Message(MessageTag.STOP);
                 msg.addObject(clientSocket.getClientId());
                 sendMessage(msg);
 
@@ -141,6 +158,20 @@ public class SingleClientController implements Controller {
         }
     }
 
+    class ReadyAction implements  ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (readyFlag){
+                clientFrame.showOptionPanel("You already told the others that you are ready to play!");
+            }else {
+                Message msg = new Message(MessageTag.READY);
+                sendMessage(msg);
+                readyFlag=true;
+            }
+        }
+    }
+
     /***************************************************************************************
      * VIEW RELATED
      **************************************************************************************/
@@ -150,6 +181,7 @@ public class SingleClientController implements Controller {
      * @param msg
      */
     public void displayMessage(Message msg){
+        System.out.println("Client " + clientSocket.getClientId() + " displays global message");
         clientFrame.setIncomingAreaText(msg.getContent().get(0).toString());
     }
 
@@ -164,5 +196,18 @@ public class SingleClientController implements Controller {
      */
     public void setClientIdentity(int id){
         this.clientSocket.setClientId(id);
+    }
+
+    public void addNewPlayerToCombo(String name) {
+        this.clientFrame.addPlayer(name);
+    }
+
+    public void removePlayerFromCombo(String name) { this.clientFrame.removePlayer(name);}
+
+    public void addPlayersToCombo(ArrayList<String> names) {
+        System.out.println("Names to add to combo:" + names);
+        for (int i=1; i<names.size(); i++){
+            this.clientFrame.addPlayer(names.get(i));
+        }
     }
 }

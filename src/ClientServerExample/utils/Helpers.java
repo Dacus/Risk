@@ -9,9 +9,9 @@ import java.awt.*;
  */
 public class Helpers {
 
-    public static JPanel buildCustomizedPanel(String name){
+    public static JPanel buildCustomizedPanel(String name, int direction){
         JPanel panel=new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.setLayout(new BoxLayout(panel, direction));
         panel.setOpaque(false);
         panel.setForeground(Color.WHITE);
 

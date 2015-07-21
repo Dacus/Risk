@@ -13,29 +13,38 @@ import java.awt.event.ActionListener;
  *
  * Created by Andrea on 7/16/2015.
  */
-public class SingleClientFrame implements SingleClientViewInterface {
+public class SingleClientFrame implements ClientServerExample.singleclient.SingleClientViewInterface {
     private JFrame frame;
+
     private JButton connectButton;
     private JButton disconnectButton;
     private JButton sendMessageButton;
+    private JButton readyButton;
+
     private JLabel statusLabel;
     private JTextArea incomingTextArea;
     private JTextField outgoingTextField;
+    private String name;
+
+    private JComboBox<String> playersCombo;
 
     public SingleClientFrame(String name){
-        frame=new JFrame("Client");
+        frame=new JFrame("Client [" + name + "]");
+        this.name=name;
 
         JPanel backgroundPanel=new JPanel();
-        backgroundPanel.setLayout(new GridLayout(4,0));
+        backgroundPanel.setLayout(new GridLayout(5,0));
         backgroundPanel.setBackground(Color.darkGray);
 
         JPanel titlePanel= Helpers.buildTitlePanel("Welcome " + name);
         JPanel outgoingMsgPanel=buildMessageEditPanel();
         JPanel connectionPanel=buildConnectionPanel();
         JPanel incomingMsgPanel=buildIncomingMessagePanel();
+        JPanel playersPanel=buildPlayersPanel();
 
         backgroundPanel.add(titlePanel);
         backgroundPanel.add(connectionPanel);
+        backgroundPanel.add(playersPanel);
         backgroundPanel.add(outgoingMsgPanel);
         backgroundPanel.add(incomingMsgPanel);
 
@@ -60,11 +69,15 @@ public class SingleClientFrame implements SingleClientViewInterface {
         this.sendMessageButton.addActionListener(a);
     }
 
+    public void setReadyButtonListener(ActionListener a){
+        this.readyButton.addActionListener(a);
+    }
+
     /************************************************************************************
      * PANEL BUILDERS
      ***********************************************************************************/
     private JPanel buildMessageEditPanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Outgoing");
+        JPanel panel=Helpers.buildCustomizedPanel("Outgoing", BoxLayout.X_AXIS);
 
         outgoingTextField=new JTextField();
         outgoingTextField.setBackground(Color.WHITE);
@@ -80,10 +93,11 @@ public class SingleClientFrame implements SingleClientViewInterface {
     }
 
     private JPanel buildConnectionPanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Connection");
+        JPanel panel=Helpers.buildCustomizedPanel("Connection", BoxLayout.X_AXIS);
 
         connectButton=new JButton("Connect");
         disconnectButton=new JButton("Disconnect");
+        readyButton=new JButton("Ready");
 
         statusLabel=new JLabel("Unknown");
         TitledBorder titledBorder = BorderFactory.createTitledBorder("Status");
@@ -91,18 +105,40 @@ public class SingleClientFrame implements SingleClientViewInterface {
         statusLabel.setBorder(titledBorder);
         statusLabel.setForeground(Color.RED);
 
-        panel.add(Box.createRigidArea(new Dimension(50, 0)));
+        panel.add(Box.createRigidArea(new Dimension(30, 0)));
         panel.add(connectButton);
-        panel.add(Box.createRigidArea(new Dimension(100, 0)));
+        panel.add(Box.createRigidArea(new Dimension(20, 0)));
+        panel.add(readyButton);
+        panel.add(Box.createRigidArea(new Dimension(20, 0)));
         panel.add(disconnectButton);
-        panel.add(Box.createRigidArea(new Dimension(50, 0)));
+        panel.add(Box.createRigidArea(new Dimension(30, 0)));
         panel.add(statusLabel);
 
         return panel;
     }
 
+    private JPanel buildPlayersPanel(){
+        JPanel panel=Helpers.buildCustomizedPanel("Players", BoxLayout.X_AXIS);
+
+        playersCombo=new JComboBox<String>();
+        playersCombo.setForeground(SingleClientViewInterface.PURPLE);
+
+        JPanel inner=new JPanel();
+        inner.setOpaque(false);
+        inner.setLayout(new BoxLayout(inner, BoxLayout.Y_AXIS));
+        inner.add(Box.createRigidArea(new Dimension(0, 30)));
+        inner.add(playersCombo);
+        inner.add(Box.createRigidArea(new Dimension(0, 30)));
+
+        panel.add(Box.createRigidArea(new Dimension(100,0)));
+        panel.add(inner);
+        panel.add(Box.createRigidArea(new Dimension(100,00)));
+
+        return panel;
+    }
+
     private JPanel buildIncomingMessagePanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Incoming");
+        JPanel panel=Helpers.buildCustomizedPanel("Incoming", BoxLayout.X_AXIS);
 
         incomingTextArea=new JTextArea(10,10);
         incomingTextArea.setBackground(Color.WHITE);
@@ -134,4 +170,25 @@ public class SingleClientFrame implements SingleClientViewInterface {
     public void close(){
         this.frame.dispose();
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void showOptionPanel(String s) {
+        JOptionPane.showMessageDialog(frame, s);
+    }
+
+    public void addPlayer(String player){
+        this.playersCombo.addItem(player);
+    }
+
+    public void removePlayer(String player){
+        this.playersCombo.removeItem(player);
+    }
+
 }

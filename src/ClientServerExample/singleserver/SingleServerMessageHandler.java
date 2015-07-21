@@ -24,14 +24,17 @@ public class SingleServerMessageHandler implements MessageHandler {
                 serverController.stop(clientId);
                 break;
             }
+            case READY:{
+                serverController.notifyClientIsReady();
+                break;
+            }
             case USER:{
-                System.out.println("Server received user message");
                 String received=message.getContent().get(0).toString();
                 serverController.displayMessage(received);
                 break;
             }
             default:{
-               serverController.sendMessage(message);
+                System.out.println("Default");
                break;
             }
         }

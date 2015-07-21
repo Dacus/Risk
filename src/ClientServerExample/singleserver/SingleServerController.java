@@ -2,11 +2,11 @@ package ClientServerExample.singleserver;
 
 import ClientServerExample.common.Controller;
 import ClientServerExample.common.Message;
-import ClientServerExample.common.MessageProvider;
 import ClientServerExample.common.MessageTag;
 import ClientServerExample.serverapp.MainServerController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Class that holds control over the CMSocketServer.
@@ -59,7 +59,7 @@ public class SingleServerController implements Controller{
     }
 
     /**
-     * Sends a message from the single server CSSocketServer to the client connected to it
+     * Sends a message from the single server CMSocketServer to the client connected to it
      *
      * @param msg message to be sent
      */
@@ -100,11 +100,14 @@ public class SingleServerController implements Controller{
      * @param id    identification number that the client receives when connecting to the MainServer
      */
     public void setID(int id){
+        Message inMsg=readMessage();
+        String name=String.valueOf(inMsg.getContent().get(0));
 
-        Message msg=new Message(MessageTag.IDENTITY);
-        msg.addObject(id);
+        Message outMsg=new Message(MessageTag.IDENTITY);
+        outMsg.addObject(id);
+        sendMessage(outMsg);
 
-        sendMessage(msg);
+        mainController.setClientName(name, id);
     }
 
     /**
@@ -112,7 +115,7 @@ public class SingleServerController implements Controller{
      *
      */
     public void stopClient(){
-        sendMessage(MessageProvider.getMessage(MessageTag.STOP));
+        sendMessage( new Message(MessageTag.STOP));
         stopRunning();
     }
 
@@ -127,5 +130,18 @@ public class SingleServerController implements Controller{
      */
     public void displayMessage(String str){
         mainController.displayMessage(str);
+    }
+
+    public void notifyClientIsReady() {
+        mainController.incrementNumberOfReadyClients();
+    }
+
+    public void sendListOfOnlineClients(ArrayList<String> names) {
+        Message msg=new Message(MessageTag.ONLINE_PLAYERS);
+        int n=names.size();
+        msg.addObject(n);
+        for (int i=0; i<n; i++){
+            msg.addObject(names.get(i));
+        }sendMessage(msg);
     }
 }

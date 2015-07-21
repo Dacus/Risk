@@ -1,12 +1,14 @@
 package ClientServerExample.serverapp;
 
 import ClientServerExample.common.Message;
+import ClientServerExample.common.MessageTag;
 import ClientServerExample.singleserver.CMSocketServer;
 import ClientServerExample.singleserver.SingleServerController;
 import ClientServerExample.singleserver.SingleServerMessageHandler;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -25,14 +27,19 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class MainServer implements Runnable{
 	private HashMap<Integer, SingleServerController> map = new HashMap<>();
-	private static final int PORT_NO = 9990;
+    private HashMap<Integer, String> clientMap = new HashMap<>();
+
+    private static final int PORT_NO = 9990;
 	private AtomicInteger id = new AtomicInteger(1);
 	private AtomicBoolean isRunning=new AtomicBoolean(true);
+
 	private SingleServerMessageHandler messageHandler;
 	private MainServerController mainServerController;
-	private Socket client;
 
-	public MainServer(MainServerController supremeServerController){
+	private Socket client;
+    private AtomicInteger readyCounter = new AtomicInteger(0);
+
+    public MainServer(MainServerController supremeServerController){
 		this.messageHandler=new SingleServerMessageHandler();
 		this.mainServerController=supremeServerController;
 	}
@@ -49,27 +56,26 @@ public class MainServer implements Runnable{
 
 				client = serverSocket.accept();
 
-				if (client!=null) {
-					//create a new server and a new controller for it
-					CMSocketServer server = new CMSocketServer(client, messageHandler);
-					SingleServerController controller = new SingleServerController(server, mainServerController, messageHandler);
+				//create a new server and a new controller for it
+				CMSocketServer server = new CMSocketServer(client, messageHandler);
+				SingleServerController controller = new SingleServerController(server, mainServerController, messageHandler);
 
-					//set the id of the controller
-					controller.setID(id.get());
+				controller.setID(id.get());
+                map.put(id.get(), controller);
 
-					//add controller to map
-					map.put(id.get(), controller);
+                System.out.println("Client " + id.get() +   " connected");
 
-					//display the number of currently connected clients on the Server GUI
-					mainServerController.setNumberOfOnlineClients(map.size());
+				//display the number of currently connected clients on the Server GUI
+				mainServerController.setNumberOfOnlineClients(map.size());
 
-					System.out.println("Client " + id.get() + " added");
-					id.getAndIncrement();
+                //send names of online clients
+                controller.sendListOfOnlineClients(new ArrayList<String>(clientMap.values()));
 
-					//Keep each client on its own thread
-					Thread thread = new Thread(server);
-					thread.start();
-				}
+				id.getAndIncrement();
+
+				//Keep each client on its own thread
+				Thread thread = new Thread(server);
+				thread.start();
 			}
 		} catch (Exception e) {
 			System.out.println("Main server stops");
@@ -107,6 +113,7 @@ public class MainServer implements Runnable{
 	public void removeSingleServer(int id){
 		if (map.remove(id)!=null) {
 			mainServerController.setNumberOfOnlineClients(map.size());
+            broadcastRemovingPlayer(clientMap.remove(id));
 		}
 	}
 
@@ -116,4 +123,30 @@ public class MainServer implements Runnable{
 	public void stop(){
 		this.isRunning.set(false);
 	}
+
+    public void incrementReadyCounter() {
+        int x=readyCounter.getAndIncrement();
+        if (x==map.size()-1) {
+            Message msg = new Message(MessageTag.START);
+            msg.addObject("StartGame");
+            sendGlobalMessage(msg);
+        }
+    }
+
+    public void setClientName(String name, int id) {
+        this.clientMap.put(id, name);
+        broadcastAddingNewPlayer(name);
+    }
+
+    public void broadcastAddingNewPlayer(String name){
+        Message msg=new Message(MessageTag.NEW_PLAYER_CONNECTED);
+        msg.addObject(name);
+        sendGlobalMessage(msg);
+    }
+
+    public void broadcastRemovingPlayer(String name){
+        Message msg=new Message(MessageTag.PLAYER_DISCONNECTED);
+        msg.addObject(name);
+        sendGlobalMessage(msg);
+    }
 }

@@ -49,7 +49,7 @@ public class MainServerFrame implements MainServerViewInterface {
      * PANEL BUILDERS
      ***********************************************************************************/
     private JPanel buildOutgoingMessagePanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Outgoing");
+        JPanel panel=Helpers.buildCustomizedPanel("Outgoing", BoxLayout.X_AXIS);
 
         outgoingTextField=new JTextField(10);
         outgoingTextField.setBackground(Color.WHITE);
@@ -65,7 +65,7 @@ public class MainServerFrame implements MainServerViewInterface {
     }
 
     private JPanel buildIncomingMessagePanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Incoming");
+        JPanel panel=Helpers.buildCustomizedPanel("Incoming", BoxLayout.X_AXIS);
 
         incomingTextArea=new JTextArea(10,10);
         incomingTextArea.setBackground(Color.WHITE);
@@ -79,7 +79,7 @@ public class MainServerFrame implements MainServerViewInterface {
     }
 
     private JPanel buildButtonPanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Buttons");
+        JPanel panel=Helpers.buildCustomizedPanel("Buttons", BoxLayout.X_AXIS);
 
         stopServerButton=new JButton("Stop Server");
 
@@ -90,7 +90,7 @@ public class MainServerFrame implements MainServerViewInterface {
     }
 
     private JPanel buildStatusPanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Status");
+        JPanel panel=Helpers.buildCustomizedPanel("Status", BoxLayout.X_AXIS);
 
         JPanel innerPanel=new JPanel();
         innerPanel.setOpaque(false);
