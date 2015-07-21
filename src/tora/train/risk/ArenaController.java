@@ -1,15 +1,16 @@
 package tora.train.risk;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 public class ArenaController {
     private final Arena arena;
     private CombatStrategy strategy;
     private BonusStrategy bonusComputer;
-    private List<Player> players;
+    private List<Player> players;           //all players
+    private Queue<Player> playersQueue;     //used to decide which player turn is
+    private boolean isCurrentPlayerTurn;    //indicates whether current player started his turn
 
     /**
      * Default constructor
@@ -20,6 +21,8 @@ public class ArenaController {
         this.arena = new Arena();
         this.bonusComputer = new RiskDefaultBonus(arena);
         this.strategy = new RiskCombatStrategy();
+        playersQueue = new LinkedList<>();
+        isCurrentPlayerTurn = false;
     }
 
     /**
@@ -33,6 +36,8 @@ public class ArenaController {
         this.arena = new Arena();
         this.bonusComputer = new RiskDefaultBonus(arena);
         this.strategy = strategy;
+        playersQueue = new LinkedList<>();
+        isCurrentPlayerTurn = false;
     }
 
     /**
@@ -46,6 +51,8 @@ public class ArenaController {
         this.arena = arena;
         this.bonusComputer = new RiskDefaultBonus(arena);
         this.strategy = new RiskCombatStrategy();
+        playersQueue = new LinkedList<>();
+        isCurrentPlayerTurn = false;
     }
 
     /**Constructor with specified arena and attacking strategy
@@ -59,6 +66,8 @@ public class ArenaController {
         this.arena = arena;
         this.bonusComputer = new RiskDefaultBonus(arena);
         this.strategy = strategy;
+        playersQueue = new LinkedList<>();
+        isCurrentPlayerTurn = false;
     }
 
     /**
@@ -259,5 +268,43 @@ public class ArenaController {
 
     public Arena getArena() {
         return arena;
+    }
+
+    /**
+     * @return player that has to move next
+     * Sets isCurrentPlayerTurn to true.
+     * If playersQueue is empty, this method will reconstruct the queue and then return the first player.
+     */
+    public Player getCurrentPlayer() {
+        if (playersQueue.isEmpty()) {
+            //generate order of players
+            List<Player> playersToDistribute = new ArrayList<>(players);
+            playersToDistribute.remove(Player.CPU_MAP_PLAYER);
+            Random generator = new Random();
+            for (int i = 0; i < getNumberOfPlayers() - 1; i++) {
+                Player generatedPlayer = playersToDistribute.get(generator.nextInt(playersToDistribute.size()));
+                playersToDistribute.remove(generatedPlayer);
+                playersQueue.add(generatedPlayer);
+            }
+        }
+        isCurrentPlayerTurn = true;
+        return playersQueue.peek();
+    }
+
+    /**
+     * Call this method when a player ends his turn. This will remove the currentPlayer from the playersQueue
+     * and set isCurrentPlayerTurn to false.
+     * @return false if playersQueue was empty before calling this method or
+     *                  getCurrentPlayer was not called before this method.
+     */
+    public boolean endCurrentPlayerTurn() {
+        if (isCurrentPlayerTurn) {
+            isCurrentPlayerTurn = false;
+            if (playersQueue.isEmpty())
+                return false;
+            playersQueue.remove();
+            return true;
+        }
+        return false;
     }
 }
