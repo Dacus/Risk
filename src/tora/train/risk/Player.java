@@ -51,18 +51,23 @@ public class Player {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (this==null ||o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Player player = (Player) o;
 
-        if (!name.equals(player.name)) return false;
+        if (reinforcements != player.reinforcements) return false;
+        if (score != player.score) return false;
+        if (name != null ? !name.equals(player.name) : player.name != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + score;
+        result = 31 * result + reinforcements;
+        return result;
     }
 
     @Override
