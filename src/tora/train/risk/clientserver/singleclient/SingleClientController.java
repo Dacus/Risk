@@ -4,7 +4,6 @@ import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
 import tora.train.risk.clientserver.common.MessageTag;
-import tora.train.risk.clientserver.singleclient.CSocketClient;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -53,8 +52,6 @@ public class SingleClientController implements Controller {
             if (! clientSocket.isRunning()) {
                 clientSocket.connect();
                 clientSocket.setClientName(clientFrame.getName());
-
-                clientFrame.setStatus(true);
 
                 connectByName();
             }
@@ -173,6 +170,28 @@ public class SingleClientController implements Controller {
             clientFrame.addPlayer(name);
         }
     }
+
+    /**
+     * Displays a message on an option pane to inform the client that it cannot connect
+     *
+     * @param max
+     */
+    public void restrictConnection(int max) {
+        clientFrame.showOptionPanel(max + " players connected. Please try again later!");
+    }
+
+    /**
+     * Changes the text on the Status panel of the Client GUI according to the value of b
+     *
+     * @param b true if the client is connected
+     */
+    public void setClientConnected(boolean b) {
+        this.clientFrame.setStatus(b);
+    }
+
+    /***************************************************************************************
+     * LISTENER
+     **************************************************************************************/
 
     /**
      * Action assigned to the "Connect" button on the GUI that connects the client to server

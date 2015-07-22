@@ -153,4 +153,22 @@ public class SingleServerController implements Controller {
             msg.addObject(names.get(i));
         }sendMessage(msg);
     }
+
+    /**
+     * Receives the connection message from the client.
+     * Sends a restriction message with the maximum number of clients that can be online at a time
+     * Stops the CMSocketServer after sending the message
+     *
+     * @param maxNumberOfClients
+     */
+    public void restrictClient(int maxNumberOfClients) {
+        Message inMsg=readMessage();
+        String name=String.valueOf(inMsg.getContent().get(0));
+
+        Message msg=new Message(MessageTag.RESTRICT_CONNECTION);
+        msg.addObject(maxNumberOfClients);
+        sendMessage(msg);
+
+        stopRunning();
+    }
 }

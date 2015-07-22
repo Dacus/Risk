@@ -3,7 +3,6 @@ package tora.train.risk.clientserver.singleclient;
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
-import tora.train.risk.clientserver.singleclient.SingleClientController;
 
 import java.util.ArrayList;
 
@@ -31,6 +30,7 @@ public class SingleClientMessageHandler implements MessageHandler {
                 int id=(int)msg.getContent().get(0);
                 System.out.println("Client has assigned ID " + id );
                 controller.setClientIdentity(id);
+                controller.setClientConnected(true);
                 break;
             }
             case START:{
@@ -54,6 +54,13 @@ public class SingleClientMessageHandler implements MessageHandler {
                     names.add(String.valueOf(msg.getContent().get(i)));
                 }
                 controller.addPlayersToCombo(names);
+                break;
+            }
+            case RESTRICT_CONNECTION:{
+                int maxNumberOfClients=(int)msg.getContent().get(0);
+                controller.restrictConnection(maxNumberOfClients);
+                controller.setClientConnected(false);
+                controller.stopRunning();
                 break;
             }
             default:{

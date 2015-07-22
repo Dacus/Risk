@@ -29,6 +29,8 @@ public class MainServer implements Runnable{
     private HashMap<Integer, String> clientMap = new HashMap<>();
 
     private static final int PORT_NO = 9990;
+    private static final int MAX_NUMBER_OF_CLIENTS=2;
+
 	private AtomicInteger id = new AtomicInteger(1);
 	private boolean isRunning= true;
 
@@ -53,30 +55,38 @@ public class MainServer implements Runnable{
 			while (isRunning) {
 				System.out.println("Listening for clients");
 
-				client = serverSocket.accept();
+                client = serverSocket.accept();
 
-				//create a new server and a new controller for it
-				CMSocketServer server = new CMSocketServer(client, messageHandler);
-				SingleServerController controller = new SingleServerController(server, mainServerController, messageHandler);
+                //create a new server and a new controller for it
+                CMSocketServer server = new CMSocketServer(client, messageHandler);
+                SingleServerController controller = new SingleServerController(server, mainServerController, messageHandler);
 
-				//set the id and the name of the client
-				controller.setID(id.get());
-				System.out.println("Client " + id.get() + " connected");
+                if (map.size() < MAX_NUMBER_OF_CLIENTS){
 
-				//send names of online clients
-				controller.sendListOfOnlineClients(new ArrayList<String>(clientMap.values()));
+                    //set the id and the name of the client
+                    controller.setID(id.get());
+                    System.out.println("Client " + id.get() + " connected");
 
-				//add client to map
-                map.put(id.get(), controller);
+                    //send names of online clients
+                    controller.sendListOfOnlineClients(new ArrayList<String>(clientMap.values()));
 
-				//display the number of currently connected clients on the Server GUI
-				mainServerController.setNumberOfOnlineClients(map.size());
+                    //add client to map
+                    map.put(id.get(), controller);
 
-				//Keep each client on its own thread
-				Thread thread = new Thread(server);
-				thread.start();
+                    //display the number of currently connected clients on the Server GUI
+                    mainServerController.setNumberOfOnlineClients(map.size());
 
-				id.getAndIncrement();
+                    id.getAndIncrement();
+
+                    //Keep each client on its own thread
+                    Thread thread = new Thread(server);
+                    thread.start();
+
+                }
+                else{
+                    //tell client that he cannot connect
+                    controller.restrictClient(MAX_NUMBER_OF_CLIENTS);
+                }
 			}
 		} catch (Exception e) {
 			System.out.println("Main server stops");

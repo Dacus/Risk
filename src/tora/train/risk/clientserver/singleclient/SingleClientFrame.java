@@ -24,12 +24,14 @@ public class SingleClientFrame implements SingleClientViewInterface {
     private JLabel statusLabel;
     private JTextArea incomingTextArea;
     private JTextField outgoingTextField;
+    private String name;
 
     private JComboBox<String> playersCombo;
 
     public SingleClientFrame(String name){
         frame=new JFrame("Client [" + name + "]");
 
+        this.name=name;
         JPanel backgroundPanel=new JPanel();
         backgroundPanel.setLayout(new GridLayout(5,0));
         backgroundPanel.setBackground(Color.darkGray);
@@ -193,7 +195,7 @@ public class SingleClientFrame implements SingleClientViewInterface {
      * @return the name of the frame as given when created
      */
     public String getName() {
-        return frame.getName();
+        return name;
     }
 
     /**
