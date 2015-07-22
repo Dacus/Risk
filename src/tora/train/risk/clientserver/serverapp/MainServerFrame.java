@@ -122,6 +122,9 @@ public class MainServerFrame implements MainServerViewInterface {
         this.incomingTextArea.append("\n"+str);
     }
 
+    /**
+     * Aici se returneaza un TextField sau un String? Daca un String, ce reprezinta outgoing string?
+     */
     public String getOutgoingTextField(){
         return this.outgoingTextField.getText();
     }
@@ -133,6 +136,7 @@ public class MainServerFrame implements MainServerViewInterface {
     /*************************************************************************************
      * LISTENERS
      ***********************************************************************************/
+
     public void setQuitButtonListener(ActionListener a) {
         this.stopServerButton.addActionListener(a);
     }

@@ -35,14 +35,26 @@ public class LoginView {
         return frame;
     }
 
+    /**
+     * Daca returnezi numarul de playeri, returneaza un Integer, nu un JTextField pe care sa fie obligat clientul
+     * sa apelze getText() iar apoi sa parseze. Don't Repeat Yourself
+     */
     public JTextField getTextFieldPlayersNr() {
         return textFieldPlayersNr;
     }
 
+    /**
+     * Prefera sa oferi o metoda 'setStatus(String status)'. In felul acesta poti modifica felul in care statusul
+     * e afisat in intefata fara sa modifici codul care seteaza statusul. In plus, nu oferi gratuit acces la field-urile
+     * clasei.
+     */
     public JLabel getStatusBar() {
         return statusBar;
     }
 
+    /**
+     * Metodele astea nu sunt necesare.
+     */
     public JButton getBtnSubmit() {
         return btnSubmit;
     }
@@ -51,12 +63,22 @@ public class LoginView {
         return btnAddPlayers;
     }
 
+    /**
+     * 1. Ce reprezinta text field-urile acestea? Metoda nu-mi comunica nimic.
+     * 2. Evita sa returnezi componente swing daca ai nevoie doar de continutul lor. Prefera
+     * o metoda: 'getPlayerNames'
+     */
     public ArrayList<JTextField> getListOfTextFields() {
         return listOfTextFields;
     }
 
-
-
+    /**
+     * Nu folosi comentarii gratuite decat daca esti obligat de conventiile echipei.
+     * 1. Cauta un nume potrivit. Daca ai nevoie de comentariu pe o zona de cod, extrage o metoda.
+     * 2. Daca ai nevoie de comentariu la un field / variabila, gandeste-te de ce numele variabilei nu comunica
+     * suficienta informatie.
+     * 3. Comentariile utile sunt acelea care explica metodele publice.
+     */
     /**
      * Create the application.
      */
@@ -115,6 +137,13 @@ public class LoginView {
         frame.getContentPane().add(c);
     }
 
+    /**
+     * 1. Ce inseamna firstView? dar second?
+     * 2. Metodele firstView si secondView nu returneaza nimic, deci nu ofera acces la vreun view. Presupun ca
+     * modifica starea interna a obiectului. Ar trebui desci sa fie verbe (ca majoritatea metodelor) si sa exprime
+     * ce anume vrei sa faca obiectul pentru tine. Numele 'showFirstView' e mai potrivit. show<nume_descriptiv>View
+     * ar fi si mai potrivit.
+     */
     public void firstView() {
         textFieldPlayersNr.setVisible(true);
         lblHowManyPlayers.setVisible(true);
@@ -124,17 +153,12 @@ public class LoginView {
     }
 
     public void secondView() {
-
         textFieldPlayersNr.setVisible(false);
         lblHowManyPlayers.setVisible(false);
         btnSubmit.setVisible(false);
         lblInsertNames.setVisible(true);
         btnAddPlayers.setVisible(true);
-
     }
-
-
-
 
     /*************************************************************************
      * LISTENERS
@@ -147,8 +171,4 @@ public class LoginView {
     public void setBtnSubmitListener(ActionListener a) {
         this.btnSubmit.addActionListener(a);
     }
-
-
-
-
 }

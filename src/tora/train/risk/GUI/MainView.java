@@ -149,12 +149,22 @@ public class MainView {
         }
     }
 
+    /**
+     * Print se face catre consola sau catre imprimanta. Metoda asta nu face print, face un update de model.
+     */
     public void printMap(){
         model.setRowCount(0);
         int n=StaticInformations.getXsize(),
                 m=StaticInformations.getYsize();
         Object [] row={"",0,1,2,3,4,5,6,7,8,9,10};
         model.addRow(row);
+
+        /**
+         * Colegii s-ar putea sa nu fie obisnuiti sa foloseasca range-ul 1 .. n (inclusiv), ci mai degraba
+         * 0 .. n (exclusiv). Asta poate cauza confuzie si poate incetini pasul la care cineva citeste codul. In plus,
+         * nu vei avea intotdeauna ocazia sa indexezi de la 1 (gandeste-te la array-uri pe care le primesti de la alte
+         * componente scrise de alti oameni), asa ca s-ar putea sa te incurci.
+         */
         for (int i=1;i<=n;i++){
             row=new Object[n+1];
             row[0]=i-1;
