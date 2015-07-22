@@ -131,6 +131,7 @@ public class MainView {
         //TODO
         btnAddReinforcement.setVisible(true);
         btnSubmitAllReinforcements.setVisible(true);
+        textFieldReinforcements.setVisible(true);
         showLeftReinforcements();
         showCurrentPlayer();
         printPlayersTerritories(StaticInformations.getCurrentPlayer());

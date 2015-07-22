@@ -275,26 +275,31 @@ public class ArenaController {
     }
 
     /**
+     * Builds the queue of players.
+     */
+    private void generateOrderOfPlayers() {
+        int nrOfPlayers = getNumberOfPlayers();
+        if (players.contains(Player.CPU_MAP_PLAYER))
+            nrOfPlayers--;
+
+        List<Player> playersToDistribute = new ArrayList<>(players);
+        playersToDistribute.remove(Player.CPU_MAP_PLAYER);
+        Random generator = new Random();
+        for (int i = 1; i <= nrOfPlayers; i++) {
+            Player generatedPlayer = playersToDistribute.get(generator.nextInt(playersToDistribute.size()));
+            playersToDistribute.remove(generatedPlayer);
+            playersQueue.add(generatedPlayer);
+        }
+    }
+
+    /**
      * @return player that has to move next
      * Sets isCurrentPlayerTurn to true.
      * If playersQueue is empty, this method will reconstruct the queue and then return the first player.
      */
     public Player getCurrentPlayer() {
-        if (playersQueue.isEmpty()) {
-            //generate order of players
-            int nrOfPlayers = getNumberOfPlayers();
-            if (players.contains(Player.CPU_MAP_PLAYER))
-                nrOfPlayers--;
-
-            List<Player> playersToDistribute = new ArrayList<>(players);
-            playersToDistribute.remove(Player.CPU_MAP_PLAYER);
-            Random generator = new Random();
-            for (int i = 1; i <= nrOfPlayers; i++) {
-                Player generatedPlayer = playersToDistribute.get(generator.nextInt(playersToDistribute.size()));
-                playersToDistribute.remove(generatedPlayer);
-                playersQueue.add(generatedPlayer);
-            }
-        }
+        if (playersQueue.isEmpty())
+            generateOrderOfPlayers();
         isCurrentPlayerTurn = true;
         return playersQueue.peek();
     }
@@ -314,5 +319,11 @@ public class ArenaController {
             return true;
         }
         return false;
+    }
+
+    public Queue<Player> getPlayersQueue() {
+        if (playersQueue.isEmpty())
+            generateOrderOfPlayers();
+        return playersQueue;
     }
 }

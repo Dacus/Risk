@@ -2,7 +2,6 @@ package tora.train.risk.clientserver.serverapp;
 
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageTag;
-import tora.train.risk.clientserver.serverapp.MainServer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,14 +40,27 @@ public class MainServerController {
         server.run();
     }
 
+    /**
+     * Calls a method on the main server that increments the variable counting the
+     * number of clients that have pushed the 'Ready' button
+     */
     public void incrementNumberOfReadyClients() {
         server.incrementReadyCounter();
     }
 
+    /**
+     * Sets the client's name and id in the main server
+     *
+     * @param name
+     * @param id
+     */
     public void setClientName(String name, int id) {
         server.setClientName(name, id);
     }
 
+    /***********************************************************************************
+     * LISTENERS
+     ************************************************************************************/
     /**
      * Action assigned to the "Stop Server" button on the GUI to stop the MainServer.
      * It stops all single servers (thus all clients) then it shuts down.
@@ -89,7 +101,7 @@ public class MainServerController {
      ************************************************************************************/
 
     /**
-     * Display the incoming messages from the clients on the GUI
+     * Displays the incoming messages from the clients on the GUI
      *
      * @param str  String to display
      */
@@ -98,7 +110,7 @@ public class MainServerController {
     }
 
     /**
-     * Display the number of clients currently online
+     * Displays the number of clients currently online
      *
      * @param n the number of online clients
      */
