@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class HotSeatConsole {
     private static Scanner reader = new Scanner(System.in);
     private ArenaController arenaController;
+    public enum Direction{UP,DOWN,LEFT,RIGHT}
 
     public HotSeatConsole() {
         arenaController=new ArenaController();
@@ -27,7 +28,7 @@ public class HotSeatConsole {
 
     private void moveLeft(int unitsNr,Point init, Player player,ArenaController arenaController){
         Point dest=new Point(init.x,init.y-1);
-        arenaController.moveUnits(unitsNr,init,dest,player);
+        arenaController.moveUnits(unitsNr, init, dest, player);
     }
 
     private void moveRight(int unitsNr,Point init, Player player,ArenaController arenaController){
@@ -89,6 +90,7 @@ public class HotSeatConsole {
 
     }
     private void playerTurn(Player player,ArenaController arenaController){
+
         System.out.println("Type end to finish turn, move followed by coordinates, number of units and direction of movement \n to move units");
         String command="";
         String direction="";
@@ -120,6 +122,9 @@ public class HotSeatConsole {
 
             }
         }
+    }
+    public void printArena(ArenaController arenaController){
+        System.out.println(arenaController.getArena().fancyPrintArena());
     }
 
     private void printWelcomeMessage(){
