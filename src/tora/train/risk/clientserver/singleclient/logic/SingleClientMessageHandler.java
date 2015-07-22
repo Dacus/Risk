@@ -3,7 +3,6 @@ package tora.train.risk.clientserver.singleclient.logic;
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
-import tora.train.risk.clientserver.singleclient.logic.SingleClientController;
 
 import java.util.ArrayList;
 
@@ -36,6 +35,7 @@ public class SingleClientMessageHandler implements MessageHandler {
             }
             case START:{
                 controller.displayMessage(msg);
+                controller.initializeMap();
                 break;
             }
             case NEW_PLAYER_CONNECTED:{

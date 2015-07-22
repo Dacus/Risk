@@ -37,15 +37,15 @@ public class MapView {
         /**
          * Create the application.
          */
-        public MapView() {
-            initialize();
+        public MapView(String name) {
+            initialize(name);
         }
 
         /**
          * Initialize the contents of the frame.
          */
-        private void initialize() {
-            frame = new JFrame();
+        private void initialize(String name) {
+            frame = new JFrame(name);
             frame.setBounds(100, 100, 900, 592);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.getContentPane().setLayout(null);

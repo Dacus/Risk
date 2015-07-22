@@ -4,7 +4,7 @@ import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
 import tora.train.risk.clientserver.common.MessageTag;
-import tora.train.risk.clientserver.singleclient.logic.CSocketClient;
+import tora.train.risk.clientserver.singleclient.gui.MapController;
 import tora.train.risk.clientserver.singleclient.gui.SingleClientFrame;
 
 import java.awt.event.ActionEvent;
@@ -189,6 +189,10 @@ public class SingleClientController implements Controller {
      */
     public void setClientConnected(boolean b) {
         this.clientFrame.setStatus(b);
+    }
+
+    public void initializeMap() {
+        MapController mapController=new MapController(clientSocket.getClientName());
     }
 
     /***************************************************************************************
