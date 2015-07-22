@@ -66,7 +66,7 @@ public class ArenaCommandValidator {
     }
 
     /**
-     * Checks whether the territory placed at init coordinates has a specified number of units.
+     * Checks whether the territory placed at init coordinates has a specified number of units that can be moved.
      *
      * @param arena     arena of the game
      * @param init      coordinates of territory to check
@@ -74,7 +74,7 @@ public class ArenaCommandValidator {
      * @return true if territory has the specified number of units
      */
     private static Boolean checkUnitsIsValid(Arena arena, Point init, int nrOfUnits) {
-        return arena.getTerritoryAtCoordinate(init).getUnitNr() > nrOfUnits;
+        return arena.getTerritoryAtCoordinate(init).getMovableUnits() > nrOfUnits;
     }
 
     /**

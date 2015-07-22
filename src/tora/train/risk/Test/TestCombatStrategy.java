@@ -42,18 +42,24 @@ public class TestCombatStrategy {
     @Test
     public void solveAttack_GivenHigherAttackKills_ExpectedConquer() {
         territory1.setUnitNr(6);
+        territory1.setMovableUnits(6);
         territory2.setUnitNr(5);
+        territory2.setMovableUnits(5);
         CombatStrategyMock.setAttackingKills(5);
         CombatStrategyMock.setDefenceKills(1);
 
         boolean fightResult = combatMock.solveAttack(5, territory1, territory2);
         int unitsOn2 = territory2.getUnitNr();
         int unitsOn1 = territory1.getUnitNr();
+        int movableOn1 = territory1.getMovableUnits();
+        int movableOn2 = territory2.getMovableUnits();
         Player ownerOf2 = territory2.getOwner();
 
-        assertEquals(fightResult, true);
-        assertEquals(unitsOn1, 1);
-        assertEquals(unitsOn2, 4);
+        assertEquals(true, fightResult);
+        assertEquals(1, unitsOn1);
+        assertEquals(4, unitsOn2);
+        assertEquals(1, movableOn1);
+        assertEquals(0, movableOn2);
         assertTrue(ownerOf2.equals(player1));
     }
 
@@ -61,17 +67,23 @@ public class TestCombatStrategy {
     public void solveAttack_GivenLowerAttackKills_ExpectedUnitNumbersChange() {
         territory1.setUnitNr(6);
         territory2.setUnitNr(7);
+        territory1.setMovableUnits(6);
+        territory2.setMovableUnits(7);
         CombatStrategyMock.setDefenceKills(7);
         CombatStrategyMock.setAttackingKills(2);
 
         boolean fightResult = combatMock.solveAttack(4, territory1, territory2);
         int unitsOn2 = territory2.getUnitNr();
         int unitsOn1 = territory1.getUnitNr();
+        int movableOn1 = territory1.getMovableUnits();
+        int movableOn2 = territory2.getMovableUnits();
         Player ownerOf2 = territory2.getOwner();
 
-        assertEquals(fightResult, false);
-        assertEquals(unitsOn1, 2);
-        assertEquals(unitsOn2, 5);
+        assertEquals(false, fightResult);
+        assertEquals(2, unitsOn1);
+        assertEquals(5, unitsOn2);
+        assertEquals(2, movableOn1);
+        assertEquals(5, movableOn2);
         assertTrue(ownerOf2.equals(player2));
     }
 
@@ -79,17 +91,23 @@ public class TestCombatStrategy {
     public void solveAttack_GivenEqualAttackKills_ExpectedBecomeNeutral() {
         territory1.setUnitNr(5);
         territory2.setUnitNr(4);
+        territory1.setMovableUnits(5);
+        territory2.setMovableUnits(4);
         CombatStrategyMock.setDefenceKills(4);
         CombatStrategyMock.setAttackingKills(4);
 
         boolean fightResult = combatMock.solveAttack(4, territory1, territory2);
         int unitsOn2 = territory2.getUnitNr();
         int unitsOn1 = territory1.getUnitNr();
+        int movableOn1 = territory1.getMovableUnits();
+        int movableOn2 = territory2.getMovableUnits();
         Player ownerOf2 = territory2.getOwner();
 
-        assertEquals(fightResult, true);
-        assertEquals(unitsOn1, 1);
-        assertEquals(unitsOn2, 0);
+        assertEquals(true, fightResult);
+        assertEquals(1, unitsOn1);
+        assertEquals(0, unitsOn2);
+        assertEquals(0, movableOn2);
+        assertEquals(1, movableOn1);
         assertTrue(ownerOf2.equals(Player.CPU_MAP_PLAYER));
     }
 }
