@@ -4,7 +4,7 @@ public class Player {
     public static final Player CPU_MAP_PLAYER;
 
     static {
-        CPU_MAP_PLAYER = new Player("CPU_MAP");
+        CPU_MAP_PLAYER = new Player("");
         CPU_MAP_PLAYER.setReinforcements(0);
     }
     private static final int INITIAL_REINFORCEMENTS = 20;
