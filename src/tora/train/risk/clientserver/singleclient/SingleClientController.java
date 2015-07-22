@@ -4,7 +4,6 @@ import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
 import tora.train.risk.clientserver.common.MessageTag;
-import tora.train.risk.clientserver.singleclient.CSocketClient;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,11 +14,11 @@ import java.util.ArrayList;
  * Controls the Client.
  * Responds to user interaction on the Client's side.
  * Contains methods that modify the View (SingleClientFrame) when needed.
- *
+ * <p/>
  * Each CSocketClient has a reference to a MessageMessage handler that processes
  * incoming messages. The MessageHandler has a reference to this controller (see constructor) and calls its methods
  * according to the message received.
- *
+ * <p/>
  * Created by Andrea on 7/16/2015.
  */
 public class SingleClientController implements Controller {
@@ -112,7 +111,61 @@ public class SingleClientController implements Controller {
         return received;
     }
 
+    /**
+     * Displays the message received from the server
+     *
+     * @param msg
+     */
+    public void displayMessage(Message msg) {
+        System.out.println("Client " + clientSocket.getClientId() + " displays global message");
+        clientFrame.setIncomingAreaText(msg.getContent().get(0).toString());
+    }
 
+    /**
+     * Sets the id of the client.
+     * <p/>
+     * As soon as the client connects, the server assigns it a unique identification number.
+     * The server lets the client know about this number through a notification message.
+     * The client will store this number and use it to communicate its identity to the server.
+     *
+     * @param id
+     */
+    public void setClientIdentity(int id) {
+        this.clientSocket.setClientId(id);
+    }
+
+    /**
+     * Adds a client name to the ComboBox that holds the names of the currently online clients
+     *
+     * @param name the String to be added to the ComboBox
+     */
+    public void addNewPlayerToCombo(String name) {
+        this.clientFrame.addPlayer(name);
+    }
+
+    /**
+     * Removes a client name from the ComboBox containing the online clients' names
+     *
+     * @param name the name to be removed from the ComboBox
+     */
+    public void removePlayerFromCombo(String name) {
+        this.clientFrame.removePlayer(name);
+    }
+
+    /***************************************************************************************
+     * VIEW RELATED
+     **************************************************************************************/
+
+    /**
+     * Adds a list of names to the ComboBox holding online clients' names
+     *
+     * @param names list of Strings representing clients' names
+     */
+    public void addPlayersToCombo(ArrayList<String> names) {
+        for (String name : names) {
+            clientFrame.addPlayer(name);
+        }
+    }
 
     /**
      * Action assigned to the "Connect" button on the GUI that connects the client to server
@@ -173,56 +226,5 @@ public class SingleClientController implements Controller {
                 readyFlag=true;
             }
         }
-    }
-
-    /***************************************************************************************
-     * VIEW RELATED
-     **************************************************************************************/
-    /**
-     * Displays the message received from the server
-     *
-     * @param msg
-     */
-    public void displayMessage(Message msg){
-        System.out.println("Client " + clientSocket.getClientId() + " displays global message");
-        clientFrame.setIncomingAreaText(msg.getContent().get(0).toString());
-    }
-
-    /**
-     * Sets the id of the client.
-     *
-     * As soon as the client connects, the server assigns it a unique identification number.
-     * The server lets the client know about this number through a notification message.
-     * The client will store this number and use it to communicate its identity to the server.
-     *
-     * @param id
-     */
-    public void setClientIdentity(int id){
-        this.clientSocket.setClientId(id);
-    }
-
-    /**
-     * Adds a client name to the ComboBox that holds the names of the currently online clients
-     *
-     * @param name the String to be added to the ComboBox
-     */
-    public void addNewPlayerToCombo(String name) {
-        this.clientFrame.addPlayer(name);
-    }
-
-    /**
-     * Removes a client name from the ComboBox containing the online clients' names
-     *
-     * @param name the name to be removed from the ComboBox
-     */
-    public void removePlayerFromCombo(String name) { this.clientFrame.removePlayer(name);}
-
-    /**
-     * Adds a list of names to the ComboBox holding online clients' names
-     *
-     * @param names list of Strings representing clients' names
-     */
-    public void addPlayersToCombo(ArrayList<String> names) {
-        names.forEach(this.clientFrame::addPlayer);
     }
 }
