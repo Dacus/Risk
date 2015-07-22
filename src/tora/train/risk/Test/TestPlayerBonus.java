@@ -110,8 +110,6 @@ public class TestPlayerBonus {
         assertThat(bonus, equalTo(actual));
     }
 
-
-
     @Test
     public void giveBonus_GivenTwoContinents_ExpectedContinentBonuses() {
         Continent firstContinent = defaultArena.getContinents().get(0);
@@ -126,6 +124,24 @@ public class TestPlayerBonus {
         Integer actual = formula(territories, continentBonus);
 
         assertThat(bonus, equalTo(actual));
+    }
+
+    @Test
+    public void giveBonus_GivenNullPlayer_ExpectedZero() {
+        randomPlayer = null;
+
+        int bonus = defaultStrat.computePlayerBonus(randomPlayer);
+
+        assertThat(bonus, equalTo(0));
+    }
+
+    @Test
+    public void giveBonus_GivenCpuPlayer_ExpectedZero() {
+        randomPlayer = Player.CPU_MAP_PLAYER;
+
+        int bonus = defaultStrat.computePlayerBonus(randomPlayer);
+
+        assertThat(bonus, equalTo(0));
     }
 
 }
