@@ -1,6 +1,6 @@
-package ClientServerExample.test;
+package tora.train.risk.ClientServerExample.test;
 
-import ClientServerExample.clientapp.ClientAppController;
+import tora.train.risk.ClientServerExample.clientapp.ClientAppController;
 
 import java.io.IOException;
 

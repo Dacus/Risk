@@ -1,4 +1,4 @@
-package ClientServerExample.clientapp;
+package tora.train.risk.ClientServerExample.clientapp;
 
 import java.awt.*;
 

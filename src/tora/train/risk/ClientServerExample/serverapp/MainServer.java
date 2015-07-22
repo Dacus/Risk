@@ -1,10 +1,10 @@
-package ClientServerExample.serverapp;
+package tora.train.risk.ClientServerExample.serverapp;
 
-import ClientServerExample.common.Message;
-import ClientServerExample.common.MessageTag;
-import ClientServerExample.singleserver.CMSocketServer;
-import ClientServerExample.singleserver.SingleServerController;
-import ClientServerExample.singleserver.SingleServerMessageHandler;
+import tora.train.risk.ClientServerExample.common.Message;
+import tora.train.risk.ClientServerExample.common.MessageTag;
+import tora.train.risk.ClientServerExample.singleserver.CMSocketServer;
+import tora.train.risk.ClientServerExample.singleserver.SingleServerController;
+import tora.train.risk.ClientServerExample.singleserver.SingleServerMessageHandler;
 
 import java.net.ServerSocket;
 import java.net.Socket;

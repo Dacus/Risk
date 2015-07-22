@@ -1,7 +1,7 @@
-package ClientServerExample.serverapp;
+package tora.train.risk.ClientServerExample.serverapp;
 
-import ClientServerExample.common.Message;
-import ClientServerExample.common.MessageTag;
+import tora.train.risk.ClientServerExample.common.Message;
+import tora.train.risk.ClientServerExample.common.MessageTag;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

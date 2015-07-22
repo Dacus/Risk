@@ -1,4 +1,4 @@
-package ClientServerExample.common;
+package tora.train.risk.ClientServerExample.common;
 
 /**
  * Type of message

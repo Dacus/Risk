@@ -1,8 +1,8 @@
-package ClientServerExample.singleclient;
+package tora.train.risk.ClientServerExample.singleclient;
 
-import ClientServerExample.common.Controller;
-import ClientServerExample.common.Message;
-import ClientServerExample.common.MessageHandler;
+import tora.train.risk.ClientServerExample.common.Controller;
+import tora.train.risk.ClientServerExample.common.Message;
+import tora.train.risk.ClientServerExample.common.MessageHandler;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
-package ClientServerExample.singleclient;
+package tora.train.risk.ClientServerExample.singleclient;
 
-import ClientServerExample.common.*;
+import tora.train.risk.ClientServerExample.common.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

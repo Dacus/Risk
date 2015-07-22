@@ -1,6 +1,6 @@
-package ClientServerExample.singleserver;
+package tora.train.risk.ClientServerExample.singleserver;
 
-import ClientServerExample.common.Message;
+import tora.train.risk.ClientServerExample.common.Message;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

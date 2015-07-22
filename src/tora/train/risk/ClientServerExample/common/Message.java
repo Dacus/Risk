@@ -1,4 +1,4 @@
-package ClientServerExample.common;
+package tora.train.risk.ClientServerExample.common;
 
 import java.io.Serializable;
 import java.util.ArrayList;

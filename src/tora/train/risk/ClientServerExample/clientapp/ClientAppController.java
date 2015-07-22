@@ -1,8 +1,8 @@
-package ClientServerExample.clientapp;
+package tora.train.risk.ClientServerExample.clientapp;
 
-import ClientServerExample.singleclient.SingleClientController;
-import ClientServerExample.singleclient.SingleClientFrame;
-import ClientServerExample.singleclient.SingleClientMessageHandler;
+import tora.train.risk.ClientServerExample.singleclient.SingleClientController;
+import tora.train.risk.ClientServerExample.singleclient.SingleClientFrame;
+import tora.train.risk.ClientServerExample.singleclient.SingleClientMessageHandler;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

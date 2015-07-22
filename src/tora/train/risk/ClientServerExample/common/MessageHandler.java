@@ -1,4 +1,4 @@
-package ClientServerExample.common;
+package tora.train.risk.ClientServerExample.common;
 
 /**
  * Created by Andrea on 7/16/2015.

@@ -1,6 +1,6 @@
-package ClientServerExample.clientapp;
+package tora.train.risk.ClientServerExample.clientapp;
 
-import ClientServerExample.utils.Helpers;
+import tora.train.risk.ClientServerExample.utils.Helpers;
 
 import javax.swing.*;
 import java.awt.*;

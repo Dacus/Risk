@@ -1,7 +1,7 @@
-package ClientServerExample.singleclient;
+package tora.train.risk.ClientServerExample.singleclient;
 
-import ClientServerExample.clientapp.ClientAppViewInterface;
-import ClientServerExample.utils.Helpers;
+import tora.train.risk.ClientServerExample.clientapp.ClientAppViewInterface;
+import tora.train.risk.ClientServerExample.utils.Helpers;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  *
  * Created by Andrea on 7/16/2015.
  */
-public class SingleClientFrame implements ClientServerExample.singleclient.SingleClientViewInterface {
+public class SingleClientFrame implements tora.train.risk.ClientServerExample.singleclient.SingleClientViewInterface {
     private JFrame frame;
 
     private JButton connectButton;

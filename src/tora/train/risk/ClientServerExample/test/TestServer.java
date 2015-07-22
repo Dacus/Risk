@@ -1,7 +1,7 @@
-package ClientServerExample.test;
+package tora.train.risk.ClientServerExample.test;
 
-import ClientServerExample.serverapp.MainServerController;
-import ClientServerExample.serverapp.MainServerFrame;
+import tora.train.risk.ClientServerExample.serverapp.MainServerController;
+import tora.train.risk.ClientServerExample.serverapp.MainServerFrame;
 
 /**
  * Created by Andrea on 7/16/2015.

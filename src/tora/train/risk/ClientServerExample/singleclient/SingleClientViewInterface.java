@@ -1,4 +1,4 @@
-package ClientServerExample.singleclient;
+package tora.train.risk.ClientServerExample.singleclient;
 
 import java.awt.*;
 

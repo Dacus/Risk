@@ -1,4 +1,4 @@
-package ClientServerExample.common;
+package tora.train.risk.ClientServerExample.common;
 
 /**
  * Interface for all controllers

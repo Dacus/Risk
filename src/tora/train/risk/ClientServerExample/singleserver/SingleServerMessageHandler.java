@@ -1,9 +1,9 @@
-package ClientServerExample.singleserver;
+package tora.train.risk.ClientServerExample.singleserver;
 
-import ClientServerExample.common.Controller;
-import ClientServerExample.common.Message;
-import ClientServerExample.common.MessageHandler;
-import ClientServerExample.common.MessageTag;
+import tora.train.risk.ClientServerExample.common.Controller;
+import tora.train.risk.ClientServerExample.common.Message;
+import tora.train.risk.ClientServerExample.common.MessageHandler;
+import tora.train.risk.ClientServerExample.common.MessageTag;
 
 /**
  * Class that processes the messages received from the client

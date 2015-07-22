@@ -1,4 +1,4 @@
-package ClientServerExample.utils;
+package tora.train.risk.ClientServerExample.utils;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
