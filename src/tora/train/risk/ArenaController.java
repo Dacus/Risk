@@ -19,7 +19,7 @@ public class ArenaController {
      * Default constructor
      */
     public ArenaController() {
-        players = new ArrayList<Player>();
+        players = new ArrayList<>();
         players.add(Player.CPU_MAP_PLAYER);
         this.arena = new Arena();
         this.bonusComputer = new RiskDefaultBonus(arena);
@@ -100,7 +100,7 @@ public class ArenaController {
         if (!arena.getTerritoryAtCoordinate(dest).getOwner().equals(player)) {
             resolveAttack(nrOfAttackingUnits, init, dest, player);
         } else {
-            transferUnits(nrOfAttackingUnits, init, dest, player);
+            transferUnits(nrOfAttackingUnits, init, dest);
         }
         return true;
     }
@@ -111,12 +111,12 @@ public class ArenaController {
      * @param nrOfUnits how many units to move (value > 0)
      * @param from      the territory's coordinates from which the player moves (belongs to player)
      * @param to        the territory's coordinates to which the player moves (belongs to player)
-     * @param player    the player that want to move
      */
-    private void transferUnits(int nrOfUnits, Point from, Point to, Player player) {
+    private void transferUnits(int nrOfUnits, Point from, Point to) {
         Territory fromTerritory = arena.getTerritoryAtCoordinate(from.x, from.y);
         Territory toTerritory = arena.getTerritoryAtCoordinate(to.x, to.y);
 
+        fromTerritory.setMovableUnits(fromTerritory.getUnitNr() - nrOfUnits);
         fromTerritory.setUnitNr(fromTerritory.getUnitNr() - nrOfUnits);
         toTerritory.setUnitNr(toTerritory.getUnitNr() + nrOfUnits);
     }
@@ -203,6 +203,7 @@ public class ArenaController {
                 int territoryID = generator.nextInt(distributableTerritories.size());
                 distributableTerritories.get(territoryID).setOwner(currentPlayer);
                 distributableTerritories.get(territoryID).setUnitNr(1);
+                distributableTerritories.get(territoryID).setMovableUnits(1);
                 currentPlayer.setReinforcements(currentPlayer.getReinforcements() - 1);
 
                 //mark current territory as distributed
@@ -240,8 +241,22 @@ public class ArenaController {
             return false;
 
         territory.setUnitNr(territory.getUnitNr() + nrOfUnits);
+        territory.setMovableUnits(territory.getUnitNr() + nrOfUnits);
         player.setReinforcements(player.getReinforcements() - nrOfUnits);
         return true;
+    }
+
+    /**
+     * Set the units on territories to be movable again, at the start of the territory
+     *
+     * @param player player who's turn is
+     */
+    public void resetMovableUnits(Player player) {
+        List<Territory> territories = arena.getOwnedTerritories(player);
+        for (Territory territory : territories) {
+            int units = territory.getUnitNr();
+            territory.setMovableUnits(units);
+        }
     }
 
     /**

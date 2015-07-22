@@ -1,6 +1,7 @@
 package tora.train.risk;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -9,10 +10,12 @@ import java.util.Scanner;
 public class HotSeatConsole {
     private static Scanner reader = new Scanner(System.in);
     private ArenaController arenaController;
-    public enum Direction{UP,DOWN,LEFT,RIGHT}
+    private ArenaCommandValidator arenaCommandValidator;
+
 
     public HotSeatConsole() {
         arenaController=new ArenaController();
+        arenaCommandValidator=new ArenaCommandValidator();
     }
 
     public static void main(String[] args) {
@@ -96,11 +99,12 @@ public class HotSeatConsole {
         System.out.println(arenaController.getArena().fancyPrintArena());
     }
 
-    private void playerTurn(Player player,ArenaController arenaController){
+    private void playerTurn(Player player,ArenaController arenaController,ArenaCommandValidator arenaCommandValidator){
 
         System.out.println("Type end to finish turn, move followed by coordinates, number of units and direction of movement \n to move units");
         String command="";
         String direction="";
+        ArrayList<MoveCommand> commands=new ArrayList<>();
         while(!command.equals("end")){
             command = reader.nextLine();
             if (command.equals("move")) {
@@ -108,28 +112,25 @@ public class HotSeatConsole {
                 int numberOfUnits = reader.nextInt();
                 reader.nextLine();
                 direction = reader.nextLine();
-
-                switch (direction.toLowerCase()){
-                    case "up":
-                        moveUp(numberOfUnits,point,player,arenaController);
-                        break;
-                    case "down":
-                        moveDown(numberOfUnits,point,player,arenaController);
-                        break;
-                    case "left":
-                        moveLeft(numberOfUnits,point,player,arenaController);
-                        break;
-                    case "right":
-                        moveRight(numberOfUnits,point,player,arenaController);
-                        break;
-                    default:
-                        System.out.println("Invalid direction");
-                        break;
+                while (!direction.equals("right") && !direction.equals("down") && !direction.equals("up") && !direction.equals("left")){
+                    System.out.println("Invalid Direction");
+                    direction = reader.nextLine();
                 }
 
+                MoveCommand moveCommand=new MoveCommand(point,numberOfUnits,player,direction);
+                if (arenaCommandValidator.validateMove(arenaController.getArena(),numberOfUnits,point,moveCommand.getDestinationPoint(),player))
+                    commands.add(moveCommand);
+                else
+                    System.out.println("Invalid Command");
+                }
+            if (command.equals("cancel"))
+                commands.clear();
+
             }
+        //Resolve Turn
+        for (MoveCommand move:commands){
+            arenaController.moveUnits(move.getNumberOfUnits(),move.getCoordinates(),move.getDestinationPoint(),player);
         }
-        System.out.println("New arena units distributions");
         System.out.println(arenaController.getArena().fancyPrintArena());
     }
     public void printArena(ArenaController arenaController){
@@ -176,7 +177,7 @@ public class HotSeatConsole {
                 arenaController.givePlayerBonus(currentPlayer);
                 System.out.println(currentPlayer.getName()+" you have "+ currentPlayer.getReinforcements() + " units to reinforce");
                 playerReinforces(currentPlayer,arenaController);
-                playerTurn(currentPlayer,arenaController);
+                playerTurn(currentPlayer,arenaController,arenaCommandValidator);
 
             }
             if (arenaController.getNumberOfPlayers()<3)
