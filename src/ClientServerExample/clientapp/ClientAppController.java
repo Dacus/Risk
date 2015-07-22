@@ -1,9 +1,5 @@
 package ClientServerExample.clientapp;
 
-import ClientServerExample.singleclient.SingleClientController;
-import ClientServerExample.singleclient.SingleClientFrame;
-import ClientServerExample.singleclient.SingleClientMessageHandler;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,11 +13,9 @@ import java.awt.event.ActionListener;
  */
 public class ClientAppController {
     private ClientAppFrame frame;
-    private SingleClientMessageHandler clientMsgHandler;
 
     public ClientAppController(){
         //initialize fields
-        this.clientMsgHandler=new SingleClientMessageHandler();
         this.frame=new ClientAppFrame();
 
         //add button listeners
@@ -41,8 +35,8 @@ public class ClientAppController {
             if (!clientName.equals("")) {
 
                 //create a new window for the client. Each window has its own associated controller
-                SingleClientFrame clientFrame = new SingleClientFrame(clientName);
-                SingleClientController singleClientController = new SingleClientController(clientFrame, clientMsgHandler);
+                Thread th=new Thread(new ClientAppThread(clientName));
+                th.start();
 
                 //clear the nameField
                 frame.clearNameField();
