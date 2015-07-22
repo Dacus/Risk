@@ -49,9 +49,15 @@ public class MainController {
     private class btnReinforcementAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            reinforcements.put(new Point(mainView.getXpos(), mainView.getYpos()), mainView.getValue());
+            Point destination = new Point(mainView.getXpos(), mainView.getYpos());
+            if (reinforcements.containsKey(destination)) {
+                Integer value = reinforcements.get(destination);
+                value += mainView.getValue();
+                reinforcements.put(destination, value);
+            } else {
+                reinforcements.put(destination, mainView.getValue());
+            }
             mainView.showLeftReinforcements();
-
         }
     }
 

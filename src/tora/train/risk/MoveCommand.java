@@ -10,20 +10,20 @@ public class MoveCommand {
     private int numberOfUnits;
     private Player owner;
 
+
+    public MoveCommand(Point coordinates, int numberOfUnits, Player owner, HotSeatConsole.Direction direction) {
+        this.coordinates = coordinates;
+        this.numberOfUnits = numberOfUnits;
+        this.owner = owner;
+        //this.direction = direction;
+    }
+
     public int getNumberOfUnits() {
         return numberOfUnits;
     }
 
     public Player getOwner() {
         return owner;
-    }
-
-
-    public MoveCommand(Point coordinates,int numberOfUnits, Player owner,Direction direction){
-        this.coordinates=coordinates;
-        this.numberOfUnits=numberOfUnits;
-        this.owner=owner;
-        this.direction=direction;
     }
 
     public Point getCoordinates() {
