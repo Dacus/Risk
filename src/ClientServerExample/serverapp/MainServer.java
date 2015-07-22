@@ -10,6 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -30,7 +31,7 @@ public class MainServer implements Runnable{
 
     private static final int PORT_NO = 9990;
 	private AtomicInteger id = new AtomicInteger(1);
-	private boolean isRunning= true;
+	private AtomicBoolean isRunning=new AtomicBoolean(true);
 
 	private SingleServerMessageHandler messageHandler;
 	private MainServerController mainServerController;
@@ -50,7 +51,7 @@ public class MainServer implements Runnable{
 			
 			System.out.println("Multiple Socket Server Initialized");
 
-			while (isRunning) {
+			while (isRunning.get()) {
 				System.out.println("Listening for clients");
 
 				client = serverSocket.accept();
@@ -59,27 +60,26 @@ public class MainServer implements Runnable{
 				CMSocketServer server = new CMSocketServer(client, messageHandler);
 				SingleServerController controller = new SingleServerController(server, mainServerController, messageHandler);
 
-				//set the id and the name of the client
 				controller.setID(id.get());
-				System.out.println("Client " + id.get() + " connected");
-
-				//send names of online clients
-				controller.sendListOfOnlineClients(new ArrayList<String>(clientMap.values()));
-
-				//add client to map
                 map.put(id.get(), controller);
+
+                System.out.println("Client " + id.get() +   " connected");
 
 				//display the number of currently connected clients on the Server GUI
 				mainServerController.setNumberOfOnlineClients(map.size());
 
+                //send names of online clients
+                controller.sendListOfOnlineClients(new ArrayList<String>(clientMap.values()));
+
+				id.getAndIncrement();
+
 				//Keep each client on its own thread
 				Thread thread = new Thread(server);
 				thread.start();
-
-				id.getAndIncrement();
 			}
 		} catch (Exception e) {
 			System.out.println("Main server stops");
+			Thread.currentThread().interrupt();
 		}
 	}
 
@@ -120,13 +120,13 @@ public class MainServer implements Runnable{
 	/**
 	 * Stops the Main Server exiting the while loop.
 	 */
-	public synchronized void stop(){
-		this.isRunning = false;
+	public void stop(){
+		this.isRunning.set(false);
 	}
 
     public void incrementReadyCounter() {
-        int x = readyCounter.getAndIncrement();
-        if (x == map.size() - 1) {
+        int x=readyCounter.getAndIncrement();
+        if (x==map.size()-1) {
             Message msg = new Message(MessageTag.START);
             msg.addObject("StartGame");
             sendGlobalMessage(msg);

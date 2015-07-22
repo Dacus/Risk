@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  *
  * Created by Andrea on 7/16/2015.
  */
-public class SingleClientFrame implements SingleClientViewInterface {
+public class SingleClientFrame implements ClientServerExample.singleclient.SingleClientViewInterface {
     private JFrame frame;
 
     private JButton connectButton;

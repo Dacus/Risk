@@ -62,6 +62,7 @@ public class SingleClientController implements Controller {
     public void connectByName(){
         Message msg=new Message(MessageTag.CONNECT);
         msg.addObject(clientSocket.getClientName());
+        msg.addObject(clientSocket.getClientId());
         sendMessage(msg);
     }
 
@@ -175,7 +176,7 @@ public class SingleClientController implements Controller {
      * VIEW RELATED
      **************************************************************************************/
     /**
-     * Displays the message received from the server
+     * Displays the message received from the server on the GUI
      *
      * @param msg
      */
@@ -197,28 +198,16 @@ public class SingleClientController implements Controller {
         this.clientSocket.setClientId(id);
     }
 
-    /**
-     * Adds a client name to the ComboBox that holds the names of the currently online clients
-     *
-     * @param name the String to be added to the ComboBox
-     */
     public void addNewPlayerToCombo(String name) {
         this.clientFrame.addPlayer(name);
     }
 
-    /**
-     * Removes a client name from the ComboBox containing the online clients' names
-     *
-     * @param name the name to be removed from the ComboBox
-     */
     public void removePlayerFromCombo(String name) { this.clientFrame.removePlayer(name);}
 
-    /**
-     * Adds a list of names to the ComboBox holding online clients' names
-     *
-     * @param names list of Strings representing clients' names
-     */
     public void addPlayersToCombo(ArrayList<String> names) {
-        names.forEach(this.clientFrame::addPlayer);
+        System.out.println("Names to add to combo:" + names);
+        for (int i=1; i<names.size(); i++){
+            this.clientFrame.addPlayer(names.get(i));
+        }
     }
 }
