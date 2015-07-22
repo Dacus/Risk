@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Arena {
-    private static final int SIZE_X=11;
-    private static final int SIZE_Y=11;
+    private static final int SIZE_X = 11;
+    private static final int SIZE_Y = 11;
     private Territory[][] map;
     private List<Continent> continents;
 
@@ -81,7 +81,7 @@ public class Arena {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return printArena();
     }
 
@@ -99,11 +99,11 @@ public class Arena {
     }
 
     /**
-     *     Identical to arena.printArena(), but is much more easy to read
-     *     note: Increased readability works only for player names up to 10 characters
+     * Identical to arena.printArena(), but is much more easy to read
+     * note: Increased readability works only for player names up to 10 characters
      */
 
-    public String fancyPrintArena(){
+    public String fancyPrintArena() {
         StringBuilder s = new StringBuilder("");
         StringBuilder playerName;
         s.append(String.format("%" + 8 + "s", 0));
@@ -183,119 +183,119 @@ public class Arena {
         continents.add(R);
 
         //ANW
-        for ( i=0;i<5;i++) {
-            map[i][0]=new Territory(ANW,new Point(i,0));
+        for (i = 0; i < 5; i++) {
+            map[i][0] = new Territory(ANW, new Point(i, 0));
         }
-        for ( i=0;i<=2;i++) {
-            map[i][1]=new Territory(ANW,new Point(i,1));
+        for (i = 0; i <= 2; i++) {
+            map[i][1] = new Territory(ANW, new Point(i, 1));
         }
-        map[0][2]=new Territory(ANW,new Point(0,2));
+        map[0][2] = new Territory(ANW, new Point(0, 2));
 
         //ASW
-        for ( i=6;i< SIZE_X;i++) {
-            map[i][0] =new Territory(ASW,new Point(i,0));
+        for (i = 6; i < SIZE_X; i++) {
+            map[i][0] = new Territory(ASW, new Point(i, 0));
         }
-        for ( i=8;i< SIZE_X;i++) {
-            map[i][1]=new Territory(ASW,new Point(i,1));
+        for (i = 8; i < SIZE_X; i++) {
+            map[i][1] = new Territory(ASW, new Point(i, 1));
         }
-        map[10][2]=new Territory(ASW,new Point(10,2));
+        map[10][2] = new Territory(ASW, new Point(10, 2));
 
         //ANE
-        for ( i=0;i<=4;i++) {
-            map[i][10]=new Territory(ANE,new Point(i,10));
+        for (i = 0; i <= 4; i++) {
+            map[i][10] = new Territory(ANE, new Point(i, 10));
         }
-        for ( i=0;i<=2;i++) {
-            map[i][9]=new Territory(ANE,new Point(i,9));
+        for (i = 0; i <= 2; i++) {
+            map[i][9] = new Territory(ANE, new Point(i, 9));
         }
-        map[0][8]=new Territory(ANE,new Point(0,8));
+        map[0][8] = new Territory(ANE, new Point(0, 8));
 
         //ASE
-        for ( i=6;i<SIZE_X;i++) {
-            map[i][10]=new Territory(ASE,new Point(i,10));
+        for (i = 6; i < SIZE_X; i++) {
+            map[i][10] = new Territory(ASE, new Point(i, 10));
         }
-        for ( i=8;i<SIZE_X;i++) {
-            map[i][9]=new Territory(ASE,new Point(i,9));
+        for (i = 8; i < SIZE_X; i++) {
+            map[i][9] = new Territory(ASE, new Point(i, 9));
         }
-        map[10][8]=new Territory(ASE,new Point(10,8));
+        map[10][8] = new Territory(ASE, new Point(10, 8));
 
         //MN
-        for ( i=3;i<=7;i++){
-            map[0][i]=new Territory(MN,new Point(0,i));
+        for (i = 3; i <= 7; i++) {
+            map[0][i] = new Territory(MN, new Point(0, i));
         }
-        for ( i=2;i<=8;i++){
-            map[1][i]=new Territory(MN,new Point(1,i));
+        for (i = 2; i <= 8; i++) {
+            map[1][i] = new Territory(MN, new Point(1, i));
         }
 
         //MS
-        for ( i=3;i<=7;i++){
-            map[10][i]=new Territory(MS,new Point(10,i));
+        for (i = 3; i <= 7; i++) {
+            map[10][i] = new Territory(MS, new Point(10, i));
         }
-        for ( i=2;i<=8;i++){
-            map[9][i]=new Territory(MS,new Point(9,i));
+        for (i = 2; i <= 8; i++) {
+            map[9][i] = new Territory(MS, new Point(9, i));
         }
 
         //PN
-        for ( i=2;i<=8;i++){
-            map[2][i]=new Territory(PN,new Point(2,i));
+        for (i = 2; i <= 8; i++) {
+            map[2][i] = new Territory(PN, new Point(2, i));
         }
-        for ( i=2;i<=8;i++){
-            if(i==2 || i==3 || i==7 || i==8) {
-                map[3][i]=new Territory(PN,new Point(3,i));
+        for (i = 2; i <= 8; i++) {
+            if (i == 2 || i == 3 || i == 7 || i == 8) {
+                map[3][i] = new Territory(PN, new Point(3, i));
             }
         }
         //PS
-        for ( i=2;i<=8;i++){
-            map[8][i]=new Territory(PS,new Point(8,i));
+        for (i = 2; i <= 8; i++) {
+            map[8][i] = new Territory(PS, new Point(8, i));
         }
-        for ( i=2;i<=8;i++){
-            if(i==2 || i==3 || i==7 || i==8) {
-                map[7][i]=new Territory(PS,new Point(7,i));
+        for (i = 2; i <= 8; i++) {
+            if (i == 2 || i == 3 || i == 7 || i == 8) {
+                map[7][i] = new Territory(PS, new Point(7, i));
             }
         }
 
         //GN
-        for( i=4;i<=6;i++){
-            map[3][i]=new Territory(GN,new Point(3,i));
+        for (i = 4; i <= 6; i++) {
+            map[3][i] = new Territory(GN, new Point(3, i));
         }
-        for( i=3;i<=7;i++){
-            if (i!=5) {
-                map[4][i]=new Territory(GN,new Point(4,i));
+        for (i = 3; i <= 7; i++) {
+            if (i != 5) {
+                map[4][i] = new Territory(GN, new Point(4, i));
             }
         }
 
         //GS
-        for( i=4;i<=6;i++){
-            map[7][i]=new Territory(GS,new Point(7,i));
+        for (i = 4; i <= 6; i++) {
+            map[7][i] = new Territory(GS, new Point(7, i));
         }
-        for( i=3;i<=7;i++){
-            if (i!=5) {
-                map[6][i]=new Territory(GS,new Point(6,i));
+        for (i = 3; i <= 7; i++) {
+            if (i != 5) {
+                map[6][i] = new Territory(GS, new Point(6, i));
             }
         }
 
         //R
-        for( i=3;i<=7;i++){
-            map[5][i]=new Territory(R,new Point(5,i));
+        for (i = 3; i <= 7; i++) {
+            map[5][i] = new Territory(R, new Point(5, i));
         }
-        map[6][5] =new Territory(R,new Point(6,5));
-        map[4][5]=new Territory(R,new Point(4,5));
+        map[6][5] = new Territory(R, new Point(6, 5));
+        map[4][5] = new Territory(R, new Point(4, 5));
 
         //HW
-        for( i=3;i<=7;i++){
-            map[i][1]=new Territory(HW,new Point(i,1));
+        for (i = 3; i <= 7; i++) {
+            map[i][1] = new Territory(HW, new Point(i, 1));
         }
-        for( i=4;i<=6;i++){
-            map[i][2]=new Territory(HW,new Point(i,2));
+        for (i = 4; i <= 6; i++) {
+            map[i][2] = new Territory(HW, new Point(i, 2));
         }
-        map[5][0]=new Territory(HW,new Point(5,0));
+        map[5][0] = new Territory(HW, new Point(5, 0));
 
         //HE
-        for( i=3;i<=7;i++){
-            map[i][9]=new Territory(HE,new Point(i,9));
+        for (i = 3; i <= 7; i++) {
+            map[i][9] = new Territory(HE, new Point(i, 9));
         }
-        for( i=4;i<=6;i++){
-            map[i][8]=new Territory(HE,new Point(i,8));
+        for (i = 4; i <= 6; i++) {
+            map[i][8] = new Territory(HE, new Point(i, 8));
         }
-        map[5][10]=new Territory(HE,new Point(5,10));
+        map[5][10] = new Territory(HE, new Point(5, 10));
     }
 }

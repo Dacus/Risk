@@ -49,6 +49,7 @@ public class SingleClientFrame implements SingleClientViewInterface {
         frame.getContentPane().add(backgroundPanel);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(SingleClientViewInterface.WINDOW_X, SingleClientViewInterface.WINDOW_Y);
     }
 
