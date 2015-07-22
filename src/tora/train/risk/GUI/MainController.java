@@ -49,13 +49,12 @@ public class MainController {
         @Override
         public void actionPerformed(ActionEvent e) {
             Point destination = new Point(mainView.getXpos(), mainView.getYpos());
-            int value=0;
+            int value=mainView.getValue();
             if (reinforcements.containsKey(destination)) {
-                value = reinforcements.get(destination);
-                value += mainView.getValue();
+                value += reinforcements.get(destination);
                 reinforcements.put(destination, value);
             } else {
-                reinforcements.put(destination, mainView.getValue());
+                reinforcements.put(destination,value);
             }
             StaticInformations.submitReinforcements(destination, value);
             mainView.printMap();
