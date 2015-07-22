@@ -133,17 +133,36 @@ public class MainServer implements Runnable{
         }
     }
 
+    /**
+     * Save the client's name and Id in a map.
+     * Tell all other clients about the newcomer
+     *
+     * @param name  name of the new client
+     * @param id    id of the new client
+     */
     public void setClientName(String name, int id) {
         this.clientMap.put(id, name);
         broadcastAddingNewPlayer(name);
     }
 
+    /**
+     * When a new client connects, all other clients will know about it.
+     * The name of the new client is sent to all other connected clients.
+     *
+     * @param name  the name of the new client
+     */
     public void broadcastAddingNewPlayer(String name){
         Message msg=new Message(MessageTag.NEW_PLAYER_CONNECTED);
         msg.addObject(name);
         sendGlobalMessage(msg);
     }
 
+    /**
+     * When a client disconnects, the server sends a message to all online clients
+     * letting them know about that client.
+     *
+     * @param name
+     */
     public void broadcastRemovingPlayer(String name){
         Message msg=new Message(MessageTag.PLAYER_DISCONNECTED);
         msg.addObject(name);

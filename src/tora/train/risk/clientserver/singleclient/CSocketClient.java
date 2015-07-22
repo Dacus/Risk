@@ -29,6 +29,14 @@ public class CSocketClient implements Runnable{
 		this.messageHandler=handler;
 	}
 
+    /**
+     * Connects the Client to the Server Socket.
+     * Instantiates the input streams and output streams through which messages are sent/received
+     * The run() method polls the boolean variable "isRunning", so this variable
+     * is set to "true". A new thread is started
+     *
+     * @throws IOException
+     */
 	public void connect() throws IOException {
 		System.out.println("Attempting to connect to " + hostname + ":" + PORT_NO);
 		socketClient = new Socket(hostname, PORT_NO);

@@ -4,6 +4,7 @@ import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
 import tora.train.risk.clientserver.common.MessageTag;
+import tora.train.risk.clientserver.singleclient.CSocketClient;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,6 +63,9 @@ public class SingleClientController implements Controller {
         }
     }
 
+    /**
+     * Sends a message with the Client's name
+     */
     public void connectByName(){
         Message msg=new Message(MessageTag.CONNECT);
         msg.addObject(clientSocket.getClientName());
@@ -111,6 +115,9 @@ public class SingleClientController implements Controller {
         return received;
     }
 
+    /***********************************************************************************
+     * LISTENERS
+     ************************************************************************************/
     /**
      * Displays the message received from the server
      *
@@ -214,6 +221,10 @@ public class SingleClientController implements Controller {
         }
     }
 
+    /**
+     * Action assigned to the "Ready" button on the GUI that sends a READY message to the server
+     * telling that the client is ready to start
+     */
     class ReadyAction implements  ActionListener{
 
         @Override
