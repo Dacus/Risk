@@ -7,6 +7,10 @@ import tora.train.risk.clientserver.singleclient.logic.SingleClientMessageHandle
 /**
  * Created by Andrea on 7/21/2015.
  */
+
+/**
+ * Deci, ClientAppThread este un Thread? sau un Runnable?
+ */
 public class ClientAppThread implements Runnable {
     private SingleClientController singleClientController;
     private SingleClientFrame clientFrame;

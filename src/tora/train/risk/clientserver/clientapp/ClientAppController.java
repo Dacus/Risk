@@ -3,6 +3,14 @@ package tora.train.risk.clientserver.clientapp;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+/**
+ * Comentariile pentru clasa sunt citite de developeri pentru a intelege cum sa foloseasca / ce rol / ce specificatii
+ * are acea clasa. Detalii despre cum se foloseste interfata grafica se adauga in manualul aplicatiei.
+ *
+ * NB: comentariile sunt pentru developeri nu pentru utilizatori.
+ */
+
 /**
  * Application for the client machine.
  * It provides a Graphical User interface where new clients can be added.

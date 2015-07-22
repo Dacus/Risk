@@ -10,6 +10,12 @@ import java.util.List;
 /**
  * Created by intern on 7/20/15.
  */
+
+/**
+ * StaticInformations e un fel de singleton, doar mai rau. Garantat sa nu stii cine scrie si cine citeste. Cand face
+ * asta, sau de ce. Clasa asta trebuie sa dispara. Cautati o modalitate in care sa comunicati informatiile acestea
+ * intre obiecte fara StaticInformation.
+ */
 public class StaticInformations {
     private static ArenaController arenaController;
 

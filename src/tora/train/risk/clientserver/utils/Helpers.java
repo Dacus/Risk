@@ -7,6 +7,11 @@ import java.awt.*;
 /**
  * Created by Andrea on 7/16/2015.
  */
+
+/**
+ * Numele pachetului ar trebui sa fie singularul 'util', iar numele classei ar trebui sa indice faptul ca este folosita
+ * in contextul UI. Exemplu: SwingHelper
+ */
 public class Helpers {
 
     public static JPanel buildCustomizedPanel(String name, int direction){

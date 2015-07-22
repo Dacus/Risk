@@ -24,6 +24,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  * When the main server needs to communicate with clients (e.g. to send them a message), it will iterate through the map
  * and call methods on one/some/each SingleServerController object in the map, as needed.
  */
+
+/**
+ * Faptul ca MainServer este un Runnable indica
+ */
 public class MainServer implements Runnable{
 	private HashMap<Integer, SingleServerController> map = new HashMap<>();
     private HashMap<Integer, String> clientMap = new HashMap<>();
@@ -49,7 +53,7 @@ public class MainServer implements Runnable{
 		System.out.println("Starting the multiple socket server at port: " + PORT_NO);
 		try {			
 			ServerSocket serverSocket = new ServerSocket(PORT_NO);
-			
+			serverSocket.setSoTimeout(1000);
 			System.out.println("Multiple Socket Server Initialized");
 
 			while (isRunning) {
@@ -130,7 +134,7 @@ public class MainServer implements Runnable{
 	/**
 	 * Stops the Main Server exiting the while loop.
 	 */
-	public synchronized void stop(){
+	public synchronized void stop() {
 		this.isRunning = false;
 	}
 

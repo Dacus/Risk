@@ -23,6 +23,9 @@ public class TestCombatStrategy {
     private static Continent ANW;
     private List<Player> players;
 
+    /**
+     * Metoda asta primeste, in general, numele beforeClass
+     */
     @BeforeClass
     public static void init() {
         combatMock = new CombatStrategyMock();
@@ -31,6 +34,16 @@ public class TestCombatStrategy {
         player2 = new Player("Player2");
     }
 
+    /**
+     * Metoda asta primeste, in general, numele setUp.
+     *
+     * NB: setUp implica tearDown care trebuie sa inverseze actiunile metodei setUp in ordine inversa. In cazul acesta:
+     *
+     *      territory2 = null;
+     *      territory1 = null;
+     *
+     * Obisnuieste-te sa scrii cod simetric. In unele cazuri pare neimportant, dar e bine sa fii consecvent.
+     */
     @Before
     public void beforeTest() {
         territory1 = new Territory(ANW);
