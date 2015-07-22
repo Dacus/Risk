@@ -132,10 +132,19 @@ public class SingleServerController implements Controller {
         mainController.displayMessage(str);
     }
 
+    /**
+     * Notifies the main server that the client sent a READY message
+     */
     public void notifyClientIsReady() {
         mainController.incrementNumberOfReadyClients();
     }
 
+    /**
+     * Builds a message having on the first position the number of online clients
+     * followed by their names and sends it to the client, tagged with ONLINE_PLAYERS
+     *
+     * @param names
+     */
     public void sendListOfOnlineClients(ArrayList<String> names) {
         Message msg=new Message(MessageTag.ONLINE_PLAYERS);
         int n=names.size();

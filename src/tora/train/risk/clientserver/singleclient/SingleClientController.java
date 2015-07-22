@@ -63,6 +63,9 @@ public class SingleClientController implements Controller {
         }
     }
 
+    /**
+     * Sends a message with the Client's name
+     */
     public void connectByName(){
         Message msg=new Message(MessageTag.CONNECT);
         msg.addObject(clientSocket.getClientName());
@@ -112,7 +115,9 @@ public class SingleClientController implements Controller {
         return received;
     }
 
-
+    /***********************************************************************************
+     * LISTENERS
+     ************************************************************************************/
 
     /**
      * Action assigned to the "Connect" button on the GUI that connects the client to server
@@ -161,6 +166,10 @@ public class SingleClientController implements Controller {
         }
     }
 
+    /**
+     * Action assigned to the "Ready" button on the GUI that sends a READY message to the server
+     * telling that the client is ready to start
+     */
     class ReadyAction implements  ActionListener{
 
         @Override
