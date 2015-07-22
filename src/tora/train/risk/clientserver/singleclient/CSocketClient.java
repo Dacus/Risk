@@ -53,6 +53,11 @@ public class CSocketClient implements Runnable{
 	}
 
 	/**
+	 * Aici chiar e nevoie de doua metode: stopRunning si closeConnection ?
+	 * Daca exista stop, de ce nu exista si start?
+	 */
+
+	/**
 	 * Stops the thread by stopping the while loop in the run() method
 	 */
 	public synchronized void stopRunning(){
