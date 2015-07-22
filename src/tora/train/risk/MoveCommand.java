@@ -20,11 +20,11 @@ public class MoveCommand {
     }
 
 
-    public MoveCommand(Point coordinates,int numberOfUnits, Player owner/*,Direction direction*/){
+    public MoveCommand(Point coordinates,int numberOfUnits, Player owner,String direction){
         this.coordinates=coordinates;
         this.numberOfUnits=numberOfUnits;
         this.owner=owner;
-       // this.direction=direction;
+        this.direction=direction;
     }
 
     public Point getCoordinates() {
