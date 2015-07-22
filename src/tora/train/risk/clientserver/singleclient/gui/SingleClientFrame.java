@@ -1,4 +1,4 @@
-package tora.train.risk.clientserver.singleclient;
+package tora.train.risk.clientserver.singleclient.gui;
 
 import tora.train.risk.clientserver.clientapp.ClientAppViewInterface;
 import tora.train.risk.clientserver.utils.Helpers;
@@ -225,4 +225,10 @@ public class SingleClientFrame implements SingleClientViewInterface {
         this.playersCombo.removeItem(player);
     }
 
+    /**
+     * Created by intern on 7/22/15.
+     */
+    public static class MapView {
+
+    }
 }

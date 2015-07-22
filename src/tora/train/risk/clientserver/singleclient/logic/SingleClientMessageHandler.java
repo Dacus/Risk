@@ -1,8 +1,9 @@
-package tora.train.risk.clientserver.singleclient;
+package tora.train.risk.clientserver.singleclient.logic;
 
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
+import tora.train.risk.clientserver.singleclient.logic.SingleClientController;
 
 import java.util.ArrayList;
 

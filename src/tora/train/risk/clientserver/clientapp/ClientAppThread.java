@@ -1,8 +1,8 @@
 package tora.train.risk.clientserver.clientapp;
 
-import tora.train.risk.clientserver.singleclient.SingleClientController;
-import tora.train.risk.clientserver.singleclient.SingleClientFrame;
-import tora.train.risk.clientserver.singleclient.SingleClientMessageHandler;
+import tora.train.risk.clientserver.singleclient.logic.SingleClientController;
+import tora.train.risk.clientserver.singleclient.gui.SingleClientFrame;
+import tora.train.risk.clientserver.singleclient.logic.SingleClientMessageHandler;
 
 /**
  * Created by Andrea on 7/21/2015.

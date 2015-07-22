@@ -1,4 +1,4 @@
-package tora.train.risk.clientserver.singleclient;
+package tora.train.risk.clientserver.singleclient.gui;
 
 import java.awt.*;
 

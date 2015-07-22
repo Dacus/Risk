@@ -1,9 +1,11 @@
-package tora.train.risk.clientserver.singleclient;
+package tora.train.risk.clientserver.singleclient.logic;
 
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
 import tora.train.risk.clientserver.common.MessageTag;
+import tora.train.risk.clientserver.singleclient.logic.CSocketClient;
+import tora.train.risk.clientserver.singleclient.gui.SingleClientFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
