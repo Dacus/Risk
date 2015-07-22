@@ -3,6 +3,9 @@ package tora.train.risk;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.Queue;
+
+import static tora.train.risk.ArenaCommandValidator.isReinforceValid;
 
 public class ArenaController {
     private final Arena arena;
@@ -232,7 +235,8 @@ public class ArenaController {
      * @return true if player can put his reinforcements on the specified territory
      */
     public boolean reinforce(int nrOfUnits, Territory territory, Player player) {
-        if (player.getReinforcements() < nrOfUnits || territory.getOwner() != player)
+        boolean isValid = isReinforceValid(nrOfUnits, territory, player);
+        if (!isValid)
             return false;
 
         territory.setUnitNr(territory.getUnitNr() + nrOfUnits);
