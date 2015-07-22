@@ -8,12 +8,13 @@ import tora.train.risk.*;
 
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
 
 /**
- * Created by intern on 7/20/15.
+ * Created by Isa on 7/20/15.
  */
 public class TestPlayerBonus {
     private static final int BONUS_FOR_GROUP = 1;
@@ -123,6 +124,24 @@ public class TestPlayerBonus {
         Integer actual = formula(territories, continentBonus);
 
         assertThat(bonus, equalTo(actual));
+    }
+
+    @Test
+    public void giveBonus_GivenNullPlayer_ExpectedZero() {
+        randomPlayer = null;
+
+        int bonus = defaultStrat.computePlayerBonus(randomPlayer);
+
+        assertThat(bonus, equalTo(0));
+    }
+
+    @Test
+    public void giveBonus_GivenCpuPlayer_ExpectedZero() {
+        randomPlayer = Player.CPU_MAP_PLAYER;
+
+        int bonus = defaultStrat.computePlayerBonus(randomPlayer);
+
+        assertThat(bonus, equalTo(0));
     }
 
 }

@@ -10,6 +10,28 @@ import static java.lang.Math.abs;
 public class ArenaCommandValidator {
 
     /**
+     * Check whether a reinforcement is ok or not
+     *
+     * @param nrOfUnits the number of units to reinforce the territory
+     * @param territory the territory to reinforce
+     * @param player    the player that tries to put units on the territory
+     * @return true if is valid , 0 otherwise
+     */
+    public static Boolean isReinforceValid(int nrOfUnits, Territory territory, Player player) {
+        Boolean isOk = true;
+        if (territory == null || player == null)
+            isOk = false;
+        else if (player.getReinforcements() < nrOfUnits)
+            isOk = false;
+        else if (territory.getOwner() != player)
+            isOk = false;
+        else if (nrOfUnits < 0)
+            isOk = false;
+
+        return isOk;
+    }
+
+    /**
      * Checks whether player can move units from a territory to another.
      *
      * @param arena     arena of the game

@@ -24,13 +24,11 @@ public class SingleClientFrame implements SingleClientViewInterface {
     private JLabel statusLabel;
     private JTextArea incomingTextArea;
     private JTextField outgoingTextField;
-    private String name;
 
     private JComboBox<String> playersCombo;
 
     public SingleClientFrame(String name){
         frame=new JFrame("Client [" + name + "]");
-        this.name=name;
 
         JPanel backgroundPanel=new JPanel();
         backgroundPanel.setLayout(new GridLayout(5,0));
@@ -51,6 +49,7 @@ public class SingleClientFrame implements SingleClientViewInterface {
         frame.getContentPane().add(backgroundPanel);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(SingleClientViewInterface.WINDOW_X, SingleClientViewInterface.WINDOW_Y);
     }
 
@@ -154,39 +153,72 @@ public class SingleClientFrame implements SingleClientViewInterface {
     /************************************************************************************
      * Methods that interrogate/modify/act on JComponents
      ***********************************************************************************/
-
+    /**
+     * Sets the text in the statusLabel
+     *
+     * @param isConnected boolean value telling whether the text on the label should be set to "Connected" or
+     *                    "Disconnected"
+     */
     public void setStatus(boolean isConnected){
         this.statusLabel.setText(isConnected ? "Connected" : "Not connected");
     }
 
+    /**
+     * Appends some text to the incomingTextArea
+     *
+     * @param s the String to be appended
+     */
     public void setIncomingAreaText(String s) {
-        this.incomingTextArea.append("\n"+s);
+        this.incomingTextArea.append(s+"\n");
     }
 
+    /**
+     * Reads the text from the outgoingTextField and returns it
+     *
+     * @return  the text on the outgoingTextField
+     */
     public String getOutgoingMessageFromField(){
         return this.outgoingTextField.getText();
     }
 
+    /**
+     * Closes the frame
+     */
     public void close(){
         this.frame.dispose();
     }
 
+    /**
+     *
+     * @return the name of the frame as given when created
+     */
     public String getName() {
-        return name;
+        return frame.getName();
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    /**
+     * Displays a new option panel for informative purposes
+     *
+     * @param s the String to be displayed on the option panel
+     */
     public void showOptionPanel(String s) {
         JOptionPane.showMessageDialog(frame, s);
     }
 
+    /**
+     * Adds a new String to the playersCombo
+     *
+     * @param player the String (name of the player) to be added
+     */
     public void addPlayer(String player){
         this.playersCombo.addItem(player);
     }
 
+    /**
+     * Removes a String from the playersCombo
+     *
+     * @param player the String (name of the player) to be removed
+     */
     public void removePlayer(String player){
         this.playersCombo.removeItem(player);
     }

@@ -15,27 +15,32 @@ public class RiskDefaultBonus implements BonusStrategy {
         this.arena = arena;
     }
 
+    /**
+     * Default bonus computer with the rules from "Risk for dummies"
+     *
+     * @param player player to compute bonus
+     * @return the bonus it has at the start of the turn
+     */
     @Override
     public int computePlayerBonus(Player player) {
+        if (player == null || player.equals(Player.CPU_MAP_PLAYER))
+            return 0;
+
         int bonus = DEFAULT_BONUS, territories = 0;
+        territories = arena.getOwnedTerritories(player).size();
+        if (territories == 0)
+            return 0;
+
         List<Continent> continents = arena.getContinents();
         int N = arena.getXSize(), M = arena.getYSize();
         for (Continent continent : continents) {
-            try {
-                if (continent.getOwnerIfExists().equals(player)) {
+            Player owner = continent.getOwnerIfExists();
+            if (owner != null && owner.equals(player)) {
                     bonus += continent.getType().getBonus();
                 }
-            } catch (NullPointerException e) {
-                //no owner exists
-            }
         }
-        territories = arena.getOwnedTerritories(player).size();
+        bonus += (territories / GROUP_SIZE) * BONUS_FOR_GROUP;
 
-        if (territories == 0) {
-            bonus = 0;
-        } else {
-            bonus += (territories / GROUP_SIZE) * BONUS_FOR_GROUP;
-        }
         return bonus;
     }
 }

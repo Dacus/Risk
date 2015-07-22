@@ -60,6 +60,7 @@ public class ClientAppFrame implements ClientAppViewInterface {
     /*************************************************************************
      * Methods that interrogate/modify/act on JComponents
      ************************************************************************/
+
     public String getClientName(){
         return nameField.getText();
     }

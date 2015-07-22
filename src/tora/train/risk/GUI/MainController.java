@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by intern on 7/20/15.
@@ -49,9 +48,18 @@ public class MainController {
     private class btnReinforcementAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            reinforcements.put(new Point(mainView.getXpos(), mainView.getYpos()), mainView.getValue());
+            Point destination = new Point(mainView.getXpos(), mainView.getYpos());
+            int value=mainView.getValue();
+            if (reinforcements.containsKey(destination)) {
+                value += reinforcements.get(destination);
+                reinforcements.put(destination, value);
+            } else {
+                reinforcements.put(destination,value);
+            }
+            StaticInformations.submitReinforcements(destination, value);
+            mainView.printMap();
             mainView.showLeftReinforcements();
-
+            System.out.println(StaticInformations.getCurrentPlayer());
         }
     }
 
@@ -59,9 +67,11 @@ public class MainController {
         @Override
         public void actionPerformed(ActionEvent e) {
             playersPlayed++;
+            /*
             for (Map.Entry<Point, Integer> pair : reinforcements.entrySet()) {
                 StaticInformations.submitReinforcements(pair.getKey(), pair.getValue());
             }
+            */
             System.out.println(reinforcements.toString());
             StaticInformations.endCurrentPlayerTurn();
             if (playersPlayed>StaticInformations.getPlayersNumber()){
