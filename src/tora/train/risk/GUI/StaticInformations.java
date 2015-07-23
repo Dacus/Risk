@@ -53,8 +53,9 @@ public class StaticInformations {
         arenaController.endCurrentPlayerTurn();
     }
 
-    public static void submitReinforcements(Point position, int value) {
-        arenaController.reinforce(value, position, StaticInformations.getCurrentPlayer());
+    public static void submitReinforcements(Point position, int value) throws Exception{
+        if  (!arenaController.reinforce(value, position, StaticInformations.getCurrentPlayer()))
+            throw new IllegalArgumentException();
     }
 
     public static int getPlayersNumber(){

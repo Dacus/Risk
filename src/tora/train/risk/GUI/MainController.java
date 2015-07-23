@@ -1,5 +1,6 @@
 package tora.train.risk.GUI;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,8 +20,12 @@ public class MainController {
         mainView=new MainView();
         StaticInformations.distributePlayers();
         mainView.printMap();
+        
         mainView.setBtnAddReinforcementListener(new btnReinforcementAction());
         mainView.setBtnSubmitReinforcementsListener(new btnSubmitReinforcementsAction());
+        
+        mainView.setBtnAddAttackListener(new btnAttackAction());
+        mainView.setBtnSubmitAllAttacksListener(new btnSubmitAttacksAction());
         startGame();
     }
 
@@ -29,7 +34,6 @@ public class MainController {
     }
 
     private void reinforcementPhase(){
-        //TODO
         mainView.reinforcePhaseView();
         reinforcements = new HashMap<>();
         mainView.showCurrentPlayer();
@@ -38,7 +42,8 @@ public class MainController {
     }
 
     private void attackPhase(){
-        //TODO
+        //TODO adauga logica
+        mainView.attackPhaseView();
     }
 
     public void setVisible(boolean visible) {
@@ -48,7 +53,7 @@ public class MainController {
     private class btnReinforcementAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Point destination = new Point(mainView.getXpos(), mainView.getYpos());
+            Point destination = new Point(mainView.getXposDest(), mainView.getYposDest());
             int value=mainView.getValue();
             if (reinforcements.containsKey(destination)) {
                 value += reinforcements.get(destination);
@@ -56,7 +61,11 @@ public class MainController {
             } else {
                 reinforcements.put(destination,value);
             }
-            StaticInformations.submitReinforcements(destination, value);
+            try {
+                StaticInformations.submitReinforcements(destination, value);
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(null, "Invalid position!");
+            }
             mainView.printMap();
             mainView.showLeftReinforcements();
             System.out.println(StaticInformations.getCurrentPlayer());
@@ -74,15 +83,52 @@ public class MainController {
             */
             System.out.println(reinforcements.toString());
             StaticInformations.endCurrentPlayerTurn();
-            if (playersPlayed>StaticInformations.getPlayersNumber()){
-                attackPhase();
+            if (playersPlayed<StaticInformations.getPlayersNumber()-1){
+                reinforcementPhase();
             }
             else{
-                reinforcementPhase();
+                System.out.println("This is sparta!!!");
+                playersPlayed=0;
+                attackPhase();
             }
         }
     }
+    
+    private class btnAttackAction implements ActionListener{
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
+        }
+        
+    }
+    
+    
+    private class btnSubmitAttacksAction implements ActionListener{
 
+        @Override
+        public void actionPerformed(ActionEvent e) {
 
+        }
+    }
+/*
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    StaticInformations.setArenaController(new ArenaController());
+                    StaticInformations.addPlayer(new Player("ion"));
+                    StaticInformations.addPlayer(new Player("ana"));
+                    MainController window = new MainController();
+                    window.mainView.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    */
 
 }
+
+
