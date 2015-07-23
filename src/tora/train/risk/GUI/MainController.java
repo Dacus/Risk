@@ -66,9 +66,15 @@ public class MainController {
             try {
                 submitReinforcements(destination, value);
             } catch (Exception e1) {
+                StaticInformations.submitReinforcements(destination, value);
+            }catch (Exception e1) {
                 JOptionPane.showMessageDialog(null, "Invalid position!");
             }
             mainView.printArena(StaticInformations.getArena());
+            finally {
+                System.out.println("destination"+destination.toString()+ " value "+value);
+            }
+            mainView.printMap();
             mainView.showLeftReinforcements();
             System.out.println(getCurrentPlayer());
         }
@@ -91,6 +97,7 @@ public class MainController {
             else{
                 System.out.println("This is sparta!!!");
                 playersPlayed=0;
+                StaticInformations.resetPlayer();
                 attackPhase();
             }
         }

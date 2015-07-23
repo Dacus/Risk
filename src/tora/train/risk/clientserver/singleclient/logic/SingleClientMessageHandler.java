@@ -31,7 +31,7 @@ public class SingleClientMessageHandler implements MessageHandler {
                 int id=(int)msg.getElementAt(0);
                 System.out.println("Client has assigned ID " + id );
                 controller.setClientIdentity(id);
-                controller.setClientConnected(true);
+                controller.setStatus(Status.CONNECTED);
                 break;
             }
             case START:{
@@ -61,7 +61,7 @@ public class SingleClientMessageHandler implements MessageHandler {
             case RESTRICT_CONNECTION:{
                 int maxNumberOfClients=(int)msg.getElementAt(0);
                 controller.restrictConnection(maxNumberOfClients);
-                controller.setClientConnected(false);
+                controller.setStatus(Status.NOT_CONNECTED);
                 controller.stopRunning();
                 break;
             }

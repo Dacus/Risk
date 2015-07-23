@@ -240,8 +240,9 @@ public class ArenaController {
         if (!isValid)
             return false;
 
-        territory.setUnitNr(territory.getUnitNr() + nrOfUnits);
-        territory.setMovableUnits(territory.getUnitNr() + nrOfUnits);
+        int units = territory.getUnitNr();
+        territory.setUnitNr(units + nrOfUnits);
+        territory.setMovableUnits(units + nrOfUnits);
         player.setReinforcements(player.getReinforcements() - nrOfUnits);
         return true;
     }
@@ -249,7 +250,6 @@ public class ArenaController {
     /**
      * Set the units on territories to be movable again, at the start of the territory
      *
-     * @param player player who's turn is
      */
     public void resetMovableUnits(Player player) {
         List<Territory> territories = arena.getOwnedTerritories(player);
