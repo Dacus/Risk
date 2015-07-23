@@ -11,13 +11,17 @@ import java.awt.event.ActionListener;
  *
  * Created by Andrea on 7/16/2015.
  */
-public class MainServerFrame implements MainServerViewInterface {
+public class MainServerFrame {
     private JFrame frame;
     private JTextArea incomingTextArea;
     private JTextField outgoingTextField;
     private JButton sendMessageButton;
     private JButton stopServerButton;
     private JLabel onlineClientsLabel;
+
+    private static final int WINDOW_X=500;
+    private static final int WINDOW_Y=500;
+    private static final Color PURPLE=new Color(125, 5, 82);
 
     public MainServerFrame() {
         frame = new JFrame("Server");
@@ -41,7 +45,7 @@ public class MainServerFrame implements MainServerViewInterface {
         frame.getContentPane().add(backgroundPanel);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        frame.setSize(MainServerViewInterface.WINDOW_X, MainServerViewInterface.WINDOW_Y);
+        frame.setSize(WINDOW_X, WINDOW_Y);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
@@ -53,7 +57,7 @@ public class MainServerFrame implements MainServerViewInterface {
 
         outgoingTextField=new JTextField(10);
         outgoingTextField.setBackground(Color.WHITE);
-        outgoingTextField.setForeground(new Color(125, 5, 82));
+        outgoingTextField.setForeground(PURPLE);
 
         sendMessageButton=new JButton("Send To All");
 
@@ -69,7 +73,7 @@ public class MainServerFrame implements MainServerViewInterface {
 
         incomingTextArea=new JTextArea(10,10);
         incomingTextArea.setBackground(Color.WHITE);
-        incomingTextArea.setForeground(new Color(125, 5, 82));
+        incomingTextArea.setForeground(PURPLE);
         incomingTextArea.setEditable(false);
 
         JScrollPane scrollPane=new JScrollPane(incomingTextArea);
