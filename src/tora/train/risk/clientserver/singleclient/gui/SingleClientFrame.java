@@ -1,6 +1,6 @@
 package tora.train.risk.clientserver.singleclient.gui;
 
-import tora.train.risk.clientserver.utils.Helpers;
+import tora.train.risk.clientserver.utils.SwingHelpers;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -35,7 +35,7 @@ public class SingleClientFrame implements SingleClientViewInterface {
         backgroundPanel.setLayout(new GridLayout(5,0));
         backgroundPanel.setBackground(Color.darkGray);
 
-        JPanel titlePanel= Helpers.buildTitlePanel("Welcome " + name);
+        JPanel titlePanel= SwingHelpers.buildTitlePanel("Welcome " + name);
         JPanel outgoingMsgPanel=buildMessageEditPanel();
         JPanel connectionPanel=buildConnectionPanel();
         JPanel incomingMsgPanel=buildIncomingMessagePanel();
@@ -77,7 +77,7 @@ public class SingleClientFrame implements SingleClientViewInterface {
      * PANEL BUILDERS
      ***********************************************************************************/
     private JPanel buildMessageEditPanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Outgoing", BoxLayout.X_AXIS);
+        JPanel panel= SwingHelpers.buildCustomizedPanel("Outgoing", BoxLayout.X_AXIS);
 
         outgoingTextField=new JTextField();
         outgoingTextField.setBackground(Color.WHITE);
@@ -93,7 +93,7 @@ public class SingleClientFrame implements SingleClientViewInterface {
     }
 
     private JPanel buildConnectionPanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Connection", BoxLayout.X_AXIS);
+        JPanel panel= SwingHelpers.buildCustomizedPanel("Connection", BoxLayout.X_AXIS);
 
         connectButton=new JButton("Connect");
         disconnectButton=new JButton("Disconnect");
@@ -118,7 +118,7 @@ public class SingleClientFrame implements SingleClientViewInterface {
     }
 
     private JPanel buildPlayersPanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Players", BoxLayout.X_AXIS);
+        JPanel panel= SwingHelpers.buildCustomizedPanel("Players", BoxLayout.X_AXIS);
 
         playersCombo=new JComboBox<String>();
         playersCombo.setForeground(SingleClientViewInterface.PURPLE);
@@ -138,7 +138,7 @@ public class SingleClientFrame implements SingleClientViewInterface {
     }
 
     private JPanel buildIncomingMessagePanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Incoming", BoxLayout.X_AXIS);
+        JPanel panel= SwingHelpers.buildCustomizedPanel("Incoming", BoxLayout.X_AXIS);
 
         incomingTextArea=new JTextArea(10,10);
         incomingTextArea.setBackground(Color.WHITE);

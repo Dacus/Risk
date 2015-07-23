@@ -1,6 +1,6 @@
 package tora.train.risk.clientserver.clientapp;
 
-import tora.train.risk.clientserver.utils.Helpers;
+import tora.train.risk.clientserver.utils.SwingHelpers;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +40,7 @@ public class ClientAppFrame {
     }
 
     private JPanel buildNewClientPanel(){
-        JPanel panel= Helpers.buildCustomizedPanel("Client name", BoxLayout.X_AXIS);
+        JPanel panel= SwingHelpers.buildCustomizedPanel("Client name", BoxLayout.X_AXIS);
 
         newClientButton=new JButton("New Client");
         nameField=new JTextField();

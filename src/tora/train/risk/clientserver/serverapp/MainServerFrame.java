@@ -1,6 +1,6 @@
 package tora.train.risk.clientserver.serverapp;
 
-import tora.train.risk.clientserver.utils.Helpers;
+import tora.train.risk.clientserver.utils.SwingHelpers;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +30,7 @@ public class MainServerFrame {
         backgroundPanel.setLayout(new GridLayout(5,0));
         backgroundPanel.setBackground(Color.darkGray);
 
-        JPanel titlePanel= Helpers.buildTitlePanel("Server");
+        JPanel titlePanel= SwingHelpers.buildTitlePanel("Server");
         JPanel statusPanel=buildStatusPanel();
         JPanel outgoingMsgPanel=buildOutgoingMessagePanel();
         JPanel incomingMsgPanel=buildIncomingMessagePanel();
@@ -53,7 +53,7 @@ public class MainServerFrame {
      * PANEL BUILDERS
      ***********************************************************************************/
     private JPanel buildOutgoingMessagePanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Outgoing", BoxLayout.X_AXIS);
+        JPanel panel= SwingHelpers.buildCustomizedPanel("Outgoing", BoxLayout.X_AXIS);
 
         outgoingTextField=new JTextField(10);
         outgoingTextField.setBackground(Color.WHITE);
@@ -69,7 +69,7 @@ public class MainServerFrame {
     }
 
     private JPanel buildIncomingMessagePanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Incoming", BoxLayout.X_AXIS);
+        JPanel panel= SwingHelpers.buildCustomizedPanel("Incoming", BoxLayout.X_AXIS);
 
         incomingTextArea=new JTextArea(10,10);
         incomingTextArea.setBackground(Color.WHITE);
@@ -83,7 +83,7 @@ public class MainServerFrame {
     }
 
     private JPanel buildButtonPanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Buttons", BoxLayout.X_AXIS);
+        JPanel panel= SwingHelpers.buildCustomizedPanel("Buttons", BoxLayout.X_AXIS);
 
         stopServerButton=new JButton("Stop Server");
 
@@ -94,7 +94,7 @@ public class MainServerFrame {
     }
 
     private JPanel buildStatusPanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Status", BoxLayout.X_AXIS);
+        JPanel panel= SwingHelpers.buildCustomizedPanel("Status", BoxLayout.X_AXIS);
 
         JPanel innerPanel=new JPanel();
         innerPanel.setOpaque(false);
