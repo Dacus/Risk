@@ -1,8 +1,9 @@
 package tora.train.risk;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class Territory {
+public class Territory implements Serializable{
 
     /**
      * army units in the territory

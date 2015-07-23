@@ -26,14 +26,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  * and call methods on one/some/each SingleServerController object in the map, as needed.
  */
 public class MainServer implements Runnable{
-	private HashMap<Integer, SingleServerController> map = new HashMap<>();
-    private HashMap<Integer, String> clientMap = new HashMap<>();
-
     private static final int PORT_NO = 9990;
-    private static final int MAX_NUMBER_OF_CLIENTS=2;
-
-	private AtomicInteger id = new AtomicInteger(1);
-	private boolean isRunning= true;
+    private static final int MAX_NUMBER_OF_CLIENTS = 7;
+    private HashMap<Integer, SingleServerController> map = new HashMap<>();
+    private HashMap<Integer, String> clientMap = new HashMap<>();
+    private AtomicInteger id = new AtomicInteger(1);
+    private boolean isRunning= true;
 
 	private SingleServerMessageHandler messageHandler;
 	private MainServerController mainServerController;
@@ -72,7 +70,7 @@ public class MainServer implements Runnable{
                     System.out.println("Client " + id.get() + " connected");
 
                     //send names of online clients
-                    controller.sendListOfOnlineClients(new ArrayList<String>(clientMap.values()));
+                    controller.sendListOfOnlineClients(new ArrayList<>(clientMap.values()));
 
                     //add client to map
                     map.put(id.get(), controller);
@@ -140,9 +138,7 @@ public class MainServer implements Runnable{
     public void incrementReadyCounter() {
         int x = readyCounter.getAndIncrement();
         if (x == map.size() - 1) {
-            Message msg = new Message(MessageType.START);
-            msg.addElement("StartGame");
-            sendGlobalMessage(msg);
+            mainServerController.startGame();
         }
     }
 

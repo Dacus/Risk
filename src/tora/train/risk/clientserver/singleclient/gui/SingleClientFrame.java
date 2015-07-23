@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 
 /**
  * Client Side GUI window, i.e. the window that opens for each individual client.
@@ -16,7 +17,6 @@ public class SingleClientFrame implements SingleClientViewInterface {
     private JFrame frame;
 
     private JButton connectButton;
-    private JButton disconnectButton;
     private JButton sendMessageButton;
     private JButton readyButton;
 
@@ -50,19 +50,18 @@ public class SingleClientFrame implements SingleClientViewInterface {
         frame.getContentPane().add(backgroundPanel);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(SingleClientViewInterface.WINDOW_X, SingleClientViewInterface.WINDOW_Y);
     }
 
     /*************************************************************************************
      * LISTENERS
      ************************************************************************************/
-    public void setConnectionButtonListener(ActionListener a){
-        this.connectButton.addActionListener(a);
+    public void setWindowListener(WindowListener listener) {
+        this.frame.addWindowListener(listener);
     }
 
-    public void setDisconnectButtonListener(ActionListener a){
-        this.disconnectButton.addActionListener(a);
+    public void setConnectionButtonListener(ActionListener a){
+        this.connectButton.addActionListener(a);
     }
 
     public void setSendMessageButtonListener(ActionListener a){
@@ -96,7 +95,6 @@ public class SingleClientFrame implements SingleClientViewInterface {
         JPanel panel= SwingHelpers.buildCustomizedPanel("Connection", BoxLayout.X_AXIS);
 
         connectButton=new JButton("Connect");
-        disconnectButton=new JButton("Disconnect");
         readyButton=new JButton("Ready");
 
         statusLabel=new JLabel("Unknown");
@@ -110,8 +108,6 @@ public class SingleClientFrame implements SingleClientViewInterface {
         panel.add(Box.createRigidArea(new Dimension(20, 0)));
         panel.add(readyButton);
         panel.add(Box.createRigidArea(new Dimension(20, 0)));
-        panel.add(disconnectButton);
-        panel.add(Box.createRigidArea(new Dimension(30, 0)));
         panel.add(statusLabel);
 
         return panel;
@@ -120,7 +116,7 @@ public class SingleClientFrame implements SingleClientViewInterface {
     private JPanel buildPlayersPanel(){
         JPanel panel= SwingHelpers.buildCustomizedPanel("Players", BoxLayout.X_AXIS);
 
-        playersCombo=new JComboBox<String>();
+        playersCombo = new JComboBox<>();
         playersCombo.setForeground(SingleClientViewInterface.PURPLE);
 
         JPanel inner=new JPanel();
@@ -132,7 +128,7 @@ public class SingleClientFrame implements SingleClientViewInterface {
 
         panel.add(Box.createRigidArea(new Dimension(100,0)));
         panel.add(inner);
-        panel.add(Box.createRigidArea(new Dimension(100,00)));
+        panel.add(Box.createRigidArea(new Dimension(100, 0)));
 
         return panel;
     }

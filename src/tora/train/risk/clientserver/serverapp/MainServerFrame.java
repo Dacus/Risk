@@ -5,6 +5,7 @@ import tora.train.risk.clientserver.utils.SwingHelpers;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 
 /**
  * Server side GUI.
@@ -12,16 +13,14 @@ import java.awt.event.ActionListener;
  * Created by Andrea on 7/16/2015.
  */
 public class MainServerFrame {
+    private static final int WINDOW_X = 500;
+    private static final int WINDOW_Y = 500;
+    private static final Color PURPLE = new Color(125, 5, 82);
     private JFrame frame;
     private JTextArea incomingTextArea;
     private JTextField outgoingTextField;
     private JButton sendMessageButton;
-    private JButton stopServerButton;
     private JLabel onlineClientsLabel;
-
-    private static final int WINDOW_X=500;
-    private static final int WINDOW_Y=500;
-    private static final Color PURPLE=new Color(125, 5, 82);
 
     public MainServerFrame() {
         frame = new JFrame("Server");
@@ -46,7 +45,6 @@ public class MainServerFrame {
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
         frame.setSize(WINDOW_X, WINDOW_Y);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     /************************************************************************************
@@ -85,10 +83,7 @@ public class MainServerFrame {
     private JPanel buildButtonPanel(){
         JPanel panel= SwingHelpers.buildCustomizedPanel("Buttons", BoxLayout.X_AXIS);
 
-        stopServerButton=new JButton("Stop Server");
-
         panel.add(Box.createRigidArea(new Dimension(100, 0)));
-        panel.add(stopServerButton);
 
         return panel;
     }
@@ -141,8 +136,8 @@ public class MainServerFrame {
     /*************************************************************************************
      * LISTENERS
      ***********************************************************************************/
-    public void setQuitButtonListener(ActionListener a) {
-        this.stopServerButton.addActionListener(a);
+    public void setWindowExitListener(WindowListener listener) {
+        frame.addWindowListener(listener);
     }
 
     public void setSendButtonListener(ActionListener a) {

@@ -1,5 +1,6 @@
 package tora.train.risk.clientserver.singleclient.logic;
 
+import tora.train.risk.Arena;
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
@@ -9,6 +10,8 @@ import tora.train.risk.clientserver.singleclient.gui.SingleClientFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -26,6 +29,7 @@ import java.util.ArrayList;
 public class SingleClientController implements Controller {
     private SingleClientFrame clientFrame;
     private CSocketClient clientSocket;
+    private MapController mapController;
 
     private boolean readyFlag;
 
@@ -35,7 +39,7 @@ public class SingleClientController implements Controller {
         this.clientSocket=new CSocketClient(handler);
 
         this.clientFrame.setConnectionButtonListener(new ConnectAction());
-        this.clientFrame.setDisconnectButtonListener(new DisconnectAction());
+        this.clientFrame.setWindowListener(new WindowDisconnectAction());
         this.clientFrame.setSendMessageButtonListener(new SendUserMessageAction());
         this.clientFrame.setReadyButtonListener(new ReadyAction());
     }
@@ -191,10 +195,6 @@ public class SingleClientController implements Controller {
         this.clientFrame.setStatus(b);
     }
 
-    public void initializeMap() {
-        MapController mapController=new MapController(clientSocket.getClientName());
-    }
-
     /***************************************************************************************
      * LISTENER
      **************************************************************************************/
@@ -213,12 +213,16 @@ public class SingleClientController implements Controller {
     /**
      * Action assigned to the "Disconnect" button on the GUI that disconnects the client from the server
      */
-    class DisconnectAction implements ActionListener{
+    private class WindowDisconnectAction implements WindowListener {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void windowOpened(WindowEvent e) {
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
             if (clientSocket.isRunning()) {
-                Message msg=new Message(MessageType.STOP);
+                Message msg = new Message(MessageType.STOP);
                 msg.addElement(clientSocket.getClientId());
                 writeMessage(msg);
 
@@ -226,7 +230,29 @@ public class SingleClientController implements Controller {
                 clientSocket.stopRunning();
                 clientFrame.close();
                 System.out.println("Client Th: " + Thread.currentThread().getName());
+            } else {
+                clientFrame.close();
             }
+        }
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
         }
     }
 
@@ -262,5 +288,13 @@ public class SingleClientController implements Controller {
                 readyFlag=true;
             }
         }
+    }
+
+    /*************************************************************************************************
+     * GAME RELATED
+     ************************************************************************************************/
+    public void initializeMap(Arena a) {
+        mapController=new MapController(clientSocket.getClientName());
+        System.out.println("Arena received");
     }
 }
