@@ -73,7 +73,7 @@ public class SingleServerController implements Controller {
     @Override
     public void writeMessage(Message msg) {
         try {
-            singleServer.sendMessage(msg);
+            singleServer.writeMessage(msg);
         } catch (IOException e) {
             e.printStackTrace();
         }

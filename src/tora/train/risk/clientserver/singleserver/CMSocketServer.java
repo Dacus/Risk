@@ -61,7 +61,7 @@ public class CMSocketServer implements Runnable {
 	 * @param msg message to be sent
 	 * @throws IOException
 	 */
-	public void sendMessage(Message msg) throws IOException {
+	public void writeMessage(Message msg) throws IOException {
 		
 		serverOutputStream.writeObject(msg);
 		System.out.println("Server sends:" + msg);
