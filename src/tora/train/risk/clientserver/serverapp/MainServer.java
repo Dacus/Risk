@@ -1,7 +1,7 @@
 package tora.train.risk.clientserver.serverapp;
 
 import tora.train.risk.clientserver.common.Message;
-import tora.train.risk.clientserver.common.MessageTag;
+import tora.train.risk.clientserver.common.MessageType;
 import tora.train.risk.clientserver.singleserver.CMSocketServer;
 import tora.train.risk.clientserver.singleserver.SingleServerController;
 import tora.train.risk.clientserver.singleserver.SingleServerMessageHandler;
@@ -100,7 +100,7 @@ public class MainServer implements Runnable{
 	 */
 	public void sendGlobalMessage(Message msg){
 		for (int key: map.keySet()){
-			map.get(key).sendMessage(msg);
+			map.get(key).writeMessage(msg);
 		}
 	}
 
@@ -137,8 +137,8 @@ public class MainServer implements Runnable{
     public void incrementReadyCounter() {
         int x = readyCounter.getAndIncrement();
         if (x == map.size() - 1) {
-            Message msg = new Message(MessageTag.START);
-            msg.addObject("StartGame");
+            Message msg = new Message(MessageType.START);
+            msg.addElement("StartGame");
             sendGlobalMessage(msg);
         }
     }
@@ -162,8 +162,8 @@ public class MainServer implements Runnable{
      * @param name  the name of the new client
      */
     public void broadcastAddingNewPlayer(String name){
-        Message msg=new Message(MessageTag.NEW_PLAYER_CONNECTED);
-        msg.addObject(name);
+        Message msg=new Message(MessageType.NEW_PLAYER_CONNECTED);
+        msg.addElement(name);
         sendGlobalMessage(msg);
     }
 
@@ -174,8 +174,8 @@ public class MainServer implements Runnable{
      * @param name
      */
     public void broadcastRemovingPlayer(String name){
-        Message msg=new Message(MessageTag.PLAYER_DISCONNECTED);
-        msg.addObject(name);
+        Message msg=new Message(MessageType.PLAYER_DISCONNECTED);
+        msg.addElement(name);
         sendGlobalMessage(msg);
     }
 }

@@ -3,7 +3,7 @@ package tora.train.risk.clientserver.singleclient.logic;
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
-import tora.train.risk.clientserver.common.MessageTag;
+import tora.train.risk.clientserver.common.MessageType;
 import tora.train.risk.clientserver.singleclient.gui.MapController;
 import tora.train.risk.clientserver.singleclient.gui.SingleClientFrame;
 
@@ -49,7 +49,7 @@ public class SingleClientController implements Controller {
      * thread where the client continuously reads incoming messages, delegating
      * their processing to a MessageHandler.
      */
-    public void startClient(){
+    public void startRunning(){
         try {
             if (! clientSocket.isRunning()) {
                 clientSocket.connect();
@@ -66,9 +66,9 @@ public class SingleClientController implements Controller {
      * Sends a message with the Client's name
      */
     public void connectByName(){
-        Message msg=new Message(MessageTag.CONNECT);
-        msg.addObject(clientSocket.getClientName());
-        sendMessage(msg);
+        Message msg=new Message(MessageType.CONNECT);
+        msg.addElement(clientSocket.getClientName());
+        writeMessage(msg);
     }
 
     /**
@@ -88,7 +88,7 @@ public class SingleClientController implements Controller {
      * @param msg the message to be sent
      */
     @Override
-    public void sendMessage(Message msg) {
+    public void writeMessage(Message msg) {
         try {
             clientSocket.sendMessage(msg);
         } catch (IOException e) {
@@ -124,7 +124,7 @@ public class SingleClientController implements Controller {
      */
     public void displayMessage(Message msg) {
         System.out.println("Client " + clientSocket.getClientId() + " displays global message");
-        clientFrame.setIncomingAreaText(msg.getContent().get(0).toString());
+        clientFrame.setIncomingAreaText(msg.getElementAt(0).toString());
     }
 
     /**
@@ -206,7 +206,7 @@ public class SingleClientController implements Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            startClient();
+            startRunning();
         }
     }
 
@@ -218,9 +218,9 @@ public class SingleClientController implements Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (clientSocket.isRunning()) {
-                Message msg=new Message(MessageTag.STOP);
-                msg.addObject(clientSocket.getClientId());
-                sendMessage(msg);
+                Message msg=new Message(MessageType.STOP);
+                msg.addElement(clientSocket.getClientId());
+                writeMessage(msg);
 
                 clientFrame.setStatus(false);
                 clientSocket.stopRunning();
@@ -238,11 +238,11 @@ public class SingleClientController implements Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Message msg=new Message(MessageTag.USER);
+            Message msg=new Message(MessageType.USER);
             String strToSend=clientFrame.getOutgoingMessageFromField();
-            msg.addObject(strToSend);
+            msg.addElement(strToSend);
 
-            sendMessage(msg);
+            writeMessage(msg);
         }
     }
 
@@ -257,8 +257,8 @@ public class SingleClientController implements Controller {
             if (readyFlag){
                 clientFrame.showOptionPanel("You already told the others that you are ready to play!");
             }else {
-                Message msg = new Message(MessageTag.READY);
-                sendMessage(msg);
+                Message msg = new Message(MessageType.READY);
+                writeMessage(msg);
                 readyFlag=true;
             }
         }

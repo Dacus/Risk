@@ -2,7 +2,7 @@ package tora.train.risk.clientserver.serverapp;
 
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
-import tora.train.risk.clientserver.common.MessageTag;
+import tora.train.risk.clientserver.common.MessageType;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -104,8 +104,8 @@ public class MainServerController implements Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             String str=frame.getOutgoingTextField();
-            Message msg= new Message(MessageTag.GLOBAL);
-            msg.addObject(str);
+            Message msg= new Message(MessageType.GLOBAL);
+            msg.addElement(str);
             server.sendGlobalMessage(msg);
         }
     }
