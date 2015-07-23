@@ -1,5 +1,6 @@
 package tora.train.risk.GUI;
 
+import tora.train.risk.Arena;
 import tora.train.risk.Player;
 import tora.train.risk.Territory;
 
@@ -226,17 +227,17 @@ public class MainView {
         }
     }
 
-    public void printMap() {
+    public void printArena(Arena arena) {
         model.setRowCount(0);
-        int n = StaticInformations.getXsize(),
-                m = StaticInformations.getYsize();
+        int n = arena.getXsize();
+        int m = arena.getYsize();
         Object[] row = {"", 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         model.addRow(row);
         for (int i = 1; i <= n; i++) {
             row = new Object[n + 1];
             row[0] = i - 1;
             for (int j = 1; j <= m; j++) {
-                row[j] = StaticInformations.getTerritoryAtCoordinate(i - 1, j - 1);
+                row[j] = arena.getTerritoryAtCoordinate(i - 1, j - 1);
             }
             model.addRow(row);
         }

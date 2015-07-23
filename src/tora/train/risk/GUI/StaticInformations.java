@@ -1,5 +1,6 @@
 package tora.train.risk.GUI;
 
+import tora.train.risk.Arena;
 import tora.train.risk.ArenaController;
 import tora.train.risk.Player;
 import tora.train.risk.Territory;
@@ -11,18 +12,10 @@ import java.util.List;
  * Created by intern on 7/20/15.
  */
 public class StaticInformations {
-    private static ArenaController arenaController;
+    private static ArenaController arenaController=new ArenaController();
 
     public static Player getCurrentPlayer() {
         return arenaController.getCurrentPlayer();
-    }
-
-    public static int getXsize(){
-        return arenaController.getArena().getXSize();
-    }
-
-    public static int getYsize(){
-        return arenaController.getArena().getYSize();
     }
 
     public static void setArenaController(ArenaController arenaController){
@@ -35,10 +28,6 @@ public class StaticInformations {
 
     public static Player getPlayerByIndex(int i){
         return arenaController.getPlayerByIndex(i);
-    }
-
-    public static Territory getTerritoryAtCoordinate(int x, int y){
-        return arenaController.getArena().getTerritoryAtCoordinate(x,y);
     }
 
     public static void distributePlayers(){
@@ -60,5 +49,9 @@ public class StaticInformations {
 
     public static int getPlayersNumber(){
         return arenaController.getNumberOfPlayers();
+    }
+
+    public static Arena getArena(){
+        return arenaController.getArena();
     }
 }

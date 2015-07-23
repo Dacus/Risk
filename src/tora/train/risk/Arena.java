@@ -366,4 +366,12 @@ public class Arena implements Serializable {
         }
         map[5][10] = new Territory(HE, new Point(5, 10));
     }
+
+    public int getXsize() {
+        return SIZE_X;
+    }
+
+    public int getYsize() {
+        return SIZE_Y;
+    }
 }

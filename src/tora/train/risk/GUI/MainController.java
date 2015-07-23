@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
+import static tora.train.risk.GUI.StaticInformations.*;
+
 /**
  * Created by intern on 7/20/15.
  */
@@ -18,8 +20,8 @@ public class MainController {
 
     public MainController(){
         mainView=new MainView();
-        StaticInformations.distributePlayers();
-        mainView.printMap();
+        distributePlayers();
+        mainView.printArena(StaticInformations.getArena());
         
         mainView.setBtnAddReinforcementListener(new btnReinforcementAction());
         mainView.setBtnSubmitReinforcementsListener(new btnSubmitReinforcementsAction());
@@ -38,7 +40,7 @@ public class MainController {
         reinforcements = new HashMap<>();
         mainView.showCurrentPlayer();
         mainView.showLeftReinforcements();
-        mainView.printPlayersTerritories(StaticInformations.getCurrentPlayer());
+        mainView.printPlayersTerritories(getCurrentPlayer());
     }
 
     private void attackPhase(){
@@ -62,13 +64,13 @@ public class MainController {
                 reinforcements.put(destination,value);
             }
             try {
-                StaticInformations.submitReinforcements(destination, value);
+                submitReinforcements(destination, value);
             } catch (Exception e1) {
                 JOptionPane.showMessageDialog(null, "Invalid position!");
             }
-            mainView.printMap();
+            mainView.printArena(StaticInformations.getArena());
             mainView.showLeftReinforcements();
-            System.out.println(StaticInformations.getCurrentPlayer());
+            System.out.println(getCurrentPlayer());
         }
     }
 
@@ -82,8 +84,8 @@ public class MainController {
             }
             */
             System.out.println(reinforcements.toString());
-            StaticInformations.endCurrentPlayerTurn();
-            if (playersPlayed<StaticInformations.getPlayersNumber()-1){
+            endCurrentPlayerTurn();
+            if (playersPlayed< getPlayersNumber()-1){
                 reinforcementPhase();
             }
             else{

@@ -293,8 +293,9 @@ public class SingleClientController implements Controller {
     /*************************************************************************************************
      * GAME RELATED
      ************************************************************************************************/
-    public void initializeMap(Arena a) {
+    public void initializeMap(Arena arena) {
         mapController=new MapController(clientSocket.getClientName());
         System.out.println("Arena received");
+        mapController.updateArena(arena);
     }
 }

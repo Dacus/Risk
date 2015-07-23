@@ -11,6 +11,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -176,5 +177,9 @@ public class MainServer implements Runnable{
         Message msg=new Message(MessageType.PLAYER_DISCONNECTED);
         msg.addElement(name);
         sendGlobalMessage(msg);
+    }
+
+    public List<String> getPlayers(){
+        return new ArrayList<>(clientMap.values());
     }
 }
