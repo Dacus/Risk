@@ -81,7 +81,7 @@ public class SingleClientFrame implements SingleClientViewInterface {
 
         outgoingTextField=new JTextField();
         outgoingTextField.setBackground(Color.WHITE);
-        outgoingTextField.setForeground(ClientAppViewInterface.PURPLE);
+        outgoingTextField.setForeground(PURPLE);
         outgoingTextField.setEditable(true);
 
         sendMessageButton=new JButton("Send Message");

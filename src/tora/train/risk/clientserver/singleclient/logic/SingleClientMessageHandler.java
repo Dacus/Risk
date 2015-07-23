@@ -16,7 +16,7 @@ public class SingleClientMessageHandler implements MessageHandler {
 
     @Override
     public void handleMessage(Message msg) {
-        switch(msg.getOperation()){
+        switch(msg.getType()){
             case STOP:{
                 System.out.println("In SingleClientMessageHandler() client is asked to stop");
                 controller.stopRunning();
@@ -27,7 +27,7 @@ public class SingleClientMessageHandler implements MessageHandler {
                 break;
             }
             case IDENTITY:{
-                int id=(int)msg.getContent().get(0);
+                int id=(int)msg.getElementAt(0);
                 System.out.println("Client has assigned ID " + id );
                 controller.setClientIdentity(id);
                 controller.setClientConnected(true);
@@ -39,26 +39,26 @@ public class SingleClientMessageHandler implements MessageHandler {
                 break;
             }
             case NEW_PLAYER_CONNECTED:{
-                String name=String.valueOf(msg.getContent().get(0));
+                String name=String.valueOf(msg.getElementAt(0));
                 controller.addNewPlayerToCombo(name);
                 break;
             }
             case PLAYER_DISCONNECTED:{
-                String name=String.valueOf(msg.getContent().get(0));
+                String name=String.valueOf(msg.getElementAt(0));
                 controller.removePlayerFromCombo(name);
                 break;
             }
             case ONLINE_PLAYERS:{
-                int n=(int)msg.getContent().get(0);
+                int n=(int)msg.getElementAt(0);
                 ArrayList<String> names=new ArrayList<String>();
                 for (int i=1; i<n+1; i++){
-                    names.add(String.valueOf(msg.getContent().get(i)));
+                    names.add(String.valueOf(msg.getElementAt(i)));
                 }
                 controller.addPlayersToCombo(names);
                 break;
             }
             case RESTRICT_CONNECTION:{
-                int maxNumberOfClients=(int)msg.getContent().get(0);
+                int maxNumberOfClients=(int)msg.getElementAt(0);
                 controller.restrictConnection(maxNumberOfClients);
                 controller.setClientConnected(false);
                 controller.stopRunning();
