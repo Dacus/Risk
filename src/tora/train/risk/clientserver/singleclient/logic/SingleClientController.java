@@ -189,10 +189,10 @@ public class SingleClientController implements Controller {
     /**
      * Changes the text on the Status panel of the Client GUI according to the value of b
      *
-     * @param b true if the client is connected
+     * @param status the status to be set on the panel
      */
-    public void setClientConnected(boolean b) {
-        this.clientFrame.setStatus(b);
+    public void setStatus(Status status) {
+        this.clientFrame.setStatus(status);
     }
 
     /***************************************************************************************
@@ -226,7 +226,7 @@ public class SingleClientController implements Controller {
                 msg.addElement(clientSocket.getClientId());
                 writeMessage(msg);
 
-                clientFrame.setStatus(false);
+
                 clientSocket.stopRunning();
                 clientFrame.close();
                 System.out.println("Client Th: " + Thread.currentThread().getName());
@@ -273,6 +273,22 @@ public class SingleClientController implements Controller {
     }
 
     /**
+     * Action assigned to the "Send Message" button on the GUI that reads the text typed in by the user in the
+     * Outgoing Messages area and sends it to the server.
+     */
+    class SendUserMessageAction implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Message msg=new Message(MessageType.USER);
+            String strToSend=clientFrame.getOutgoingMessageFromField();
+            msg.addElement(strToSend);
+
+            writeMessage(msg);
+        }
+    }
+
+    /**
      * Action assigned to the "Ready" button on the GUI that sends a READY message to the server
      * telling that the client is ready to start
      */
@@ -285,16 +301,16 @@ public class SingleClientController implements Controller {
             }else {
                 Message msg = new Message(MessageType.READY);
                 writeMessage(msg);
+                clientFrame.setStatus(Status.READY);
                 readyFlag=true;
             }
         }
-    }
-
-    /*************************************************************************************************
+    }    /*************************************************************************************************
      * GAME RELATED
      ************************************************************************************************/
     public void initializeMap(Arena a) {
         mapController=new MapController(clientSocket.getClientName());
+        clientFrame.setStatus(Status.PLAYING);
         System.out.println("Arena received");
     }
 }

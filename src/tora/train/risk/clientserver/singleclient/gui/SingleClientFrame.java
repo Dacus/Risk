@@ -1,5 +1,6 @@
 package tora.train.risk.clientserver.singleclient.gui;
 
+import tora.train.risk.clientserver.singleclient.logic.Status;
 import tora.train.risk.clientserver.utils.SwingHelpers;
 
 import javax.swing.*;
@@ -147,17 +148,16 @@ public class SingleClientFrame implements SingleClientViewInterface {
         return panel;
     }
 
-    /************************************************************************************
+    /*******************i*****************************************************************
      * Methods that interrogate/modify/act on JComponents
      ***********************************************************************************/
     /**
      * Sets the text in the statusLabel
      *
-     * @param isConnected boolean value telling whether the text on the label should be set to "Connected" or
-     *                    "Disconnected"
+     * @param status Status value telling the status of the player
      */
-    public void setStatus(boolean isConnected){
-        this.statusLabel.setText(isConnected ? "Connected" : "Not connected");
+    public void setStatus(Status status) {
+        this.statusLabel.setText(status.toString());
     }
 
     /**

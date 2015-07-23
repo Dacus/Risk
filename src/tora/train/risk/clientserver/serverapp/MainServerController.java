@@ -128,13 +128,25 @@ public class MainServerController implements Controller {
      * LISTENERS
      ************************************************************************************/
 
+    /**
+     * ********************************************************************************
+     * GAME RELATED
+     * **********************************************************************************
+     */
+    public void startGame() {
+        this.arenaController = new ArenaController();
+
+        Message msg = new Message(MessageType.START);
+        msg.addElement(arenaController.getArena());
+        server.sendGlobalMessage(msg);
+    }
+
     /** Window listener class for closing the frame and releasing the resources, resulting
      *  in a graceful server stop
      */
     private class ServerWindowListener implements WindowListener {
         @Override
-        public void windowOpened(WindowEvent e) {
-        }
+        public void windowOpened(WindowEvent e) {}
 
         @Override
         public void windowClosing(WindowEvent e) {
@@ -142,24 +154,19 @@ public class MainServerController implements Controller {
         }
 
         @Override
-        public void windowClosed(WindowEvent e) {
-        }
+        public void windowClosed(WindowEvent e) {}
 
         @Override
-        public void windowIconified(WindowEvent e) {
-        }
+        public void windowIconified(WindowEvent e) {}
 
         @Override
-        public void windowDeiconified(WindowEvent e) {
-        }
+        public void windowDeiconified(WindowEvent e) {}
 
         @Override
-        public void windowActivated(WindowEvent e) {
-        }
+        public void windowActivated(WindowEvent e) {}
 
         @Override
-        public void windowDeactivated(WindowEvent e) {
-        }
+        public void windowDeactivated(WindowEvent e) {}
     }
 
     /**
@@ -181,17 +188,6 @@ public class MainServerController implements Controller {
 
             server.sendGlobalMessage(msgToSend);
         }
-    }
-
-    /***********************************************************************************
-     * GAME RELATED
-     ************************************************************************************/
-    public void startGame(){
-        this.arenaController=new ArenaController();
-
-        Message msg=new Message(MessageType.START);
-        msg.addElement(arenaController.getArena());
-        server.sendGlobalMessage(msg);
     }
 
 
