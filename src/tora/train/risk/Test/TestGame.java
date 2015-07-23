@@ -162,8 +162,10 @@ public class TestGame {
         Territory toT=arenaController.getArena().getTerritoryAtCoordinate(toP);
         fromT.setOwner(player);
         fromT.setUnitNr(4);
+        fromT.setMovableUnits(4);
         toT.setOwner(player);
         toT.setUnitNr(2);
+        toT.setMovableUnits(2);
 
         int unitsOnSource=fromT.getUnitNr();
         int unitsOnDest=toT.getUnitNr();
