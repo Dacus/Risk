@@ -1,13 +1,13 @@
 package tora.train.risk.clientserver.clientapp;
 
-import tora.train.risk.clientserver.singleclient.SingleClientController;
-import tora.train.risk.clientserver.singleclient.SingleClientFrame;
-import tora.train.risk.clientserver.singleclient.SingleClientMessageHandler;
+import tora.train.risk.clientserver.singleclient.logic.SingleClientController;
+import tora.train.risk.clientserver.singleclient.gui.SingleClientFrame;
+import tora.train.risk.clientserver.singleclient.logic.SingleClientMessageHandler;
 
 /**
  * Created by Andrea on 7/21/2015.
  */
-public class ClientAppThread implements Runnable {
+public class ClientAppThread extends Thread {
     private SingleClientController singleClientController;
     private SingleClientFrame clientFrame;
     private SingleClientMessageHandler clientMsgHandler;
@@ -19,7 +19,7 @@ public class ClientAppThread implements Runnable {
     }
 
     @Override
-    public void run(){
+    public void start(){
         System.out.println("Running client");
     }
 }

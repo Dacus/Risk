@@ -11,6 +11,6 @@ public class TestServer {
         MainServerFrame serverFrame=new MainServerFrame();
         MainServerController controller=new MainServerController(serverFrame);
 
-        controller.startServer();
+        controller.startRunning();
     }
 }

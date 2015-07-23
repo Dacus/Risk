@@ -3,7 +3,7 @@ package tora.train.risk.clientserver.singleserver;
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
-import tora.train.risk.clientserver.common.MessageTag;
+import tora.train.risk.clientserver.common.MessageType;
 
 /**
  * Class that processes the messages received from the client
@@ -16,10 +16,10 @@ public class SingleServerMessageHandler implements MessageHandler {
     @Override
     public void handleMessage(Message message) {
         System.out.println("Message received:" + message);
-        MessageTag tag=message.getOperation();
-        switch(tag){
+        MessageType type=message.getType();
+        switch(type){
             case STOP:{
-                int clientId=(int)message.getContent().get(0);
+                int clientId=(int)message.getElementAt(0);
                 System.out.println("Client " + clientId + " requested stopping");
                 serverController.stop(clientId);
                 break;
@@ -29,7 +29,7 @@ public class SingleServerMessageHandler implements MessageHandler {
                 break;
             }
             case USER:{
-                String received=message.getContent().get(0).toString();
+                String received=message.getElementAt(0).toString();
                 serverController.displayMessage(received);
                 break;
             }

@@ -9,7 +9,7 @@ import tora.train.risk.*;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 
@@ -28,15 +28,13 @@ public class TestPlayerBonus {
      * Initialize the arena and strategy we are testing
      */
     @BeforeClass
-    public static void init() {
+    public static void beforeClass() {
         defaultArena = new Arena();
         defaultStrat = new RiskDefaultBonus(defaultArena);
     }
 
     private static Integer formula(int territories, int continentBonus) {
-        int bonus = DEFAULT_BONUS + BONUS_FOR_GROUP * (territories) / GROUP_SIZE + continentBonus;
-
-        return bonus;
+        return DEFAULT_BONUS + BONUS_FOR_GROUP * (territories) / GROUP_SIZE + continentBonus;
     }
 
     private static int setRandomPlayerContinentOwner(Continent continent) {
@@ -55,12 +53,12 @@ public class TestPlayerBonus {
     }
 
     @Before
-    public void initiateRandomPlayer() {
+    public void setUp() {
         randomPlayer = new Player("Osama bin Laden");
     }
 
     @After
-    public void setDefaultPlayer() {
+    public void tearDown() {
         List<Territory> territories = defaultArena.getOwnedTerritories(randomPlayer);
         for (Continent continent : defaultArena.getContinents()) {
             continent.removePlayer(randomPlayer);
@@ -70,13 +68,14 @@ public class TestPlayerBonus {
         for (Territory territory : territories) {
             territory.setOwner(Player.CPU_MAP_PLAYER);
         }
+        randomPlayer = null;
     }
 
     @Test
     public void giveBonus_GivenNoTerritories_ExpectedZero() {
         int bonus = defaultStrat.computePlayerBonus(randomPlayer);
 
-        assertEquals(bonus, 0);
+        assertThat(bonus, is(0));
     }
 
     @Test
@@ -84,7 +83,7 @@ public class TestPlayerBonus {
         defaultArena.getTerritoryAtCoordinate(0, 0).setOwner(randomPlayer);
         int bonus = defaultStrat.computePlayerBonus(randomPlayer);
 
-        assertEquals(DEFAULT_BONUS, bonus);
+        assertThat(bonus, is(DEFAULT_BONUS));
     }
 
     @Test
@@ -95,7 +94,7 @@ public class TestPlayerBonus {
 
         int bonus = defaultStrat.computePlayerBonus(randomPlayer);
 
-        assertEquals(DEFAULT_BONUS + BONUS_FOR_GROUP, bonus);
+        assertThat(bonus, is(DEFAULT_BONUS + BONUS_FOR_GROUP));
     }
 
     @Test
@@ -128,9 +127,7 @@ public class TestPlayerBonus {
 
     @Test
     public void giveBonus_GivenNullPlayer_ExpectedZero() {
-        randomPlayer = null;
-
-        int bonus = defaultStrat.computePlayerBonus(randomPlayer);
+        int bonus = defaultStrat.computePlayerBonus(null);
 
         assertThat(bonus, equalTo(0));
     }

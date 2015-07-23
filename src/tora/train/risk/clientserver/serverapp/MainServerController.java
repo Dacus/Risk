@@ -1,10 +1,14 @@
 package tora.train.risk.clientserver.serverapp;
 
+import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
-import tora.train.risk.clientserver.common.MessageTag;
+import tora.train.risk.clientserver.common.MessageType;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.IOException;
 
 /**
  * This class controls the actions on the MainServer and displays the results on the MainServerFrame. It is entirely
@@ -17,7 +21,7 @@ import java.awt.event.ActionListener;
  *
  * Created by Andrea on 7/16/2015.
  */
-public class MainServerController {
+public class MainServerController implements Controller {
     private MainServer server;
     private MainServerFrame frame;
 
@@ -25,20 +29,13 @@ public class MainServerController {
         this.frame=frame;
         this.server=new MainServer(this); //set the Controller of the MainServer to ensure two-way communication
 
-        frame.setQuitButtonListener(new StopServerAction());
         frame.setSendButtonListener(new SendMessageAction());
+        frame.setWindowExitListener(new ServerWindowListener());
     }
 
     /***********************************************************************************
      * CONTROL
      ************************************************************************************/
-
-    /**
-     * Starts the server in the current thread
-     */
-    public void startServer(){
-        server.run();
-    }
 
     /**
      * Calls a method on the main server that increments the variable counting the
@@ -58,54 +55,62 @@ public class MainServerController {
         server.setClientName(name, id);
     }
 
+    /**
+     * Starts the server in the current thread
+     */
+    @Override
+    public void startRunning() {
+        server.run();
+    }
+
+    @Override
+    public void stopRunning() {
+        server.stopSingleServers();
+        try {
+            server.stop();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Sends a message to all connected clients
+     *
+     * @param msg
+     */
+    @Override
+    public void writeMessage(Message msg) {
+        server.sendGlobalMessage(msg);
+    }
+
+    @Override
+    public Message readMessage() {
+        return null;
+    }
+
+    public void closeWindow() {
+        this.frame.close();
+    }
+
     /***********************************************************************************
      * LISTENERS
      ************************************************************************************/
-    /**
-     * Action assigned to the "Stop Server" button on the GUI to stop the MainServer.
-     * It stops all single servers (thus all clients) then it shuts down.
-     */
-    class StopServerAction implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            server.stopSingleServers();
-        }
-    }
-
-    /**
-     * Action assigned to the "Send to all" button on the GUI.
-     * It reads the message written by the user in the JTextField and sends it to all clients (global message)
-     */
-    class SendMessageAction implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String str=frame.getOutgoingTextField();
-            Message msg= new Message(MessageTag.GLOBAL);
-            msg.addObject(str);
-            server.sendGlobalMessage(msg);
-        }
-    }
 
     /**
      * Removes a client from the map stored the MainServer
      *
      * @param id the id of the client removed
      */
-    public void removeSingleServer(int id){
+    public void removeSingleServer(int id) {
         server.removeSingleServer(id);
     }
-
-    /***********************************************************************************
-     * VIEW
-     ************************************************************************************/
 
     /**
      * Displays the incoming messages from the clients on the GUI
      *
-     * @param str  String to display
+     * @param str String to display
      */
-    public void displayMessage(String str){
+    public void displayMessage(String str) {
         this.frame.setIncomingAreaText(str);
     }
 
@@ -114,8 +119,67 @@ public class MainServerController {
      *
      * @param n the number of online clients
      */
-    public void setNumberOfOnlineClients(int n){
+    public void setNumberOfOnlineClients(int n) {
         this.frame.changeNumberOfClientsOnline(n);
+    }
+
+    /** Window listener class for closing the frame and releasing the resources, resulting
+     *  in a graceful server stop
+     */
+    private class ServerWindowListener implements WindowListener {
+        @Override
+        public void windowOpened(WindowEvent e) {
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            stopRunning();
+        }
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+        }
+    }
+
+    /***********************************************************************************
+     * VIEW
+     ************************************************************************************/
+
+    /**
+     * Action assigned to the "Send to all" button on the GUI.
+     */
+    private class SendMessageAction implements ActionListener {
+
+        /**
+         * Creates a new Message, tagged GLOBAL.
+         * Adds the String entered by the user in the frame's "outgoingTextField" JTextField to this message.
+         * Sends this message to all online clients.
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String strToSend = frame.getOutgoingString();
+
+            Message msgToSend = new Message(MessageType.GLOBAL);
+            msgToSend.addElement(strToSend);
+
+            server.sendGlobalMessage(msgToSend);
+        }
     }
 
 }

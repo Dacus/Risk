@@ -2,6 +2,7 @@ package tora.train.risk.clientserver.common;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -10,46 +11,33 @@ import java.util.List;
 public class Message implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-	private MessageTag operation;
-	private List<Object> content;
+	private MessageType type;
+	private List<Object> contents;
 	
-	public Message(MessageTag op, List<Object> list){
-		this.operation=op;
-		this.content=list;
+	public Message(MessageType type, List<Object> list){
+		this.type=type;
+		this.contents=list;
 	}
 
-	public Message(MessageTag op){
-		this.operation=op;
-		this.content=new ArrayList<Object>();
-	}
-
-	public Message(){
-		this.content=new ArrayList<Object>();
+	public Message(MessageType type){
+		this.type=type;
+		this.contents= new ArrayList<Object>();
 	}
 	
-	public MessageTag getOperation() {
-		return operation;
+	public MessageType getType() {
+		return type;
 	}
 
-	public List<Object> getContent() {
-		return content;
+	public Object getElementAt(int i) {
+		return contents.get(i);
 	}
 	
-	public void addObject(Object obj){
-		this.content.add(obj);
+	public void addElement(Object obj){
+		this.contents.add(obj);
 	}
 
 	@Override
 	public String toString() {
-		return "Message [operation=" + operation + ", content=" + content + "]";
+		return "Message [type=" + type + ", contents=" + contents + "]";
 	}
-
-	public void setOperation(MessageTag tag){
-		this.operation=tag;
-	}
-
-	public void clearContents(){
-		this.content.clear();
-	}
-
 }

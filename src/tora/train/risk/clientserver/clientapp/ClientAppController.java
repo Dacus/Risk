@@ -4,45 +4,48 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Application for the client machine.
- * It provides a Graphical User interface where new clients can be added.
- *
- * To add a new client: insert the name of the client then hit "New Client" button.
+ * Class that controls the Graphical User Interface of the application running on the client machine.
+ * It allows the creation of new ClientAppThreads.
  *
  * Created by Andrea on 7/17/2015.
  */
 public class ClientAppController {
-    private ClientAppFrame frame;
+    private ClientAppFrame clientAppFrame;
 
-    public ClientAppController(){
+    public ClientAppController(ClientAppFrame frame){
         //initialize fields
-        this.frame=new ClientAppFrame();
+        this.clientAppFrame=frame;
 
         //add button listeners
-        this.frame.setNewClientButtonListener(new AddClientAction());
+        this.clientAppFrame.setNewClientButtonListener(new AddClientAction());
     }
 
     /**
-     * Action assigned to the "New Client" button to create a new Client thread
+     * Action assigned to the "New Client" button.
      */
     class AddClientAction implements ActionListener{
+
+        /**
+         * The method takes the String inserted by the client (client's name) and stores it in the ¨"clientName" variable.
+         * If "clientName" is an empty String, an informative message is displayed.
+         * Otherwise, a new ClientAppThread is created and started.
+         * The String inserted by the client is erased.
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
-
             //get text from nameField
-            String clientName=frame.getClientName();
+            String clientName=clientAppFrame.getClientName();
 
             if (!clientName.equals("")) {
-
                 //create a new window for the client. Each window has its own associated controller
-                Thread th=new Thread(new ClientAppThread(clientName));
+                Thread th=new ClientAppThread(clientName);
                 th.start();
 
                 //clear the nameField
-                frame.clearNameField();
+                clientAppFrame.clearNameField();
             }
             else
-                frame.showOptionPanel("Please enter your name!");
+                clientAppFrame.showOptionPanel("Please enter your name!");
         }
     }
 }

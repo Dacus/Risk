@@ -6,7 +6,8 @@ package tora.train.risk.clientserver.common;
  * Created by Andrea on 7/16/2015.
  */
 public interface Controller {
-    public void stopRunning();
-    public void sendMessage(Message msg);
-    public Message readMessage();
+    void startRunning();
+    void stopRunning();
+    void writeMessage(Message msg);
+    Message readMessage();
 }

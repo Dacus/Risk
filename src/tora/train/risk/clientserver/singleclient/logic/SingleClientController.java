@@ -1,13 +1,16 @@
-package tora.train.risk.clientserver.singleclient;
+package tora.train.risk.clientserver.singleclient.logic;
 
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
-import tora.train.risk.clientserver.common.MessageTag;
-import tora.train.risk.clientserver.singleclient.CSocketClient;
+import tora.train.risk.clientserver.common.MessageType;
+import tora.train.risk.clientserver.singleclient.gui.MapController;
+import tora.train.risk.clientserver.singleclient.gui.SingleClientFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -34,7 +37,7 @@ public class SingleClientController implements Controller {
         this.clientSocket=new CSocketClient(handler);
 
         this.clientFrame.setConnectionButtonListener(new ConnectAction());
-        this.clientFrame.setDisconnectButtonListener(new DisconnectAction());
+        this.clientFrame.setWindowListener(new WindowDisconnectAction());
         this.clientFrame.setSendMessageButtonListener(new SendUserMessageAction());
         this.clientFrame.setReadyButtonListener(new ReadyAction());
     }
@@ -48,13 +51,11 @@ public class SingleClientController implements Controller {
      * thread where the client continuously reads incoming messages, delegating
      * their processing to a MessageHandler.
      */
-    public void startClient(){
+    public void startRunning(){
         try {
             if (! clientSocket.isRunning()) {
                 clientSocket.connect();
                 clientSocket.setClientName(clientFrame.getName());
-
-                clientFrame.setStatus(true);
 
                 connectByName();
             }
@@ -67,9 +68,9 @@ public class SingleClientController implements Controller {
      * Sends a message with the Client's name
      */
     public void connectByName(){
-        Message msg=new Message(MessageTag.CONNECT);
-        msg.addObject(clientSocket.getClientName());
-        sendMessage(msg);
+        Message msg=new Message(MessageType.CONNECT);
+        msg.addElement(clientSocket.getClientName());
+        writeMessage(msg);
     }
 
     /**
@@ -89,9 +90,9 @@ public class SingleClientController implements Controller {
      * @param msg the message to be sent
      */
     @Override
-    public void sendMessage(Message msg) {
+    public void writeMessage(Message msg) {
         try {
-            clientSocket.sendMessage(msg);
+            clientSocket.writeMessage(msg);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -125,7 +126,7 @@ public class SingleClientController implements Controller {
      */
     public void displayMessage(Message msg) {
         System.out.println("Client " + clientSocket.getClientId() + " displays global message");
-        clientFrame.setIncomingAreaText(msg.getContent().get(0).toString());
+        clientFrame.setIncomingAreaText(msg.getElementAt(0).toString());
     }
 
     /**
@@ -175,33 +176,85 @@ public class SingleClientController implements Controller {
     }
 
     /**
+     * Displays a message on an option pane to inform the client that it cannot connect
+     *
+     * @param max
+     */
+    public void restrictConnection(int max) {
+        clientFrame.showOptionPanel(max + " players connected. Please try again later!");
+    }
+
+    /**
+     * Changes the text on the Status panel of the Client GUI according to the value of b
+     *
+     * @param b true if the client is connected
+     */
+    public void setClientConnected(boolean b) {
+        this.clientFrame.setStatus(b);
+    }
+
+    public void initializeMap() {
+        MapController mapController=new MapController(clientSocket.getClientName());
+    }
+
+    /***************************************************************************************
+     * LISTENER
+     **************************************************************************************/
+
+    /**
      * Action assigned to the "Connect" button on the GUI that connects the client to server
      */
     class ConnectAction implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            startClient();
+            startRunning();
         }
     }
 
     /**
      * Action assigned to the "Disconnect" button on the GUI that disconnects the client from the server
      */
-    class DisconnectAction implements ActionListener{
+    private class WindowDisconnectAction implements WindowListener {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void windowOpened(WindowEvent e) {
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
             if (clientSocket.isRunning()) {
-                Message msg=new Message(MessageTag.STOP);
-                msg.addObject(clientSocket.getClientId());
-                sendMessage(msg);
+                Message msg = new Message(MessageType.STOP);
+                msg.addElement(clientSocket.getClientId());
+                writeMessage(msg);
 
                 clientFrame.setStatus(false);
                 clientSocket.stopRunning();
                 clientFrame.close();
                 System.out.println("Client Th: " + Thread.currentThread().getName());
+            } else {
+                clientFrame.close();
             }
+        }
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
         }
     }
 
@@ -213,11 +266,11 @@ public class SingleClientController implements Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Message msg=new Message(MessageTag.USER);
+            Message msg=new Message(MessageType.USER);
             String strToSend=clientFrame.getOutgoingMessageFromField();
-            msg.addObject(strToSend);
+            msg.addElement(strToSend);
 
-            sendMessage(msg);
+            writeMessage(msg);
         }
     }
 
@@ -232,8 +285,8 @@ public class SingleClientController implements Controller {
             if (readyFlag){
                 clientFrame.showOptionPanel("You already told the others that you are ready to play!");
             }else {
-                Message msg = new Message(MessageTag.READY);
-                sendMessage(msg);
+                Message msg = new Message(MessageType.READY);
+                writeMessage(msg);
                 readyFlag=true;
             }
         }

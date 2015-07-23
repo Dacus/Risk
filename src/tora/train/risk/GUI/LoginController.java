@@ -1,6 +1,6 @@
 package tora.train.risk.GUI;
 
-import tora.train.risk.Player;
+import tora.train.risk.*;
 
 import javax.swing.*;
 import java.awt.*;

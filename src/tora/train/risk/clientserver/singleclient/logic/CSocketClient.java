@@ -1,4 +1,4 @@
-package tora.train.risk.clientserver.singleclient;
+package tora.train.risk.clientserver.singleclient.logic;
 
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
@@ -74,7 +74,7 @@ public class CSocketClient implements Runnable{
 	 * @param message	the message to be sent
 	 * @throws IOException
 	 */
-	public void sendMessage(Message message) throws IOException{
+	public void writeMessage(Message message) throws IOException{
 		System.out.println("Client sends message:" + message);
 		outputStream.writeObject(message);
 		outputStream.flush();

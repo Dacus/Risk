@@ -7,7 +7,7 @@ import java.awt.*;
 /**
  * Created by Andrea on 7/16/2015.
  */
-public class Helpers {
+public class SwingHelpers {
 
     public static JPanel buildCustomizedPanel(String name, int direction){
         JPanel panel=new JPanel();

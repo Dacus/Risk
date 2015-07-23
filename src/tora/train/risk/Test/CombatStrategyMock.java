@@ -22,7 +22,6 @@ public class CombatStrategyMock implements CombatStrategy {
             throw new IllegalArgumentException();
         else ATTACKING_KILLS = kills;
     }
-
     @Override
     public boolean solveAttack(int nrOfAttackingUnits, Territory source, Territory destination) {
         int defendingUnits = destination.getUnitNr();
@@ -34,21 +33,26 @@ public class CombatStrategyMock implements CombatStrategy {
         if (attackingKills >= defendingUnits) {
             if (defendingKills < nrOfAttackingUnits) {
                 changeOwnershipOfTerritory(nrOfAttackingUnits, destination, initiator, defendingKills);
+                source.setMovableUnits(unitsOnAttackingTerritory - nrOfAttackingUnits);
                 source.setUnitNr(unitsOnAttackingTerritory - nrOfAttackingUnits);
                 return true;
             } else {
                 makeTerritoryNeutral(destination);
+                source.setMovableUnits(unitsOnAttackingTerritory - nrOfAttackingUnits);
                 source.setUnitNr(unitsOnAttackingTerritory - nrOfAttackingUnits);
                 return true;
             }
         } else {
+            destination.setMovableUnits(defendingUnits - attackingKills);
             destination.setUnitNr(defendingUnits - attackingKills);
             if (defendingKills > nrOfAttackingUnits)
                 defendingKills = nrOfAttackingUnits;
+            source.setMovableUnits(unitsOnAttackingTerritory - nrOfAttackingUnits);
             source.setUnitNr(unitsOnAttackingTerritory - defendingKills);
             return false;
         }
     }
+
 
     /**
      * Marginal case when the territory becomes neutral as the attacked could not
@@ -57,9 +61,11 @@ public class CombatStrategyMock implements CombatStrategy {
      * @param destination the territory on which this happened
      */
     private void makeTerritoryNeutral(Territory destination) {
+        destination.setMovableUnits(0);
         destination.setUnitNr(0);
         destination.setOwner(Player.CPU_MAP_PLAYER);
         destination.getContinent().addPlayer(Player.CPU_MAP_PLAYER);
+        destination.setMovableUnits(0);
     }
 
     /**
@@ -72,7 +78,9 @@ public class CombatStrategyMock implements CombatStrategy {
      */
     private void changeOwnershipOfTerritory(int nrOfAttackingUnits, Territory destination, Player player, int defendingKills) {
         destination.setOwner(player);
+        destination.setMovableUnits(0);
         destination.setUnitNr(nrOfAttackingUnits - defendingKills);
         destination.getContinent().addPlayer(player);
     }
+
 }

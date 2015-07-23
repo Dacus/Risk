@@ -2,7 +2,7 @@ package tora.train.risk.clientserver.singleserver;
 
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
-import tora.train.risk.clientserver.common.MessageTag;
+import tora.train.risk.clientserver.common.MessageType;
 import tora.train.risk.clientserver.serverapp.MainServerController;
 
 import java.io.IOException;
@@ -47,6 +47,13 @@ public class SingleServerController implements Controller {
         mainController.removeSingleServer(id);
     }
 
+    @Override
+    public void startRunning() {
+        //Keep each client on its own thread
+        Thread thread = new Thread(singleServer);
+        thread.start();
+    }
+
     /**
      * Stops the CMSocketServer thread's loop
      */
@@ -64,9 +71,9 @@ public class SingleServerController implements Controller {
      * @param msg message to be sent
      */
     @Override
-    public void sendMessage(Message msg) {
+    public void writeMessage(Message msg) {
         try {
-            singleServer.sendMessage(msg);
+            singleServer.writeMessage(msg);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,11 +108,11 @@ public class SingleServerController implements Controller {
      */
     public void setID(int id){
         Message inMsg=readMessage();
-        String name=String.valueOf(inMsg.getContent().get(0));
+        String name=String.valueOf(inMsg.getElementAt(0));
 
-        Message outMsg=new Message(MessageTag.IDENTITY);
-        outMsg.addObject(id);
-        sendMessage(outMsg);
+        Message outMsg=new Message(MessageType.IDENTITY);
+        outMsg.addElement(id);
+        writeMessage(outMsg);
 
         mainController.setClientName(name, id);
     }
@@ -115,7 +122,7 @@ public class SingleServerController implements Controller {
      *
      */
     public void stopClient(){
-        sendMessage( new Message(MessageTag.STOP));
+        writeMessage(new Message(MessageType.STOP));
         stopRunning();
     }
 
@@ -146,11 +153,30 @@ public class SingleServerController implements Controller {
      * @param names
      */
     public void sendListOfOnlineClients(ArrayList<String> names) {
-        Message msg=new Message(MessageTag.ONLINE_PLAYERS);
+        Message msg=new Message(MessageType.ONLINE_PLAYERS);
         int n=names.size();
-        msg.addObject(n);
+        msg.addElement(n);
         for (int i=0; i<n; i++){
-            msg.addObject(names.get(i));
-        }sendMessage(msg);
+            msg.addElement(names.get(i));
+        }
+        writeMessage(msg);
+    }
+
+    /**
+     * Receives the connection message from the client.
+     * Sends a restriction message with the maximum number of clients that can be online at a time
+     * Stops the CMSocketServer after sending the message
+     *
+     * @param maxNumberOfClients
+     */
+    public void restrictClient(int maxNumberOfClients) {
+        Message inMsg=readMessage();
+        String name=String.valueOf(inMsg.getElementAt(0));
+
+        Message msg=new Message(MessageType.RESTRICT_CONNECTION);
+        msg.addElement(maxNumberOfClients);
+        writeMessage(msg);
+
+        stopRunning();
     }
 }

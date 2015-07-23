@@ -1,22 +1,25 @@
 package tora.train.risk.clientserver.serverapp;
 
-import tora.train.risk.clientserver.utils.Helpers;
+import tora.train.risk.clientserver.utils.SwingHelpers;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 
 /**
  * Server side GUI.
  *
  * Created by Andrea on 7/16/2015.
  */
-public class MainServerFrame implements MainServerViewInterface {
+public class MainServerFrame {
+    private static final int WINDOW_X = 500;
+    private static final int WINDOW_Y = 500;
+    private static final Color PURPLE = new Color(125, 5, 82);
     private JFrame frame;
     private JTextArea incomingTextArea;
     private JTextField outgoingTextField;
     private JButton sendMessageButton;
-    private JButton stopServerButton;
     private JLabel onlineClientsLabel;
 
     public MainServerFrame() {
@@ -26,7 +29,7 @@ public class MainServerFrame implements MainServerViewInterface {
         backgroundPanel.setLayout(new GridLayout(5,0));
         backgroundPanel.setBackground(Color.darkGray);
 
-        JPanel titlePanel= Helpers.buildTitlePanel("Server");
+        JPanel titlePanel= SwingHelpers.buildTitlePanel("Server");
         JPanel statusPanel=buildStatusPanel();
         JPanel outgoingMsgPanel=buildOutgoingMessagePanel();
         JPanel incomingMsgPanel=buildIncomingMessagePanel();
@@ -41,19 +44,18 @@ public class MainServerFrame implements MainServerViewInterface {
         frame.getContentPane().add(backgroundPanel);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
-        frame.setSize(MainServerViewInterface.WINDOW_X, MainServerViewInterface.WINDOW_Y);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(WINDOW_X, WINDOW_Y);
     }
 
     /************************************************************************************
      * PANEL BUILDERS
      ***********************************************************************************/
     private JPanel buildOutgoingMessagePanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Outgoing", BoxLayout.X_AXIS);
+        JPanel panel= SwingHelpers.buildCustomizedPanel("Outgoing", BoxLayout.X_AXIS);
 
         outgoingTextField=new JTextField(10);
         outgoingTextField.setBackground(Color.WHITE);
-        outgoingTextField.setForeground(new Color(125, 5, 82));
+        outgoingTextField.setForeground(PURPLE);
 
         sendMessageButton=new JButton("Send To All");
 
@@ -65,11 +67,11 @@ public class MainServerFrame implements MainServerViewInterface {
     }
 
     private JPanel buildIncomingMessagePanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Incoming", BoxLayout.X_AXIS);
+        JPanel panel= SwingHelpers.buildCustomizedPanel("Incoming", BoxLayout.X_AXIS);
 
         incomingTextArea=new JTextArea(10,10);
         incomingTextArea.setBackground(Color.WHITE);
-        incomingTextArea.setForeground(new Color(125, 5, 82));
+        incomingTextArea.setForeground(PURPLE);
         incomingTextArea.setEditable(false);
 
         JScrollPane scrollPane=new JScrollPane(incomingTextArea);
@@ -79,18 +81,15 @@ public class MainServerFrame implements MainServerViewInterface {
     }
 
     private JPanel buildButtonPanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Buttons", BoxLayout.X_AXIS);
-
-        stopServerButton=new JButton("Stop Server");
+        JPanel panel= SwingHelpers.buildCustomizedPanel("Buttons", BoxLayout.X_AXIS);
 
         panel.add(Box.createRigidArea(new Dimension(100, 0)));
-        panel.add(stopServerButton);
 
         return panel;
     }
 
     private JPanel buildStatusPanel(){
-        JPanel panel=Helpers.buildCustomizedPanel("Status", BoxLayout.X_AXIS);
+        JPanel panel= SwingHelpers.buildCustomizedPanel("Status", BoxLayout.X_AXIS);
 
         JPanel innerPanel=new JPanel();
         innerPanel.setOpaque(false);
@@ -119,10 +118,14 @@ public class MainServerFrame implements MainServerViewInterface {
      ***********************************************************************************/
 
     public void setIncomingAreaText(String str){
-        this.incomingTextArea.append("\n"+str);
+        this.incomingTextArea.append("\n" + str);
     }
 
-    public String getOutgoingTextField(){
+    /**
+     *
+     * @return the String typed in by the user in the "outgoingTextField" GUI component
+     */
+    public String getOutgoingString(){
         return this.outgoingTextField.getText();
     }
 
@@ -133,8 +136,8 @@ public class MainServerFrame implements MainServerViewInterface {
     /*************************************************************************************
      * LISTENERS
      ***********************************************************************************/
-    public void setQuitButtonListener(ActionListener a) {
-        this.stopServerButton.addActionListener(a);
+    public void setWindowExitListener(WindowListener listener) {
+        frame.addWindowListener(listener);
     }
 
     public void setSendButtonListener(ActionListener a) {
