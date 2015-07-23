@@ -7,7 +7,7 @@ import tora.train.risk.clientserver.singleclient.logic.SingleClientMessageHandle
 /**
  * Created by Andrea on 7/21/2015.
  */
-public class ClientAppThread implements Runnable {
+public class ClientAppThread extends Thread {
     private SingleClientController singleClientController;
     private SingleClientFrame clientFrame;
     private SingleClientMessageHandler clientMsgHandler;
@@ -19,7 +19,7 @@ public class ClientAppThread implements Runnable {
     }
 
     @Override
-    public void run(){
+    public void start(){
         System.out.println("Running client");
     }
 }
