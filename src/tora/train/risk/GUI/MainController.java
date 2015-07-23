@@ -63,12 +63,14 @@ public class MainController {
             }
             try {
                 StaticInformations.submitReinforcements(destination, value);
-            } catch (Exception e1) {
+            }catch (Exception e1) {
                 JOptionPane.showMessageDialog(null, "Invalid position!");
+            }
+            finally {
+                System.out.println("destination"+destination.toString()+ " value "+value);
             }
             mainView.printMap();
             mainView.showLeftReinforcements();
-            System.out.println(StaticInformations.getCurrentPlayer());
         }
     }
 
@@ -89,6 +91,7 @@ public class MainController {
             else{
                 System.out.println("This is sparta!!!");
                 playersPlayed=0;
+                StaticInformations.resetPlayer();
                 attackPhase();
             }
         }
@@ -98,7 +101,7 @@ public class MainController {
         
         @Override
         public void actionPerformed(ActionEvent e) {
-            
+            //TODO
         }
         
     }
@@ -108,7 +111,7 @@ public class MainController {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            //TODO
         }
     }
 /*

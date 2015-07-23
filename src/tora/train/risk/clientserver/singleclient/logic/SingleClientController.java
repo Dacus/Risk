@@ -273,22 +273,6 @@ public class SingleClientController implements Controller {
     }
 
     /**
-     * Action assigned to the "Send Message" button on the GUI that reads the text typed in by the user in the
-     * Outgoing Messages area and sends it to the server.
-     */
-    class SendUserMessageAction implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Message msg=new Message(MessageType.USER);
-            String strToSend=clientFrame.getOutgoingMessageFromField();
-            msg.addElement(strToSend);
-
-            writeMessage(msg);
-        }
-    }
-
-    /**
      * Action assigned to the "Ready" button on the GUI that sends a READY message to the server
      * telling that the client is ready to start
      */
