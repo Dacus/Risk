@@ -1,6 +1,5 @@
 package tora.train.risk.clientserver.singleclient.gui;
 
-import tora.train.risk.clientserver.clientapp.ClientAppViewInterface;
 import tora.train.risk.clientserver.utils.Helpers;
 
 import javax.swing.*;
