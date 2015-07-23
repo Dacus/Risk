@@ -1,5 +1,6 @@
 package tora.train.risk.Test;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import tora.train.risk.Arena;
@@ -8,14 +9,12 @@ import tora.train.risk.Player;
 import tora.train.risk.Territory;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static junit.framework.Assert.assertNotNull;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 /**
@@ -95,6 +94,61 @@ public class TestGame {
             //all players must have finished their turns
             assertThat(localArenaController.endCurrentPlayerTurn(), is(false));
         }
+    }
+
+    /**
+     * Tests if a given point is on the map or not.
+     */
+    @Test
+    public void testCoordinatesAreOnTheMap() {
+        Arena arena = arenaController.getArena();
+
+        final int sizeX = arena.getXSize();
+        final int sizeY = arena.getYSize();
+
+        Point minusXY = new Point(-1, -1);
+        Point minusX = new Point(-1, 0);
+        Point minusY = new Point(0, -1);
+        Point origin = new Point(0, 0);
+        Point outsideX = new Point(sizeX, 0);
+        Point outsideY = new Point(0, sizeY);
+        Point outsideXY = new Point(sizeX, sizeY);
+        Point outsideXminusY = new Point(sizeX, -1);
+        Point outsideYminusX = new Point(-1, sizeY);
+
+        assertThat(((sizeX >= 1) && (sizeY >= 1)), is(true));
+        Point insideXY = new Point(sizeX - 1, sizeY - 1);
+
+        assertThat(arena.coordinatesAreOnTheMap(insideXY), is(true));
+        assertThat(arena.coordinatesAreOnTheMap(minusXY), is(false));
+        assertThat(arena.coordinatesAreOnTheMap(minusX), is(false));
+        assertThat(arena.coordinatesAreOnTheMap(minusY), is(false));
+        assertThat(arena.coordinatesAreOnTheMap(origin), is(true));
+        assertThat(arena.coordinatesAreOnTheMap(outsideX), is(false));
+        assertThat(arena.coordinatesAreOnTheMap(outsideY), is(false));
+        assertThat(arena.coordinatesAreOnTheMap(outsideXY), is(false));
+        assertThat(arena.coordinatesAreOnTheMap(outsideXminusY), is(false));
+        assertThat(arena.coordinatesAreOnTheMap(outsideYminusX), is(false));
+    }
+
+    /**
+     * Tests moving of units from a territory that is not owned by the player that moves.
+     */
+    @Test
+    public void testMoveUnitsFromAlienTerritory() {
+        //TODO: Lorand
+        /*
+        Queue<Player> playerQueue = arenaController.getPlayersQueue();
+        Player me = playerQueue.remove();
+        Player you = playerQueue.remove();
+        List<Territory> yourTerritories = arenaController.getArena().getOwnedTerritories(you);
+        assertThat(yourTerritories, not(empty()));
+        Territory yourTerritory = yourTerritories.get(0);
+        Territory neighbourTerritory = yourTerritory
+        int nrOfAttackingUnits = yourTerritory.getUnitNr();
+
+        assertThat(arenaController.moveUnits(nrOfAttackingUnits - 1, yourTerritory
+        */
     }
 
     /**
