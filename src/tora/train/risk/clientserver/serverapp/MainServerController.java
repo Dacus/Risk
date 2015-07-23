@@ -106,16 +106,21 @@ public class MainServerController implements Controller {
 
     /**
      * Action assigned to the "Send to all" button on the GUI.
-     * It reads the message written by the user in the JTextField and sends it to all clients (global message)
      */
     class SendMessageAction implements ActionListener{
 
+        /** Creates a new Message, tagged GLOBAL.
+         * Adds the String entered by the user in the frame's "outgoingTextField" JTextField to this message.
+         * Sends this message to all online clients.
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
-            String str=frame.getOutgoingTextField();
-            Message msg= new Message(MessageType.GLOBAL);
-            msg.addElement(str);
-            server.sendGlobalMessage(msg);
+            String strToSend=frame.getOutgoingString();
+
+            Message msgToSend= new Message(MessageType.GLOBAL);
+            msgToSend.addElement(strToSend);
+
+            server.sendGlobalMessage(msgToSend);
         }
     }
 

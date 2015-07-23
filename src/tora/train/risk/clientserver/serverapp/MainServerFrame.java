@@ -123,10 +123,14 @@ public class MainServerFrame {
      ***********************************************************************************/
 
     public void setIncomingAreaText(String str){
-        this.incomingTextArea.append("\n"+str);
+        this.incomingTextArea.append("\n" + str);
     }
 
-    public String getOutgoingTextField(){
+    /**
+     *
+     * @return the String typed in by the user in the "outgoingTextField" GUI component
+     */
+    public String getOutgoingString(){
         return this.outgoingTextField.getText();
     }
 
