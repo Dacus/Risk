@@ -6,6 +6,7 @@ import tora.train.risk.clientserver.common.MessageType;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * This class controls the actions on the MainServer and displays the results on the MainServerFrame. It is entirely
@@ -63,7 +64,11 @@ public class MainServerController implements Controller {
     @Override
     public void stopRunning() {
         server.stopSingleServers();
-        server.stop();
+        try {
+            server.stop();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -79,6 +84,10 @@ public class MainServerController implements Controller {
     @Override
     public Message readMessage() {
         return null;
+    }
+
+    public void closeWindow() {
+        this.frame.close();
     }
 
     /***********************************************************************************

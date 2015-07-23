@@ -49,7 +49,9 @@ public class SingleServerController implements Controller {
 
     @Override
     public void startRunning() {
-
+        //Keep each client on its own thread
+        Thread thread = new Thread(singleServer);
+        thread.start();
     }
 
     /**

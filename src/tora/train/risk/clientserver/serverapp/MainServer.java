@@ -6,6 +6,7 @@ import tora.train.risk.clientserver.singleserver.CMSocketServer;
 import tora.train.risk.clientserver.singleserver.SingleServerController;
 import tora.train.risk.clientserver.singleserver.SingleServerMessageHandler;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -38,6 +39,8 @@ public class MainServer implements Runnable{
 	private MainServerController mainServerController;
 
 	private Socket client;
+    private ServerSocket serverSocket;
+
     private AtomicInteger readyCounter = new AtomicInteger(0);
 
     public MainServer(MainServerController supremeServerController){
@@ -48,10 +51,11 @@ public class MainServer implements Runnable{
 	public void run() {
 		System.out.println("Starting the multiple socket server at port: " + PORT_NO);
 		try {			
-			ServerSocket serverSocket = new ServerSocket(PORT_NO);
+			serverSocket = new ServerSocket(PORT_NO);
 			
 			System.out.println("Multiple Socket Server Initialized");
 
+            //serverSocket.setSoTimeout(1000);
 			while (isRunning) {
 				System.out.println("Listening for clients");
 
@@ -78,10 +82,7 @@ public class MainServer implements Runnable{
 
                     id.getAndIncrement();
 
-                    //Keep each client on its own thread
-                    Thread thread = new Thread(server);
-                    thread.start();
-
+                    controller.startRunning();
                 }
                 else{
                     //tell client that he cannot connect
@@ -90,6 +91,7 @@ public class MainServer implements Runnable{
 			}
 		} catch (Exception e) {
 			System.out.println("Main server stops");
+            mainServerController.closeWindow();
 		}
 	}
 
@@ -99,8 +101,8 @@ public class MainServer implements Runnable{
 	 * @param msg	message to be sent
 	 */
 	public void sendGlobalMessage(Message msg){
-		for (int key: map.keySet()){
-			map.get(key).writeMessage(msg);
+		for (int key: map.keySet()) {
+            map.get(key).writeMessage(msg);
 		}
 	}
 
@@ -130,8 +132,9 @@ public class MainServer implements Runnable{
 	/**
 	 * Stops the Main Server exiting the while loop.
 	 */
-	public synchronized void stop(){
-		this.isRunning = false;
+	public synchronized void stop() throws IOException {
+        this.isRunning = false;
+        serverSocket.close();
 	}
 
     public void incrementReadyCounter() {
