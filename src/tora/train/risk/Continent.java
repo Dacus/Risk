@@ -1,11 +1,12 @@
 package tora.train.risk;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 
-public class Continent {
+public class Continent implements Serializable{
     private ContinentType type;
     private Set<Player> currentPlayers;
 

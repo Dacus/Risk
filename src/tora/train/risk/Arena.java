@@ -1,10 +1,11 @@
 package tora.train.risk;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Arena {
+public class Arena implements Serializable {
     private static final int SIZE_X = 11;
     private static final int SIZE_Y = 11;
     private Territory[][] map;

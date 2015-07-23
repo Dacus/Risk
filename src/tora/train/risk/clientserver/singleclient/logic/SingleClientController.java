@@ -1,5 +1,6 @@
 package tora.train.risk.clientserver.singleclient.logic;
 
+import tora.train.risk.Arena;
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 public class SingleClientController implements Controller {
     private SingleClientFrame clientFrame;
     private CSocketClient clientSocket;
+    private MapController mapController;
 
     private boolean readyFlag;
 
@@ -193,10 +195,6 @@ public class SingleClientController implements Controller {
         this.clientFrame.setStatus(b);
     }
 
-    public void initializeMap() {
-        MapController mapController=new MapController(clientSocket.getClientName());
-    }
-
     /***************************************************************************************
      * LISTENER
      **************************************************************************************/
@@ -290,5 +288,13 @@ public class SingleClientController implements Controller {
                 readyFlag=true;
             }
         }
+    }
+
+    /*************************************************************************************************
+     * GAME RELATED
+     ************************************************************************************************/
+    public void initializeMap(Arena a) {
+        mapController=new MapController(clientSocket.getClientName());
+        System.out.println("Arena received");
     }
 }

@@ -1,6 +1,8 @@
 package tora.train.risk;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable{
     public static final Player CPU_MAP_PLAYER;
 
     static {

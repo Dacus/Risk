@@ -1,5 +1,6 @@
 package tora.train.risk.clientserver.serverapp;
 
+import tora.train.risk.ArenaController;
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageType;
@@ -24,6 +25,7 @@ import java.io.IOException;
 public class MainServerController implements Controller {
     private MainServer server;
     private MainServerFrame frame;
+    private ArenaController arenaController;
 
     public MainServerController(MainServerFrame frame){
         this.frame=frame;
@@ -95,7 +97,6 @@ public class MainServerController implements Controller {
     /***********************************************************************************
      * LISTENERS
      ************************************************************************************/
-
     /**
      * Removes a client from the map stored the MainServer
      *
@@ -122,6 +123,10 @@ public class MainServerController implements Controller {
     public void setNumberOfOnlineClients(int n) {
         this.frame.changeNumberOfClientsOnline(n);
     }
+
+    /***********************************************************************************
+     * LISTENERS
+     ************************************************************************************/
 
     /** Window listener class for closing the frame and releasing the resources, resulting
      *  in a graceful server stop
@@ -157,10 +162,6 @@ public class MainServerController implements Controller {
         }
     }
 
-    /***********************************************************************************
-     * VIEW
-     ************************************************************************************/
-
     /**
      * Action assigned to the "Send to all" button on the GUI.
      */
@@ -181,5 +182,17 @@ public class MainServerController implements Controller {
             server.sendGlobalMessage(msgToSend);
         }
     }
+
+    /***********************************************************************************
+     * GAME RELATED
+     ************************************************************************************/
+    public void startGame(){
+        this.arenaController=new ArenaController();
+
+        Message msg=new Message(MessageType.START);
+        msg.addElement(arenaController.getArena());
+        server.sendGlobalMessage(msg);
+    }
+
 
 }

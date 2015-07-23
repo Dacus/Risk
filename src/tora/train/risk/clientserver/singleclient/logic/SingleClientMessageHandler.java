@@ -1,5 +1,6 @@
 package tora.train.risk.clientserver.singleclient.logic;
 
+import tora.train.risk.Arena;
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
@@ -34,8 +35,8 @@ public class SingleClientMessageHandler implements MessageHandler {
                 break;
             }
             case START:{
-                controller.displayMessage(msg);
-                controller.initializeMap();
+                Arena arena=(Arena)msg.getElementAt(0);
+                controller.initializeMap(arena);
                 break;
             }
             case NEW_PLAYER_CONNECTED:{

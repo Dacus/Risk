@@ -138,9 +138,7 @@ public class MainServer implements Runnable{
     public void incrementReadyCounter() {
         int x = readyCounter.getAndIncrement();
         if (x == map.size() - 1) {
-            Message msg = new Message(MessageType.START);
-            msg.addElement("StartGame");
-            sendGlobalMessage(msg);
+            mainServerController.startGame();
         }
     }
 

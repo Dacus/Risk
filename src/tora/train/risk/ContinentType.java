@@ -1,6 +1,8 @@
 package tora.train.risk;
 
-public class ContinentType {
+import java.io.Serializable;
+
+public class ContinentType implements Serializable{
     //Default map continent types From "Risk for dummies" map
     public static final ContinentType A = new ContinentType(2, 3, true);
     public static final ContinentType H = new ContinentType(2, 4, true);
