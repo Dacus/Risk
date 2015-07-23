@@ -12,6 +12,74 @@ public class Arena implements Serializable {
     private List<Continent> continents;
     static final long serialVersionUID = 1L;
 
+    public class CoordinatesCalculator {
+        /**
+         * @param coordinates territory's coordinates to check
+         * @return true if territory's coordinates are on the map
+         */
+        public boolean coordinatesAreOnTheMap(Point coordinates) {
+            return ((coordinates.getX() >= 0 && coordinates.getX() < SIZE_X) &&
+                    (coordinates.getY() >= 0 && coordinates.getY() < SIZE_Y));
+        }
+
+        /**
+         * Creates a new point based on the point param coordinates, changing coordinates
+         * X = point's X + addX param, Y = point's Y + addY param
+         * @param point to adjust
+         * @param addX  value to add on X coordinate of point
+         * @param addY  value to add on Y coordinate of point
+         * @return a new point that has X, Y coordinates adjusted as above
+         *         null if point or adjusted point are not on the map
+         */
+        private Point adjustPositionOfPoint(Point point, int addX, int addY) {
+            Point adjustedPoint = new Point(point.x + addX, point.y + addY);
+            if (coordinatesAreOnTheMap(point) && coordinatesAreOnTheMap(adjustedPoint))
+                return adjustedPoint;
+            else
+                return null;
+        }
+
+        /**
+         * @param coordinates of which to compute the neighbour territory in the UP direction
+         * @return the territory's coordinates that is neighbour in the UP direction with coordinates point
+         *         null if coordinates does not have a neighbour in the UP direction or
+         *              if coordinates are not valid
+         */
+        public Point getUpNeighbour(Point coordinates) {
+            return adjustPositionOfPoint(coordinates, -1, 0);
+        }
+
+        /**
+         * @param coordinates of which to compute the neighbour territory in the DOWN direction
+         * @return the territory's coordinates that is neighbour in the DOWN direction with coordinates point
+         *         null if coordinates does not have a neighbour in the DOWN direction or
+         *              if coordinates are not valid
+         */
+        public Point getDownNeighbour(Point coordinates) {
+            return adjustPositionOfPoint(coordinates, 1, 0);
+        }
+
+        /**
+         * @param coordinates of which to compute the neighbour territory in the LEFT direction
+         * @return the territory's coordinates that is neighbour in the LEFT direction with coordinates point
+         *         null if coordinates does not have a neighbour in the LEFT direction or
+         *              if coordinates are not valid
+         */
+        public Point getLeftNeighbour(Point coordinates) {
+            return adjustPositionOfPoint(coordinates, 0, -1);
+        }
+
+        /**
+         * @param coordinates of which to compute the neighbour territory in the RIGHT direction
+         * @return the territory's coordinates that is neighbour in the RIGHT direction with coordinates point
+         *         null if coordinates does not have a neighbour in the RIGHT direction or
+         *              if coordinates are not valid
+         */
+        public Point getRightNeighbour(Point coordinates) {
+            return adjustPositionOfPoint(coordinates, 0, 1);
+        }
+    }
+
     public Arena() {
         map = new Territory[SIZE_X][SIZE_Y];
         continents = new ArrayList<>();
@@ -34,72 +102,6 @@ public class Arena implements Serializable {
 
     public Territory getTerritoryAtCoordinate(Point coordinate) {
         return map[coordinate.x][coordinate.y];
-    }
-
-    /**
-     * @param coordinates territory's coordinates to check
-     * @return true if territory's coordinates are on the map
-     */
-    public boolean coordinatesAreOnTheMap(Point coordinates) {
-        return ((coordinates.getX() >= 0 && coordinates.getX() < SIZE_X) &&
-                (coordinates.getY() >= 0 && coordinates.getY() < SIZE_Y));
-    }
-
-    /**
-     * Creates a new point based on the point param coordinates, changing coordinates
-     * X = point's X + addX param, Y = point's Y + addY param
-     * @param point to adjust
-     * @param addX  value to add on X coordinate of point
-     * @param addY  value to add on Y coordinate of point
-     * @return a new point that has X, Y coordinates adjusted as above
-     *         null if point or adjusted point are not on the map
-     */
-    private Point adjustPositionOfPoint(Point point, int addX, int addY) {
-        Point adjustedPoint = new Point(point.x + addX, point.y + addY);
-        if (coordinatesAreOnTheMap(point) && coordinatesAreOnTheMap(adjustedPoint))
-            return adjustedPoint;
-        else
-            return null;
-    }
-
-    /**
-     * @param coordinates of which to compute the neighbour territory in the UP direction
-     * @return the territory's coordinates that is neighbour in the UP direction with coordinates point
-     *         null if coordinates does not have a neighbour in the UP direction or
-     *              if coordinates are not valid
-     */
-    public Point getUpNeighbour(Point coordinates) {
-        return adjustPositionOfPoint(coordinates, -1, 0);
-    }
-
-    /**
-     * @param coordinates of which to compute the neighbour territory in the DOWN direction
-     * @return the territory's coordinates that is neighbour in the DOWN direction with coordinates point
-     *         null if coordinates does not have a neighbour in the DOWN direction or
-     *              if coordinates are not valid
-     */
-    public Point getDownNeighbour(Point coordinates) {
-        return adjustPositionOfPoint(coordinates, 1, 0);
-    }
-
-    /**
-     * @param coordinates of which to compute the neighbour territory in the LEFT direction
-     * @return the territory's coordinates that is neighbour in the LEFT direction with coordinates point
-     *         null if coordinates does not have a neighbour in the LEFT direction or
-     *              if coordinates are not valid
-     */
-    public Point getLeftNeighbour(Point coordinates) {
-        return adjustPositionOfPoint(coordinates, 0, -1);
-    }
-
-    /**
-     * @param coordinates of which to compute the neighbour territory in the RIGHT direction
-     * @return the territory's coordinates that is neighbour in the RIGHT direction with coordinates point
-     *         null if coordinates does not have a neighbour in the RIGHT direction or
-     *              if coordinates are not valid
-     */
-    public Point getRightNeighbour(Point coordinates) {
-        return adjustPositionOfPoint(coordinates, 0, 1);
     }
 
     public int getXSize() {

@@ -102,6 +102,7 @@ public class TestGame {
     @Test
     public void testCoordinatesAreOnTheMap() {
         Arena arena = arenaController.getArena();
+        Arena.CoordinatesCalculator coordinatesCalculator = arena.new CoordinatesCalculator();
 
         final int sizeX = arena.getXSize();
         final int sizeY = arena.getYSize();
@@ -119,16 +120,16 @@ public class TestGame {
         assertThat(((sizeX >= 1) && (sizeY >= 1)), is(true));
         Point insideXY = new Point(sizeX - 1, sizeY - 1);
 
-        assertThat(arena.coordinatesAreOnTheMap(insideXY), is(true));
-        assertThat(arena.coordinatesAreOnTheMap(minusXY), is(false));
-        assertThat(arena.coordinatesAreOnTheMap(minusX), is(false));
-        assertThat(arena.coordinatesAreOnTheMap(minusY), is(false));
-        assertThat(arena.coordinatesAreOnTheMap(origin), is(true));
-        assertThat(arena.coordinatesAreOnTheMap(outsideX), is(false));
-        assertThat(arena.coordinatesAreOnTheMap(outsideY), is(false));
-        assertThat(arena.coordinatesAreOnTheMap(outsideXY), is(false));
-        assertThat(arena.coordinatesAreOnTheMap(outsideXminusY), is(false));
-        assertThat(arena.coordinatesAreOnTheMap(outsideYminusX), is(false));
+        assertThat(coordinatesCalculator.coordinatesAreOnTheMap(insideXY), is(true));
+        assertThat(coordinatesCalculator.coordinatesAreOnTheMap(minusXY), is(false));
+        assertThat(coordinatesCalculator.coordinatesAreOnTheMap(minusX), is(false));
+        assertThat(coordinatesCalculator.coordinatesAreOnTheMap(minusY), is(false));
+        assertThat(coordinatesCalculator.coordinatesAreOnTheMap(origin), is(true));
+        assertThat(coordinatesCalculator.coordinatesAreOnTheMap(outsideX), is(false));
+        assertThat(coordinatesCalculator.coordinatesAreOnTheMap(outsideY), is(false));
+        assertThat(coordinatesCalculator.coordinatesAreOnTheMap(outsideXY), is(false));
+        assertThat(coordinatesCalculator.coordinatesAreOnTheMap(outsideXminusY), is(false));
+        assertThat(coordinatesCalculator.coordinatesAreOnTheMap(outsideYminusX), is(false));
     }
 
     /**
