@@ -47,7 +47,6 @@ public class MapView {
         private void initialize(String name) {
             frame = new JFrame(name);
             frame.setBounds(100, 100, 900, 592);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.getContentPane().setLayout(null);
 
             JLabel lblPlayer = new JLabel("Player: ");
