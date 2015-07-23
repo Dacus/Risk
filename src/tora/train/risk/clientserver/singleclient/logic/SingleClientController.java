@@ -90,7 +90,7 @@ public class SingleClientController implements Controller {
     @Override
     public void writeMessage(Message msg) {
         try {
-            clientSocket.sendMessage(msg);
+            clientSocket.writeMessage(msg);
         } catch (IOException e) {
             e.printStackTrace();
         }
