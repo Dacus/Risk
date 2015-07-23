@@ -1,5 +1,6 @@
 package tora.train.risk.clientserver.serverapp;
 
+import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageTag;
 
@@ -17,7 +18,7 @@ import java.awt.event.ActionListener;
  *
  * Created by Andrea on 7/16/2015.
  */
-public class MainServerController {
+public class MainServerController implements Controller {
     private MainServer server;
     private MainServerFrame frame;
 
@@ -32,13 +33,6 @@ public class MainServerController {
     /***********************************************************************************
      * CONTROL
      ************************************************************************************/
-
-    /**
-     * Starts the server in the current thread
-     */
-    public void startServer(){
-        server.run();
-    }
 
     /**
      * Calls a method on the main server that increments the variable counting the
@@ -58,6 +52,35 @@ public class MainServerController {
         server.setClientName(name, id);
     }
 
+    /**
+     * Starts the server in the current thread
+     */
+    @Override
+    public void startRunning() {
+        server.run();
+    }
+
+    @Override
+    public void stopRunning() {
+        server.stopSingleServers();
+        server.stop();
+    }
+
+    /**
+     * Sends a message to all connected clients
+     *
+     * @param msg
+     */
+    @Override
+    public void writeMessage(Message msg) {
+        server.sendGlobalMessage(msg);
+    }
+
+    @Override
+    public Message readMessage() {
+        return null;
+    }
+
     /***********************************************************************************
      * LISTENERS
      ************************************************************************************/
@@ -68,7 +91,7 @@ public class MainServerController {
     class StopServerAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            server.stopSingleServers();
+            stopRunning();
         }
     }
 
