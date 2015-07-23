@@ -10,6 +10,7 @@ public class Arena implements Serializable {
     private static final int SIZE_Y = 11;
     private Territory[][] map;
     private List<Continent> continents;
+    static final long serialVersionUID = 1L;
 
     public Arena() {
         map = new Territory[SIZE_X][SIZE_Y];
@@ -82,9 +83,9 @@ public class Arena implements Serializable {
     }
 
     /**
-     * @param coordinates of which to compute the neighbour territory in the DOWN direction
-     * @return the territory's coordinates that is neighbour in the DOWN direction with coordinates point
-     *         null if coordinates does not have a neighbour in the DOWN direction or
+     * @param coordinates of which to compute the neighbour territory in the LEFT direction
+     * @return the territory's coordinates that is neighbour in the LEFT direction with coordinates point
+     *         null if coordinates does not have a neighbour in the LEFT direction or
      *              if coordinates are not valid
      */
     public Point getLeftNeighbour(Point coordinates) {
@@ -92,9 +93,9 @@ public class Arena implements Serializable {
     }
 
     /**
-     * @param coordinates of which to compute the neighbour territory in the DOWN direction
-     * @return the territory's coordinates that is neighbour in the DOWN direction with coordinates point
-     *         null if coordinates does not have a neighbour in the DOWN direction or
+     * @param coordinates of which to compute the neighbour territory in the RIGHT direction
+     * @return the territory's coordinates that is neighbour in the RIGHT direction with coordinates point
+     *         null if coordinates does not have a neighbour in the RIGHT direction or
      *              if coordinates are not valid
      */
     public Point getRightNeighbour(Point coordinates) {
