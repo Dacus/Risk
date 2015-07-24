@@ -23,7 +23,6 @@ public class MapView {
     private JLabel labelParRight;
     private JTextField textFieldUnits;
     private JButton btnAddReinforcement;
-    private JButton btnSubmitAllReinforcements;
     private JLabel lblReinforcementsLeft;
     private JLabel lblInsertDestPosition;
     private JLabel labelPositionDelimiterSource;
@@ -36,7 +35,6 @@ public class MapView {
     private JLabel lblInsertUnits;
     private JButton btnAddAttack;
 
-
     /**
      * Create the frame.
      */
@@ -44,7 +42,7 @@ public class MapView {
         initializeFrame(title);
         buildReinforcePhaseView();
         buildAttackPhaseView();
-        reinforcePhaseView();
+        switchAttackPanel(false);
     }
 
     /**
@@ -79,8 +77,10 @@ public class MapView {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         tableArena.setDefaultRenderer(Object.class, centerRenderer);
-        tableArena.setBounds(12, 44, 876, 198);
-        frame.getContentPane().add(tableArena);
+
+        JScrollPane scrollPane=new JScrollPane(tableArena);
+        scrollPane.setBounds(12, 44, 876, 198);
+        frame.getContentPane().add(scrollPane);
 
         lblYourTerritories = new JLabel("Your territories are at positions:");
         lblYourTerritories.setBounds(12, 254, 242, 15);
@@ -101,10 +101,6 @@ public class MapView {
         btnAddReinforcement = new JButton("Add Reinforcement");
         btnAddReinforcement.setBounds(414, 450, 240, 25);
         frame.getContentPane().add(btnAddReinforcement);
-
-        btnSubmitAllReinforcements = new JButton("Submit All Reinforcements");
-        btnSubmitAllReinforcements.setBounds(414, 400, 240, 25);
-        frame.getContentPane().add(btnSubmitAllReinforcements);
 
         lblInsertUnits = new JLabel("Insert units:");
         lblInsertUnits.setBounds(315, 300, 220, 15);
@@ -175,32 +171,18 @@ public class MapView {
         frame.getContentPane().add(btnAddAttack);
     }
 
-    public void reinforcePhaseView() {
-        lblInsertUnits.setText("Reinforce with: ");
-
-        labelParLeft.setVisible(false);
-        labelParRight.setVisible(false);
-        labelPositionDelimiterSource.setVisible(false);
-        textFieldXposSource.setVisible(false);
-        textFieldYposSource.setVisible(false);
-        lblInsertSourcePosition.setVisible(false);
-        btnSubmitAllReinforcements.setVisible(true);
-        btnAddReinforcement.setVisible(true);
-    }
-
-    public void attackPhaseView() {
+    public void switchAttackPanel(boolean isVisible) {
         //TODO
         lblInsertUnits.setText("Attack with");
         lblInsertSourcePosition.setText("Insert source position ");
         lblInsertDestPosition.setText("Destination position: ");
-        labelParLeft.setVisible(true);
-        labelParRight.setVisible(true);
-        labelPositionDelimiterSource.setVisible(true);
-        textFieldXposSource.setVisible(true);
-        textFieldYposSource.setVisible(true);
-        lblInsertSourcePosition.setVisible(true);
-        btnSubmitAllReinforcements.setVisible(false);
-        btnAddReinforcement.setVisible(false);
+        labelParLeft.setVisible(isVisible);
+        labelParRight.setVisible(isVisible);
+        labelPositionDelimiterSource.setVisible(isVisible);
+        textFieldXposSource.setVisible(isVisible);
+        textFieldYposSource.setVisible(isVisible);
+        lblInsertSourcePosition.setVisible(isVisible);
+        btnAddReinforcement.setVisible(!isVisible);
     }
 
 
@@ -223,7 +205,8 @@ public class MapView {
     public void printPlayerTerritories(java.util.List<Territory> list) {
         textAreaCurrentPlayerTerritories.setText("");
         for (Territory t : list) {
-            textAreaCurrentPlayerTerritories.append(t.getCoordinates().toString() + "\n");
+            Point p=t.getCoordinates();
+            textAreaCurrentPlayerTerritories.append("(" + p.getX() + " ,"  + p.getY() + ")"+"\n");
         }
     }
 
@@ -232,12 +215,15 @@ public class MapView {
         lblReinforcementsLeft.updateUI();
     }
 
-    public void printArena(Arena arena) {
+    /**************************************************************************
+     * UPDATE ARENA
+     ***************************************************************************/
+
+    public void updateArena(Arena arena) {
         model.setRowCount(0);
         int n = arena.getXsize();
         int m = arena.getYsize();
-        Object[] row = {"", 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        model.addRow(row);
+        Object[] row;
         for (int i = 1; i <= n; i++) {
             row = new Object[n + 1];
             row[0] = i - 1;
@@ -248,15 +234,8 @@ public class MapView {
         }
     }
 
-    public void updateTerritories(java.util.List<Territory> list){
-        for (Territory t: list) {
-            Point p = t.getCoordinates();
-            model.setValueAt(t, (int)p.getX()+1, (int)p.getY()+1);
-        }
-    }
-
-    public void updateTerritories(String playerName, int x, int y, int numOfUnits){
-        model.setValueAt(playerName + "(" + numOfUnits + ")", x+1, y+1);
+    public void updateTerritories(String playerName, int x, int y, int numOfUnits) {
+        model.setValueAt(playerName + "(" + numOfUnits + ")", x, y+1);
     }
 
     public void setVisible(boolean visible) {
@@ -269,14 +248,6 @@ public class MapView {
 
     public void setBtnAddAttackListener(ActionListener a) {
         this.btnAddAttack.addActionListener(a);
-    }
-
-    public void setBtnSubmitReinforcementsListener(ActionListener a) {
-        btnAddAttack.addActionListener(a);
-    }
-
-    public void setAttackButtonListener(ActionListener a) {
-        btnSubmitAllReinforcements.addActionListener(a);
     }
 
     public String getXposDest() {
@@ -303,7 +274,7 @@ public class MapView {
     }
 
     public void setAttackPhaseViewVisible(){
-        attackPhaseView();
+        switchAttackPanel(true);
     }
 }
 

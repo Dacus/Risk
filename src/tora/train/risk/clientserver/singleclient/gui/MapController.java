@@ -21,15 +21,15 @@ public class MapController {
 
     public MapController(String name) {
         this.mapView = new MapView(name);
-
         mapView.setVisible(true);
-       /* mapView.setBtnAddAttackListener(new btnAttackAction());
-        mapView.setBtnSubmitAllAttacksListener(new btnSubmitAttacksAction());*/
     }
 
-    public void updateArenaView(Arena arena) {
+    public void updateArenaView() {
+        mapView.updateArena(this.arena);
+    }
+
+    public void setArena(Arena arena){
         this.arena=arena;
-        mapView.printArena(arena);
     }
 
     public void changeTurn(Player currentPlayer, List<String> orderedListOfPlayers, List<Territory> territoryList) {
@@ -50,6 +50,12 @@ public class MapController {
         return new Point(x, y);
     }
 
+    public Point getSourceCoordinates() throws NumberFormatException {
+        int x = Integer.parseInt(mapView.getXposSource());
+        int y = Integer.parseInt(mapView.getYposSource());
+        return new Point(x, y);
+    }
+
     public int getReinforcementValue() throws NumberFormatException {
         return Integer.parseInt(mapView.getValue());
     }
@@ -62,7 +68,7 @@ public class MapController {
         mapView.showLeftReinforcements(reinforcementsLeft);
         mapView.updateTerritories(playerName, x, y, numOfUnits);
 
-        //update arena
+        //update arena variable
         arena.getTerritoryAtCoordinate(x, y).setUnitNr(numOfUnits);
     }
 

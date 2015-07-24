@@ -311,7 +311,8 @@ public class SingleClientController implements Controller {
 
         clientFrame.setStatus(Status.PLAYING);
         System.out.println("Arena received");
-        mapController.updateArenaView(arena);
+        mapController.setArena(arena);
+        mapController.updateArenaView();
     }
 
     public void setMapListeners(){
