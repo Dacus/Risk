@@ -137,19 +137,36 @@ public class TestGame {
      */
     @Test
     public void testMoveUnitsFromAlienTerritory() {
-        //TODO: Lorand
-        /*
+        Arena arena;
+        Arena.CoordinatesCalculator coordinatesCalculator = arena.new CoordinatesCalculator();
+
+        assertThat((arena.getXSize() >= 3), is(true));
+        assertThat((arena.getYSize() >= 3), is(true));
+
         Queue<Player> playerQueue = arenaController.getPlayersQueue();
         Player me = playerQueue.remove();
         Player you = playerQueue.remove();
         List<Territory> yourTerritories = arenaController.getArena().getOwnedTerritories(you);
+
         assertThat(yourTerritories, not(empty()));
+
         Territory yourTerritory = yourTerritories.get(0);
-        Territory neighbourTerritory = yourTerritory
+        Point yourTerritoryPoint = yourTerritory.getCoordinates();
         int nrOfAttackingUnits = yourTerritory.getUnitNr();
 
-        assertThat(arenaController.moveUnits(nrOfAttackingUnits - 1, yourTerritory
-        */
+        //neighbour of yourTerritory
+        Point neighbourTerritoryPoint;
+        if (coordinatesCalculator.isOnUpSide(yourTerritoryPoint))
+            neighbourTerritoryPoint = coordinatesCalculator.getDownNeighbour(yourTerritoryPoint);
+        else if (coordinatesCalculator.isOnDownSide(yourTerritoryPoint))
+            neighbourTerritoryPoint = coordinatesCalculator.getUpNeighbour(yourTerritoryPoint);
+        else if (coordinatesCalculator.isOnRightSide(yourTerritoryPoint))
+            neighbourTerritoryPoint = coordinatesCalculator.getLeftNeighbour(yourTerritoryPoint);
+        else
+            neighbourTerritoryPoint = coordinatesCalculator.getRightNeighbour(yourTerritoryPoint);
+
+        assertThat(arenaController.moveUnits(nrOfAttackingUnits - 1, yourTerritoryPoint, neighbourTerritoryPoint, me),
+                is(false));
     }
 
     /**
