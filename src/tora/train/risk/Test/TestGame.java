@@ -137,7 +137,7 @@ public class TestGame {
      */
     @Test
     public void testMoveUnitsFromAlienTerritory() {
-        Arena arena;
+        Arena arena = arenaController.getArena();
         Arena.CoordinatesCalculator coordinatesCalculator = arena.new CoordinatesCalculator();
 
         assertThat((arena.getXSize() >= 3), is(true));
