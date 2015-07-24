@@ -133,10 +133,11 @@ public class TestGame {
     }
 
     /**
-     * Tests moving of units from a territory that is not owned by the player that moves.
+     * Tests moving units from a territory that is not owned by the player that moves.
      */
     @Test
     public void testMoveUnitsFromAlienTerritory() {
+        arenaController.distributePlayers(5, 5);
         Arena arena = arenaController.getArena();
         Arena.CoordinatesCalculator coordinatesCalculator = arena.new CoordinatesCalculator();
 
