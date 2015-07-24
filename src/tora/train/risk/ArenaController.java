@@ -202,9 +202,9 @@ public class ArenaController {
                 Random generator = new Random();
                 int territoryID = generator.nextInt(distributableTerritories.size());
                 distributableTerritories.get(territoryID).setOwner(currentPlayer);
-                distributableTerritories.get(territoryID).setUnitNr(1);
-                distributableTerritories.get(territoryID).setMovableUnits(1);
-                currentPlayer.setReinforcements(currentPlayer.getReinforcements() - 1);
+                distributableTerritories.get(territoryID).setUnitNr(unitsPerTerritory);
+                distributableTerritories.get(territoryID).setMovableUnits(unitsPerTerritory);
+                currentPlayer.setReinforcements(currentPlayer.getReinforcements() - unitsPerTerritory);
 
                 //mark current territory as distributed
                 distributableTerritories.get(territoryID).getContinent().addPlayer(currentPlayer);
