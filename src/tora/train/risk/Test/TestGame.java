@@ -133,23 +133,55 @@ public class TestGame {
     }
 
     /**
-     * Tests moving of units from a territory that is not owned by the player that moves.
+     * Tests moving units from a territory that is not owned by the player that moves.
      */
     @Test
     public void testMoveUnitsFromAlienTerritory() {
-        //TODO: Lorand
-        /*
+        arenaController.distributePlayers(5, 5);
+        Arena arena = arenaController.getArena();
+        Arena.CoordinatesCalculator coordinatesCalculator = arena.new CoordinatesCalculator();
+
+        assertThat((arena.getXSize() >= 3), is(true));
+        assertThat((arena.getYSize() >= 3), is(true));
+
         Queue<Player> playerQueue = arenaController.getPlayersQueue();
         Player me = playerQueue.remove();
         Player you = playerQueue.remove();
         List<Territory> yourTerritories = arenaController.getArena().getOwnedTerritories(you);
+
         assertThat(yourTerritories, not(empty()));
+
         Territory yourTerritory = yourTerritories.get(0);
-        Territory neighbourTerritory = yourTerritory
+        Point yourTerritoryPoint = yourTerritory.getCoordinates();
         int nrOfAttackingUnits = yourTerritory.getUnitNr();
 
-        assertThat(arenaController.moveUnits(nrOfAttackingUnits - 1, yourTerritory
-        */
+        //neighbour of yourTerritory
+        Point neighbourTerritoryPoint;
+        if (coordinatesCalculator.isOnUpSide(yourTerritoryPoint))
+            neighbourTerritoryPoint = coordinatesCalculator.getDownNeighbour(yourTerritoryPoint);
+        else if (coordinatesCalculator.isOnDownSide(yourTerritoryPoint))
+            neighbourTerritoryPoint = coordinatesCalculator.getUpNeighbour(yourTerritoryPoint);
+        else if (coordinatesCalculator.isOnRightSide(yourTerritoryPoint))
+            neighbourTerritoryPoint = coordinatesCalculator.getLeftNeighbour(yourTerritoryPoint);
+        else
+            neighbourTerritoryPoint = coordinatesCalculator.getRightNeighbour(yourTerritoryPoint);
+
+        assertThat(arenaController.moveUnits(nrOfAttackingUnits - 1, yourTerritoryPoint, neighbourTerritoryPoint, me),
+                is(false));
+    }
+
+    /**
+     * Tests moving units from a territory to the same territory
+     */
+    @Test
+    public void testMoveUnitsSourceSameAsDest() {
+        arenaController.distributePlayers(5, 5);
+        Player me = arenaController.getPlayerByIndex(0);
+        Territory myTerritory = arenaController.getArena().getOwnedTerritories(me).get(0);
+        Point myTerritoryPoint = myTerritory.getCoordinates();
+
+        assertThat(arenaController.moveUnits(myTerritory.getUnitNr() - 1, myTerritoryPoint, myTerritoryPoint, me),
+                is(false));
     }
 
     /**

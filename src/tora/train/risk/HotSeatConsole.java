@@ -100,6 +100,7 @@ public class HotSeatConsole {
     }
 
     private void playerTurn(Player player,ArenaController arenaController,ArenaCommandValidator arenaCommandValidator){
+        arenaController.resetMovableUnits(player);
 
         System.out.println("Type end to finish turn, move followed by coordinates, number of units and direction of movement \n to move units");
         String command="";
@@ -123,8 +124,10 @@ public class HotSeatConsole {
                 else
                     System.out.println("Invalid Command");
                 }
-            if (command.equals("cancel"))
+            if (command.equals("cancel")){
                 commands.clear();
+                arenaController.resetMovableUnits(player);
+            }
 
             }
         //Resolve Turn

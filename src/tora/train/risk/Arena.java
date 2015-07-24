@@ -13,13 +13,58 @@ public class Arena implements Serializable {
     static final long serialVersionUID = 1L;
 
     public class CoordinatesCalculator {
+
+        /**
+         * Methods to return specific points on the map.
+         * @return
+         */
+
+        public Point getUpLeftCorner() {
+            return new Point(0, 0);
+        }
+
+        public Point getUpRightCorner() {
+            return new Point(0, getYSize() - 1);
+        }
+
+        public Point getDownLeftCorner() {
+            return new Point(getXSize() - 1, 0);
+        }
+
+        public Point getDownRightCorner() {
+            return new Point(getXSize() - 1, getYSize() - 1);
+        }
+
+        /**
+         * Methods to check if a point is on a specific side of the map
+         * @param point to check
+         * @return true if point is placed on that side of the map
+         */
+
+        public boolean isOnUpSide(Point point) {
+            return (point.getX() == 0);
+        }
+
+        public boolean isOnDownSide(Point point) {
+            return (point.getX() == getXSize() -  1);
+        }
+
+        public boolean isOnLeftSide(Point point) {
+            return (point.getY() == 0);
+        }
+
+        public boolean isOnRightSide(Point point) {
+            return (point.getY() == getYSize() - 1);
+        }
+
+
         /**
          * @param coordinates territory's coordinates to check
          * @return true if territory's coordinates are on the map
          */
         public boolean coordinatesAreOnTheMap(Point coordinates) {
-            return ((coordinates.getX() >= 0 && coordinates.getX() < SIZE_X) &&
-                    (coordinates.getY() >= 0 && coordinates.getY() < SIZE_Y));
+            return ((coordinates.getX() >= 0 && coordinates.getX() < getXSize()) &&
+                    (coordinates.getY() >= 0 && coordinates.getY() < getYSize()));
         }
 
         /**
