@@ -36,8 +36,6 @@ public class MainView {
     private JTextField textFieldYposDest;
     private JLabel lblInsertUnits;
     private JButton btnAddAttack;
-    private JButton btnSubmitAllAttacks;
-
 
     /**
      * Create the application.
@@ -175,10 +173,6 @@ public class MainView {
         btnAddAttack = new JButton("Add Attack");
         btnAddAttack.setBounds(414, 450, 240, 25);
         frame.getContentPane().add(btnAddAttack);
-
-        btnSubmitAllAttacks = new JButton("Submit All Reinforcements");
-        btnSubmitAllAttacks.setBounds(414, 400, 240, 25);
-        frame.getContentPane().add(btnSubmitAllAttacks);
     }
 
     public void reinforcePhaseView() {
@@ -261,10 +255,6 @@ public class MainView {
 
     public void setBtnSubmitReinforcementsListener(ActionListener a) {
         btnSubmitAllReinforcements.addActionListener(a);
-    }
-
-    public void setBtnSubmitAllAttacksListener(ActionListener a) {
-        btnSubmitAllAttacks.addActionListener(a);
     }
 
     public String getXposDest() {
