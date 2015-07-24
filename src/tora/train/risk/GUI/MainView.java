@@ -36,6 +36,8 @@ public class MainView {
     private JTextField textFieldYposDest;
     private JLabel lblInsertUnits;
     private JButton btnAddAttack;
+    private JButton btnSubmitAllAttacks;
+
 
     /**
      * Create the application.
@@ -79,11 +81,8 @@ public class MainView {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         tableArena.setDefaultRenderer(Object.class, centerRenderer);
-
-        JScrollPane scrollPane=new JScrollPane(tableArena, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setBounds(12, 44, 876, 198);
-        frame.getContentPane().add(scrollPane);
+        tableArena.setBounds(12, 44, 876, 198);
+        frame.getContentPane().add(tableArena);
 
         lblYourTerritories = new JLabel("Your territories are at positions:");
         lblYourTerritories.setBounds(12, 254, 242, 15);
@@ -113,13 +112,16 @@ public class MainView {
         lblInsertUnits.setBounds(315, 300, 220, 15);
         frame.getContentPane().add(lblInsertUnits);
 
-        textFieldXposDest = new JTextField(10);
+        textFieldXposDest = new JTextField();
         textFieldXposDest.setBounds(571, 254, 41, 19);
         frame.getContentPane().add(textFieldXposDest);
+        textFieldXposDest.setColumns(10);
 
-        textFieldYposDest = new JTextField(10);
+        textFieldYposDest = new JTextField();
+        textFieldYposDest.setColumns(10);
         textFieldYposDest.setBounds(648, 254, 41, 19);
         frame.getContentPane().add(textFieldYposDest);
+
 
         labelPositionDelimiterDestination = new JLabel(":");
         labelPositionDelimiterDestination.setBounds(630, 256, 14, 15);
@@ -138,6 +140,7 @@ public class MainView {
         lblInsertDestPosition = new JLabel("Insert reinforcement position:");
         lblInsertDestPosition.setBounds(315, 254, 220, 15);
         frame.getContentPane().add(lblInsertDestPosition);
+
     }
 
     public void buildAttackPhaseView(){
@@ -173,10 +176,15 @@ public class MainView {
         btnAddAttack = new JButton("Add Attack");
         btnAddAttack.setBounds(414, 450, 240, 25);
         frame.getContentPane().add(btnAddAttack);
+
+        btnSubmitAllAttacks = new JButton("Submit All Reinforcements");
+        btnSubmitAllAttacks.setBounds(414, 400, 240, 25);
+        frame.getContentPane().add(btnSubmitAllAttacks);
     }
 
     public void reinforcePhaseView() {
         //TODO
+
         lblInsertUnits.setText("Reinforce with: ");
 
         labelParLeft.setVisible(false);
@@ -257,24 +265,63 @@ public class MainView {
         btnSubmitAllReinforcements.addActionListener(a);
     }
 
-    public String getXposDest() {
-        return textFieldXposDest.getText();
+    public void setBtnSubmitAllAttacksListener(ActionListener a) {
+        btnSubmitAllAttacks.addActionListener(a);
     }
 
-    public String getYposDest() {
-        return textFieldYposDest.getText();
+    public int getXposDest() {
+        int x = -1;
+        try {
+            x = Integer.parseInt(textFieldXposDest.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please insert numerical values");
+            e.printStackTrace();
+        }
+        return x;
     }
 
-    public String getXposSource() {
-        return textFieldXposSource.getText();
+    public int getYposDest() {
+        int x = -1;
+        try {
+            x = Integer.parseInt(textFieldYposDest.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please insert numerical values");
+            e.printStackTrace();
+        }
+        return x;
     }
 
-    public String getYposSource() {
-       return textFieldYposSource.getText();
+    public int getXposSource() {
+        int x = -1;
+        try {
+            x = Integer.parseInt(textFieldXposSource.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please insert numerical values");
+            e.printStackTrace();
+        }
+        return x;
     }
 
-    public String getValue() {
-       return textFieldUnits.getText();
+    public int getYposDestSource() {
+        int x = -1;
+        try {
+            x = Integer.parseInt(textFieldYposSource.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please insert numerical values");
+            e.printStackTrace();
+        }
+        return x;
+    }
+
+    public int getValue() {
+        int x = -1;
+        try {
+            x = Integer.parseInt(textFieldUnits.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please insert numerical values");
+            e.printStackTrace();
+        }
+        return x;
     }
 }
 
