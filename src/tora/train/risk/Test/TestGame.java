@@ -171,6 +171,20 @@ public class TestGame {
     }
 
     /**
+     * Tests moving units from a territory to the same territory
+     */
+    @Test
+    public void testMoveUnitsSourceSameAsDest() {
+        arenaController.distributePlayers(5, 5);
+        Player me = arenaController.getPlayerByIndex(0);
+        Territory myTerritory = arenaController.getArena().getOwnedTerritories(me).get(0);
+        Point myTerritoryPoint = myTerritory.getCoordinates();
+
+        assertThat(arenaController.moveUnits(myTerritory.getUnitNr() - 1, myTerritoryPoint, myTerritoryPoint, me),
+                is(false));
+    }
+
+    /**
      * Test the reinforcement after initial territory distribution.
      * While it can, it puts units on every territory owned by player. (It tries an even distribution)
      * First territories should have more reinforcements than last territories owned
