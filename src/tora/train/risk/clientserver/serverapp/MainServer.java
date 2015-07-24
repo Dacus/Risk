@@ -182,4 +182,12 @@ public class MainServer implements Runnable{
     public List<String> getPlayers(){
         return new ArrayList<>(clientMap.values());
     }
+
+    public String getClientNameByID(int clientId) {
+        return clientMap.get(clientId);
+    }
+
+    public void sendSingleServerMessage(int clientId, Message msg) {
+        map.get(clientId).writeMessage(msg);
+    }
 }

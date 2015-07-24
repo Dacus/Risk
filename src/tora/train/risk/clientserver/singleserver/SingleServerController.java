@@ -5,6 +5,7 @@ import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageType;
 import tora.train.risk.clientserver.serverapp.MainServerController;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -178,5 +179,9 @@ public class SingleServerController implements Controller {
         writeMessage(msg);
 
         stopRunning();
+    }
+
+    public void tryReinforce(Point point, int value, int playerId) {
+        mainController.tryReinforce(point, value, playerId);
     }
 }

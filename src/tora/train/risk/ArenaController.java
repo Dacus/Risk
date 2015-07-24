@@ -341,4 +341,17 @@ public class ArenaController {
             generateOrderOfPlayers();
         return playersQueue;
     }
+
+    public Player getPlayerByName(String name){
+        for (Player p: players){
+            if (p.getName().equals(name)){
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public boolean isPlayersQueueEmpty(){
+        return playersQueue.isEmpty();
+    }
 }

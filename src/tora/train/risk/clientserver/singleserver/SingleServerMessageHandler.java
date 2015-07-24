@@ -5,6 +5,8 @@ import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
 import tora.train.risk.clientserver.common.MessageType;
 
+import java.awt.*;
+
 /**
  * Class that processes the messages received from the client
  *
@@ -31,6 +33,13 @@ public class SingleServerMessageHandler implements MessageHandler {
             case USER:{
                 String received=message.getElementAt(0).toString();
                 serverController.displayMessage(received);
+                break;
+            }
+            case TRY_REINFORCE:{
+                Point point=(Point)message.getElementAt(0);
+                int value=(int)message.getElementAt(1);
+                int playerId=(int)message.getElementAt(2);
+                serverController.tryReinforce(point, value, playerId);
                 break;
             }
             default:{

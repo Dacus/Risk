@@ -1,6 +1,8 @@
 package tora.train.risk.clientserver.singleclient.logic;
 
 import tora.train.risk.Arena;
+import tora.train.risk.Player;
+import tora.train.risk.Territory;
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
@@ -8,12 +10,14 @@ import tora.train.risk.clientserver.common.MessageType;
 import tora.train.risk.clientserver.singleclient.gui.MapController;
 import tora.train.risk.clientserver.singleclient.gui.SingleClientFrame;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controls the Client.
@@ -30,6 +34,7 @@ public class SingleClientController implements Controller {
     private SingleClientFrame clientFrame;
     private CSocketClient clientSocket;
     private MapController mapController;
+    private boolean myTurn=false;
 
     private boolean readyFlag;
 
@@ -42,6 +47,7 @@ public class SingleClientController implements Controller {
         this.clientFrame.setWindowListener(new WindowDisconnectAction());
         this.clientFrame.setSendMessageButtonListener(new SendUserMessageAction());
         this.clientFrame.setReadyButtonListener(new ReadyAction());
+
     }
 
     /***************************************************************************************
@@ -116,6 +122,10 @@ public class SingleClientController implements Controller {
             e.printStackTrace();
         }
         return received;
+    }
+
+    public void setTurn(boolean value){
+        this.myTurn=value;
     }
 
     /***********************************************************************************
@@ -194,6 +204,8 @@ public class SingleClientController implements Controller {
     public void setStatus(Status status) {
         this.clientFrame.setStatus(status);
     }
+
+
 
     /***************************************************************************************
      * LISTENER
@@ -294,8 +306,87 @@ public class SingleClientController implements Controller {
      ************************************************************************************************/
     public void initializeMap(Arena arena) {
         mapController=new MapController(clientSocket.getClientName());
+
+        setMapListeners();
+
         clientFrame.setStatus(Status.PLAYING);
         System.out.println("Arena received");
-        mapController.updateArena(arena);
+        mapController.updateArenaView(arena);
     }
+
+    public void setMapListeners(){
+
+        this.mapController.addReinforceButtonListener(new ReinforceAction());
+        this.mapController.addAttackButtonListener(new AttackAction());
+    }
+
+    public void establishTurn(Player currentPlayer, List<String> orderedListOfPlayers, List<Territory> territoryList) {
+        mapController.changeTurn(currentPlayer, orderedListOfPlayers, territoryList);
+
+        if (currentPlayer.getName().equals(clientSocket.getClientName())) {
+            setTurn(true);
+            System.out.println("It's my turn");
+        }
+        else {
+            setTurn(false);
+        }
+
+    }
+
+    class ReinforceAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (myTurn) {
+                try {
+                    Point destination = mapController.getReinforceCoordinates();
+                    int value = mapController.getReinforcementValue();
+
+                    Message msg = new Message(MessageType.TRY_REINFORCE);
+                    msg.addElement(destination);
+                    msg.addElement(value);
+                    msg.addElement(clientSocket.getClientId());
+
+                    writeMessage(msg);
+                }
+                catch(NumberFormatException ex){
+                    mapController.displayInformativeMessage("Please insert numerical values");
+                }
+            }
+        }
+    }
+
+    class AttackAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (myTurn) {
+                try {
+                    Point destination = mapController.getReinforceCoordinates();
+                    int value = mapController.getReinforcementValue();
+
+
+                    //TO DO
+                }
+                catch(NumberFormatException ex){
+                    mapController.displayInformativeMessage("Please insert numerical values");
+                }
+            }
+        }
+    }
+
+    public void applyReinforcement(String playerName, int reinforcementsLeft, int x, int y, int numOfUnits) {
+        mapController.updateArena(playerName, reinforcementsLeft, x, y, numOfUnits);
+    }
+
+    public void denyReinforcement() {
+        mapController.displayInformativeMessage("Reinforcement denied");
+    }
+
+    public void enableMoveAndAttackView() {
+        mapController.showMoveAndAttackPanel();
+    }
+
+    public void updateReinforcementLabel(int reinforcements) {
+        mapController.updateReinforcementLabel(reinforcements);
+    }
+
 }

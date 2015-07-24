@@ -65,16 +65,14 @@ public class MainController {
             }
             try {
                 submitReinforcements(destination, value);
-            } catch (Exception e1) {
-                StaticInformations.submitReinforcements(destination, value);
             }catch (Exception e1) {
                 JOptionPane.showMessageDialog(null, "Invalid position!");
             }
-            mainView.printArena(StaticInformations.getArena());
+            //mainView.printArena(StaticInformations.getArena());
             finally {
                 System.out.println("destination"+destination.toString()+ " value "+value);
             }
-            mainView.printMap();
+            //mainView.printMap();
             mainView.showLeftReinforcements();
             System.out.println(getCurrentPlayer());
         }

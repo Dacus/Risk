@@ -1,7 +1,6 @@
 package tora.train.risk.clientserver.singleclient.gui;
 
 import tora.train.risk.Arena;
-import tora.train.risk.GUI.StaticInformations;
 import tora.train.risk.Player;
 import tora.train.risk.Territory;
 
@@ -36,16 +35,16 @@ public class MapView {
     private JTextField textFieldYposDest;
     private JLabel lblInsertUnits;
     private JButton btnAddAttack;
-    private JButton btnSubmitAllAttacks;
 
 
     /**
-     * Create the application.
+     * Create the frame.
      */
     public MapView(String title) {
         initializeFrame(title);
         buildReinforcePhaseView();
         buildAttackPhaseView();
+        reinforcePhaseView();
     }
 
     /**
@@ -143,7 +142,6 @@ public class MapView {
     }
 
     public void buildAttackPhaseView(){
-
         labelParLeft = new JLabel("(");
         labelParLeft.setFont(new Font("Dialog", Font.BOLD, 14));
         labelParLeft.setBounds(558, 350, 21, 25);
@@ -175,15 +173,9 @@ public class MapView {
         btnAddAttack = new JButton("Add Attack");
         btnAddAttack.setBounds(414, 450, 240, 25);
         frame.getContentPane().add(btnAddAttack);
-
-        btnSubmitAllAttacks = new JButton("Submit All Reinforcements");
-        btnSubmitAllAttacks.setBounds(414, 400, 240, 25);
-        frame.getContentPane().add(btnSubmitAllAttacks);
     }
 
-    public void reinforcePhaseView(int reinforcements) {
-        //TODO
-
+    public void reinforcePhaseView() {
         lblInsertUnits.setText("Reinforce with: ");
 
         labelParLeft.setVisible(false);
@@ -194,10 +186,6 @@ public class MapView {
         lblInsertSourcePosition.setVisible(false);
         btnSubmitAllReinforcements.setVisible(true);
         btnAddReinforcement.setVisible(true);
-
-        showLeftReinforcements(reinforcements);
-        showCurrentPlayer();
-        printPlayersTerritories(StaticInformations.getCurrentPlayer());
     }
 
     public void attackPhaseView() {
@@ -216,11 +204,32 @@ public class MapView {
     }
 
 
-    public void printPlayersTerritories(Player p) {
+    /*****************************************************************************
+     * GET/SET INFO ON VIEW
+     *****************************************************************************/
+    /**
+     * SHOW CURRENT PLAYER's SITUATION
+     */
+    public void showCurrentPlayersSituation(Player currentPlayer, java.util.List<Territory> territoryList){
+        showLeftReinforcements(currentPlayer.getReinforcements());
+        showCurrentPlayer(currentPlayer.getName());
+        printPlayerTerritories(territoryList);
+    }
+
+    public void showCurrentPlayer(String name) {
+        lblCurrentPlayer.setText(name);
+    }
+
+    public void printPlayerTerritories(java.util.List<Territory> list) {
         textAreaCurrentPlayerTerritories.setText("");
-        for (Territory t : StaticInformations.getPlayersTerritories(p)) {
+        for (Territory t : list) {
             textAreaCurrentPlayerTerritories.append(t.getCoordinates().toString() + "\n");
         }
+    }
+
+    public void showLeftReinforcements(int reinforcements) {
+        lblReinforcementsLeft.setText("" + reinforcements);
+        lblReinforcementsLeft.updateUI();
     }
 
     public void printArena(Arena arena) {
@@ -239,13 +248,15 @@ public class MapView {
         }
     }
 
-    public void showCurrentPlayer() {
-        lblCurrentPlayer.setText(StaticInformations.getCurrentPlayer().getName());
+    public void updateTerritories(java.util.List<Territory> list){
+        for (Territory t: list) {
+            Point p = t.getCoordinates();
+            model.setValueAt(t, (int)p.getX()+1, (int)p.getY()+1);
+        }
     }
 
-    public void showLeftReinforcements(int reinforcements) {
-        lblReinforcementsLeft.setText("" + reinforcements);
-        lblReinforcementsLeft.updateUI();
+    public void updateTerritories(String playerName, int x, int y, int numOfUnits){
+        model.setValueAt(playerName + "(" + numOfUnits + ")", x+1, y+1);
     }
 
     public void setVisible(boolean visible) {
@@ -261,66 +272,38 @@ public class MapView {
     }
 
     public void setBtnSubmitReinforcementsListener(ActionListener a) {
+        btnAddAttack.addActionListener(a);
+    }
+
+    public void setAttackButtonListener(ActionListener a) {
         btnSubmitAllReinforcements.addActionListener(a);
     }
 
-    public void setBtnSubmitAllAttacksListener(ActionListener a) {
-        btnSubmitAllAttacks.addActionListener(a);
+    public String getXposDest() {
+        return textFieldXposDest.getText();
     }
 
-    public int getXposDest() {
-        int x = -1;
-        try {
-            x = Integer.parseInt(textFieldXposDest.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please insert numerical values");
-            e.printStackTrace();
-        }
-        return x;
+    public String getYposDest() {
+        return textFieldYposDest.getText();
     }
 
-    public int getYposDest() {
-        int x = -1;
-        try {
-            x = Integer.parseInt(textFieldYposDest.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please insert numerical values");
-            e.printStackTrace();
-        }
-        return x;
+    public String getXposSource() {
+        return textFieldXposSource.getText();
     }
 
-    public int getXposSource() {
-        int x = -1;
-        try {
-            x = Integer.parseInt(textFieldXposSource.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please insert numerical values");
-            e.printStackTrace();
-        }
-        return x;
+    public String getYposSource(){
+        return textFieldYposSource.getText();
     }
 
-    public int getYposDestSource() {
-        int x = -1;
-        try {
-            x = Integer.parseInt(textFieldYposSource.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please insert numerical values");
-            e.printStackTrace();
-        }
-        return x;
+    public String getValue() {
+        return textFieldUnits.getText();
+    }
+    public void showOptionPanel(String s) {
+        JOptionPane.showMessageDialog(frame, s);
     }
 
-    public int getValue() {
-        int x = -1;
-        try {
-            x = Integer.parseInt(textFieldUnits.getText());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Please insert numerical values");
-            e.printStackTrace();
-        }
-        return x;
+    public void setAttackPhaseViewVisible(){
+        attackPhaseView();
     }
 }
 

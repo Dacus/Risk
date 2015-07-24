@@ -6,12 +6,15 @@ import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageType;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * This class controls the actions on the MainServer and displays the results on the MainServerFrame. It is entirely
@@ -28,10 +31,14 @@ public class MainServerController implements Controller {
     private MainServer server;
     private MainServerFrame frame;
     private ArenaController arenaController;
+    private boolean firstRound;
+    private boolean secondRound;
 
     public MainServerController(MainServerFrame frame){
         this.frame=frame;
         this.server=new MainServer(this); //set the Controller of the MainServer to ensure two-way communication
+        this.firstRound=true;
+        this.secondRound=false;
 
         frame.setSendButtonListener(new SendMessageAction());
         frame.setWindowExitListener(new ServerWindowListener());
@@ -201,7 +208,80 @@ public class MainServerController implements Controller {
         Message msg=new Message(MessageType.START);
         msg.addElement(arenaController.getArena());
         server.sendGlobalMessage(msg);
+
+        changeTurn();
     }
 
+    public void changeTurn(){
+        Player currentPlayer=arenaController.getCurrentPlayer();
+        arenaController.resetMovableUnits(currentPlayer);
 
+        Message msg=new Message(MessageType.YOUR_TURN);
+        msg.addElement(currentPlayer);
+        msg.addElement(getPlayerNamesInOrder());
+        msg.addElement(arenaController.getArena().getOwnedTerritories(currentPlayer));
+        server.sendGlobalMessage(msg);
+
+        if (!firstRound){
+            arenaController.givePlayerBonus(currentPlayer);
+            endReinforcements(currentPlayer);
+        }
+    }
+
+    private List<String> getPlayerNamesInOrder(){
+        Queue<Player> q=arenaController.getPlayersQueue();
+        List<String> names=new ArrayList<String>(q.size());
+        for (Player p: q){
+            names.add(p.getName());
+        }
+        return names;
+    }
+
+    public void tryReinforce(Point point, int value, int clientId) {
+        String playerName=server.getClientNameByID(clientId);
+        Player player=arenaController.getPlayerByName(playerName);
+
+        boolean isReinforcementPossible=arenaController.reinforce(value, point, player);
+        Message msg=null;
+
+        if (isReinforcementPossible){
+            msg=new Message(MessageType.REINFORCE_ACCEPTED);
+
+            msg.addElement(playerName);
+            msg.addElement(player.getReinforcements());
+            msg.addElement((int)point.getX());
+            msg.addElement((int)point.getY());
+            msg.addElement(value);
+
+            server.sendGlobalMessage(msg);
+
+            if (player.getReinforcements() == 0) {
+                arenaController.endCurrentPlayerTurn();
+                if (firstRound) {
+                    if (arenaController.isPlayersQueueEmpty()) {
+                        firstRound = false;
+                    }
+                    changeTurn();
+                } else {
+                    startTransferPhase();
+                }
+            }
+        }
+        else
+        {
+            msg=new Message(MessageType.REINFORCE_DENIED);
+            server.sendSingleServerMessage(clientId, msg);
+        }
+    }
+
+    public void endReinforcements(Player currentPlayer){
+        Message msg=new Message(MessageType.REINFORCE_END);
+        msg.addElement(currentPlayer.getReinforcements());
+        server.sendGlobalMessage(msg);
+    }
+
+    public void startTransferPhase(){
+        Message msg=new Message(MessageType.START_TRANSFER);
+        server.sendGlobalMessage(msg);
+    }
 }

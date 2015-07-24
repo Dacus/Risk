@@ -1,11 +1,14 @@
 package tora.train.risk.clientserver.singleclient.logic;
 
 import tora.train.risk.Arena;
+import tora.train.risk.Player;
+import tora.train.risk.Territory;
 import tora.train.risk.clientserver.common.Controller;
 import tora.train.risk.clientserver.common.Message;
 import tora.train.risk.clientserver.common.MessageHandler;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Processes messages received from the server
@@ -63,6 +66,37 @@ public class SingleClientMessageHandler implements MessageHandler {
                 controller.restrictConnection(maxNumberOfClients);
                 controller.setStatus(Status.NOT_CONNECTED);
                 controller.stopRunning();
+                break;
+            }
+            case YOUR_TURN:{
+                Player currentPlayer=(Player)msg.getElementAt(0);
+                List<String> restOfPlayersInOrder=(List<String>)msg.getElementAt(1);
+                List<Territory> territoriesOfCurrentPlayer=(List<Territory>)msg.getElementAt(2);
+                controller.establishTurn(currentPlayer, restOfPlayersInOrder, territoriesOfCurrentPlayer);
+                break;
+            }
+            case REINFORCE_ACCEPTED:{
+                System.out.println("In handler, Client received:" + msg);
+                String playerName=String.valueOf(msg.getElementAt(0));
+                int reinfLeft=(int)msg.getElementAt(1);
+                int x=(int)msg.getElementAt(2);
+                int y=(int)msg.getElementAt(3);
+                int numOfUnits=(int)msg.getElementAt(4);
+                controller.applyReinforcement(playerName, reinfLeft, x, y, numOfUnits);
+                break;
+            }
+            case REINFORCE_DENIED:{
+                controller.denyReinforcement();
+                break;
+            }
+            case REINFORCE_END: {
+                System.out.println("Client asked to move on " + msg);
+                int reinforcements=(int)msg.getElementAt(0);
+                controller.updateReinforcementLabel(reinforcements);
+                break;
+            }
+            case START_TRANSFER:{
+                controller.enableMoveAndAttackView();
                 break;
             }
             default:{
