@@ -43,7 +43,7 @@ public class MapView {
      * Create the application.
      */
     public MapView(String title) {
-        initialize(title);
+        initializeFrame(title);
         buildReinforcePhaseView();
         buildAttackPhaseView();
     }
@@ -51,7 +51,7 @@ public class MapView {
     /**
      * Initialize the contents of the frame.
      */
-    private void initialize(String title) {
+    private void initializeFrame(String title) {
         frame = new JFrame(title);
         frame.setBounds(100, 100, 900, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,8 +91,6 @@ public class MapView {
         textAreaCurrentPlayerTerritories.setEditable(false);
         textAreaCurrentPlayerTerritories.setBounds(22, 275, 232, 265);
         frame.getContentPane().add(textAreaCurrentPlayerTerritories);
-
-
     }
 
     public void buildReinforcePhaseView(){
